@@ -111,14 +111,25 @@ namespace menDoc.ViewModels
 		}
 		#endregion
 
+		#region 初期化処理
+		/// <summary>
+		/// 初期化処理
+		/// </summary>
 		public override void Init()
         {
             
 
         }
-        public override void Close()
+		#endregion
+
+		#region 画面を閉じる処理
+		/// <summary>
+		/// 画面を閉じる処理
+		/// </summary>
+		public override void Close()
         {
 
         }
-    }
+		#endregion
+	}
 }
