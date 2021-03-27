@@ -68,6 +68,9 @@ namespace menDoc.Models
 		#endregion
 
 		#region .cs サーバー用コード
+		/// <summary>
+		/// .cs サーバー用コード
+		/// </summary>
 		[System.Xml.Serialization.XmlIgnore]
 		public string CsServer
         {
@@ -78,6 +81,35 @@ namespace menDoc.Models
         }
 		#endregion
 
+		#region .cs クライアント用コード
+		/// <summary>
+		/// .cs クライアント用コード
+		/// </summary>
+		[System.Xml.Serialization.XmlIgnore]
+		public string CsClient
+		{
+			get
+			{
+				return CreateCSCodeClient();
+			}
+		}
+		#endregion
+
+		#region コードの更新
+		/// <summary>
+		/// コードの更新
+		/// </summary>
+		public void RefleshCode()
+		{
+			NotifyPropertyChanged("ProtoCode");
+			NotifyPropertyChanged("Markdown");
+			NotifyPropertyChanged("CsprojServer");
+			NotifyPropertyChanged("CsprojClient");
+			NotifyPropertyChanged("CsprojBoth");
+			NotifyPropertyChanged("CsServer");
+			NotifyPropertyChanged("CsClient");
+		}
+		#endregion
 		#region マークダウン[Markdown]プロパティ
 		/// <summary>
 		/// マークダウン[Markdown]プロパティ
@@ -220,20 +252,7 @@ namespace menDoc.Models
 			return code.ToString();
 		}
 		#endregion
-		#region コードの更新
-		/// <summary>
-		/// コードの更新
-		/// </summary>
-		public void RefleshCode()
-		{
-			NotifyPropertyChanged("ProtoCode");
-			NotifyPropertyChanged("Markdown");
-			NotifyPropertyChanged("CsprojServer");
-			NotifyPropertyChanged("CsprojClient");
-			NotifyPropertyChanged("CsprojBoth");
-			NotifyPropertyChanged("CsServer");
-		}
-		#endregion
+
 		#region マークダウンの作成処理
 		/// <summary>
 		/// マークダウンの作成処理
@@ -351,10 +370,40 @@ namespace menDoc.Models
 			code.AppendLine(string.Format("\t\tServices = {{ {0}.BindService(tmp) }},", this.ServiceName));
 			code.AppendLine(string.Format("\t\tPorts = {{ new ServerPort(/*IP Address*/\"128.0.0.1\", /*Port No*/552552, ServerCredentials.Insecure) }}"));
 			code.AppendLine("\t};");
+			code.AppendLine("\tserver.Start();");
 
 			code.AppendLine("}");
-			code.AppendLine("server.Start();");
 			return code.ToString();
+		}
+		#endregion
+
+		#region クライアント用コードの作成
+		/// <summary>
+		/// クライアント用コードの作成
+		/// </summary>
+		/// <returns>コード</returns>
+		public string CreateCSCodeClient()
+		{
+			StringBuilder code = new StringBuilder();
+			code.AppendLine("/// <summary>");
+			code.AppendLine("/// クライアント側の送信開始処理");
+			code.AppendLine("/// </summary>");
+			code.AppendLine("public void Send()");
+			code.AppendLine("{");
+			code.AppendLine("\tvar channel = new Channel(/*IP Address*/\"127.0.0.1\", /* Port No*/552552, ChannelCredentials.Insecure);");
+			code.AppendLine(string.Format("\tvar client = new {0}.{0}Client(channel);", this.ServiceName));
+
+			foreach(var tmp in this.APIs)
+            {
+				code.AppendLine("\t{");
+				code.AppendLine(string.Format("\t\tvar message = new {0}Request();", tmp.Name));
+				code.AppendLine(string.Format("\t\tvar reply = client.{0}(message);", tmp.Name));
+				code.AppendLine("\t}");
+			}
+
+			code.AppendLine("}");
+			return code.ToString();
+
 		}
 		#endregion
 	}

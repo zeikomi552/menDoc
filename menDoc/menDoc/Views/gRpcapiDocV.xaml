@@ -47,11 +47,18 @@
                     </StackPanel>
                 </TabItem>
                 <TabItem Header=".cs">
-                    <GroupBox Header=".cs Server Code">
-                        <StackPanel>
-                            <TextBox Margin="5" IsReadOnly="True" Text="{Binding Service.CsServer, Mode=OneWay}"/>
-                        </StackPanel>
-                    </GroupBox>
+                    <StackPanel>
+                        <GroupBox Header=".cs Server Code">
+                            <StackPanel>
+                                <TextBox Margin="5" IsReadOnly="True" Text="{Binding Service.CsServer, Mode=OneWay}"/>
+                            </StackPanel>
+                        </GroupBox>
+                        <GroupBox Header=".cs Client Code">
+                            <StackPanel>
+                                <TextBox Margin="5" IsReadOnly="True" Text="{Binding Service.CsClient, Mode=OneWay}"/>
+                            </StackPanel>
+                        </GroupBox>
+                    </StackPanel>
                 </TabItem>
             </TabControl>
             <Grid Grid.Column="1">
