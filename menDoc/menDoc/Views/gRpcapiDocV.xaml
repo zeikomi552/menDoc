@@ -23,19 +23,34 @@
             </Grid.ColumnDefinitions>
 
             <TabControl>
-                <TabItem Header="proto Code">
-                    <GroupBox Header="gRPCCode">
+                <TabItem Header="Markdown">
+                    <GroupBox Header="Markdown">
+                        <TextBox Margin="5" Text="{Binding Service.Markdown, Mode=OneWay}"/>
+                    </GroupBox>
+                </TabItem>
+                <TabItem Header=".proto">
+                    <GroupBox Header="Proto File">
                         <TextBox Margin="5" IsReadOnly="True" Text="{Binding Service.ProtoCode, Mode=OneWay}"/>
                     </GroupBox>
                 </TabItem>
-                <TabItem Header="Code">
-                    <GroupBox Header="gRPCCode">
-                        <TextBox Margin="5"/>
-                    </GroupBox>
+                <TabItem Header=".csproj">
+                    <StackPanel>
+                        <GroupBox Header=".csproj(Server)">
+                            <TextBox Margin="5" IsReadOnly="True" Text="{Binding Service.CsprojServer, Mode=OneWay}"/>
+                        </GroupBox>
+                        <GroupBox Header=".csproj(Client)">
+                            <TextBox Margin="5" IsReadOnly="True" Text="{Binding Service.CsprojClient, Mode=OneWay}"/>
+                        </GroupBox>
+                        <GroupBox Header=".csproj(Both用)">
+                            <TextBox Margin="5" IsReadOnly="True" Text="{Binding Service.CsprojBoth, Mode=OneWay}"/>
+                        </GroupBox>
+                    </StackPanel>
                 </TabItem>
-                <TabItem Header="Markdown">
-                    <GroupBox Header="gRPCCode">
-                        <TextBox Margin="5" Text="{Binding Service.Markdown, Mode=OneWay}"/>
+                <TabItem Header=".cs">
+                    <GroupBox Header=".cs Server Code">
+                        <StackPanel>
+                            <TextBox Margin="5" IsReadOnly="True" Text="{Binding Service.CsServer, Mode=OneWay}"/>
+                        </StackPanel>
                     </GroupBox>
                 </TabItem>
             </TabControl>
@@ -50,12 +65,12 @@
                 <Grid>
                     <GroupBox Header="Service">
                         <StackPanel Orientation="Horizontal">
-                            <TextBlock Margin="5" Text="Service Name"/>
-                            <TextBlock Margin="5" Text=":"/>
-                            <TextBox Margin="5" Width="100" Text="{Binding Service.ServiceName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                            <TextBlock Margin="5" Text="Description"/>
-                            <TextBlock Margin="5" Text=":"/>
-                            <TextBox Margin="5" Width="250" Text="{Binding Service.ServiceDescriotion, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                            <TextBlock VerticalAlignment="Center" Margin="5" Text="Service Name"/>
+                            <TextBlock VerticalAlignment="Center" Margin="5" Text=":"/>
+                            <TextBox VerticalAlignment="Center" Margin="5" Width="100" Text="{Binding Service.ServiceName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                            <TextBlock VerticalAlignment="Center" Margin="5" Text="Description"/>
+                            <TextBlock VerticalAlignment="Center" Margin="5" Text=":"/>
+                            <TextBox VerticalAlignment="Center" Margin="5" Width="250" Text="{Binding Service.ServiceDescriotion, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                         </StackPanel>
                     </GroupBox>
                 </Grid>

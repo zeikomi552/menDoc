@@ -23,10 +23,66 @@ namespace menDoc.Models
 			}
 		}
 		#endregion
+
+		#region .csproj用コード(サーバー用)プロパティ
+		/// <summary>
+		/// .csproj用コード(サーバー用)プロパティ
+		/// </summary>
+		[System.Xml.Serialization.XmlIgnore]
+		public string CsprojServer
+        {
+            get
+            {
+				return CreateCSProjClient(ProjType.Server);
+
+			}
+		}
+		#endregion
+
+		#region .csproj用コード(クライアント用)プロパティ
+		/// <summary>
+		/// .csproj用コード(クライアント用)プロパティ
+		/// </summary>
+		[System.Xml.Serialization.XmlIgnore]
+		public string CsprojClient
+        {
+            get
+            {
+				return CreateCSProjClient(ProjType.Client);
+			}
+		}
+		#endregion
+
+		#region .csproj用コード(兼用)プロパティ
+		/// <summary>
+		/// .csproj用コード(兼用)プロパティ
+		/// </summary>
+		[System.Xml.Serialization.XmlIgnore]
+		public string CsprojBoth
+		{
+			get
+			{
+				return CreateCSProjClient(ProjType.Both);
+			}
+		}
+		#endregion
+
+		#region .cs サーバー用コード
+		[System.Xml.Serialization.XmlIgnore]
+		public string CsServer
+        {
+            get
+            {
+				return CreateCSCodeServer();
+            }
+        }
+		#endregion
+
 		#region マークダウン[Markdown]プロパティ
 		/// <summary>
 		/// マークダウン[Markdown]プロパティ
 		/// </summary>
+		[System.Xml.Serialization.XmlIgnore]
 		public string Markdown
 		{
 			get
@@ -132,7 +188,7 @@ namespace menDoc.Models
 			foreach (var api in this.APIs)
 			{
 				code.AppendLine(string.Format("\t// {0}", api.Description));
-				code.AppendLine(string.Format("\trpc ({0}Request) returns({0}Reply) {{}}", api.Name));
+				code.AppendLine(string.Format("\trpc {0} ({0}Request) returns({0}Reply) {{}}", api.Name));
 				code.AppendLine("");
 			}
 			code.AppendLine("}");
@@ -164,14 +220,18 @@ namespace menDoc.Models
 			return code.ToString();
 		}
 		#endregion
-		#region .protoファイル用コードの更新
+		#region コードの更新
 		/// <summary>
-		/// .protoファイル用コードの更新
+		/// コードの更新
 		/// </summary>
 		public void RefleshCode()
 		{
 			NotifyPropertyChanged("ProtoCode");
 			NotifyPropertyChanged("Markdown");
+			NotifyPropertyChanged("CsprojServer");
+			NotifyPropertyChanged("CsprojClient");
+			NotifyPropertyChanged("CsprojBoth");
+			NotifyPropertyChanged("CsServer");
 		}
 		#endregion
 		#region マークダウンの作成処理
@@ -242,6 +302,59 @@ namespace menDoc.Models
 
 			return code.ToString();
 
+		}
+		#endregion
+
+		/// <summary>
+		/// プロジェクトタイプ
+		/// </summary>
+		public enum ProjType
+        {
+			Server=0,
+			Client,
+			Both
+        }
+		#region プロジェクトファイルのサンプル
+		/// <summary>
+		/// プロジェクトファイルのサンプル
+		/// </summary>
+		/// <param name="type">プロジェクトのタイプ：Server用 Client用 兼用</param>
+		/// <returns>Code</returns>
+		public string CreateCSProjClient(ProjType type)
+		{
+			StringBuilder code = new StringBuilder();
+			code.AppendLine("<Project Sdk=\"Microsoft.NET.Sdk\">");
+			code.AppendLine("\t<ItemGroup>");
+			code.AppendLine(string.Format("\t\t<Protobuf Include=\" * */*.proto\" OutputDir=\"%(RelativePath)\" CompileOutputs=\"false\" GrpcServices=\"{0}\" />", type.ToString()));
+			code.AppendLine("\t</ItemGroup>");
+			code.AppendLine("</Project>");
+			return code.ToString();
+		}
+		#endregion
+
+		#region サーバー側の処理の作成
+		/// <summary>
+		/// サーバー側の処理の作成
+		/// </summary>
+		/// <returns>コード</returns>
+		public string CreateCSCodeServer()
+		{
+			StringBuilder code = new StringBuilder();
+			code.AppendLine("/// <summary>");
+			code.AppendLine("/// サーバー側の受付開始処理");
+			code.AppendLine("/// </summary>");
+			code.AppendLine("public void Listen()");
+			code.AppendLine("{");
+			code.AppendLine(string.Format("\tvar tmp = new {0}Service();", this.ServiceName));
+			code.AppendLine("\tServer server = new Server");
+			code.AppendLine("\t{");
+			code.AppendLine(string.Format("\t\tServices = {{ {0}.BindService(tmp) }},", this.ServiceName));
+			code.AppendLine(string.Format("\t\tPorts = {{ new ServerPort(/*IP Address*/\"128.0.0.1\", /*Port No*/552552, ServerCredentials.Insecure) }}"));
+			code.AppendLine("\t};");
+
+			code.AppendLine("}");
+			code.AppendLine("server.Start();");
+			return code.ToString();
 		}
 		#endregion
 	}
