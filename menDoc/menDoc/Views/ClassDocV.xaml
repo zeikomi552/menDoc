@@ -36,20 +36,21 @@
             </Grid.ColumnDefinitions>
 
             <TabControl TabStripPlacement="Left">
+                <TabControl.Resources>
+                    <Style BasedOn="{StaticResource MahApps.Styles.TabItem}" TargetType="{x:Type TabItem}">
+                        <Setter Property="LayoutTransform">
+                            <Setter.Value>
+                                <TransformGroup>
+                                    <RotateTransform Angle="90"/>
+                                </TransformGroup>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </TabControl.Resources>
                 <TabItem Header="Markdown">
                     <GroupBox Header="Markdown">
                         <TextBox Margin="5" Text="{Binding ClassList.Markdown, Mode=OneWay}"/>
                     </GroupBox>
-                </TabItem>
-
-                <TabItem Header=".cs">
-                    <StackPanel>
-                        <GroupBox Header=".cs">
-                            <StackPanel>
-                                <TextBox Margin="5" IsReadOnly="True" Text="{Binding Service.CsServer, Mode=OneWay}"/>
-                            </StackPanel>
-                        </GroupBox>
-                    </StackPanel>
                 </TabItem>
             </TabControl>
             <Grid Margin="3" Grid.Column="1">
@@ -71,6 +72,8 @@
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="Name" Binding="{Binding Name}"/>
                             <DataGridTextColumn Header="Description" Binding="{Binding Description}"/>
+                            <DataGridTextColumn Header="Create Date" Binding="{Binding CreateDate, StringFormat=yyyy/MM/dd}"/>
+                            <DataGridTextColumn Header="Create User" Binding="{Binding CreateUser}"/>
                         </DataGrid.Columns>
                     </DataGrid>
                 </GroupBox>

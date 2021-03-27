@@ -1,4 +1,5 @@
-﻿using MVVMCore.BaseClass;
+﻿using menDoc.Common.Utilities;
+using MVVMCore.BaseClass;
 using MVVMCore.Common.Utilities;
 using System;
 using System.Collections.Generic;
@@ -64,6 +65,10 @@ namespace menDoc.Models.ClassDiagram
 		private string CreateMarkdown()
 		{
 			StringBuilder code = new StringBuilder();
+			code.AppendLine("## クラス図");
+			code.AppendLine(string.Format("- 作成日:{0}", DateTime.Today.ToShortDateString()));
+			code.AppendLine(string.Format("- 作成者:{0}", Environment.UserName));
+			code.AppendLine();
 			code.AppendLine("```mermaid");
 			code.AppendLine("classDiagram");
 			foreach (var classitem in this.ClassItems)
@@ -73,7 +78,35 @@ namespace menDoc.Models.ClassDiagram
 			}
 			code.AppendLine("```");
 
+			code.AppendLine();
+			code.AppendLine("## クラス一覧");
+			code.AppendLine(GetMarkdownForClassList());
+			code.AppendLine();
+			code.AppendLine("## クラス詳細");
+			code.AppendLine(GetMarkdownForClassDetail());
 			return code.ToString();
+		}
+		#endregion
+
+		#region クラスの一覧マークダウン作成
+		/// <summary>
+		/// クラスの一覧マークダウン作成
+		/// </summary>
+		/// <returns>マークダウン</returns>
+		public string GetMarkdownForClassList()
+		{
+			return Utilities.GetClassClassList(this);
+		}
+		#endregion
+
+		#region クラス情報の詳細マークダウン作成
+		/// <summary>
+		/// クラス情報の詳細マークダウン作成
+		/// </summary>
+		/// <returns>マークダウン</returns>
+		public string GetMarkdownForClassDetail()
+		{
+			return Utilities.GetClassDetails(this);
 		}
 		#endregion
 

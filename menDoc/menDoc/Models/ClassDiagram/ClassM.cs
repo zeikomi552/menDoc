@@ -60,6 +60,55 @@ namespace menDoc.Models.ClassDiagram
 			}
 		}
 		#endregion
+		#region 作成日時[CreateDate]プロパティ
+		/// <summary>
+		/// 作成日時[CreateDate]プロパティ用変数
+		/// </summary>
+		DateTime _CreateDate = DateTime.Today;
+		/// <summary>
+		/// 作成日時[CreateDate]プロパティ
+		/// </summary>
+		public DateTime CreateDate
+		{
+			get
+			{
+				return _CreateDate;
+			}
+			set
+			{
+				if (!_CreateDate.Equals(value))
+				{
+					_CreateDate = value;
+					NotifyPropertyChanged("CreateDate");
+				}
+			}
+		}
+		#endregion
+		#region 作成者[CreateUser]プロパティ
+		/// <summary>
+		/// 作成者[CreateUser]プロパティ用変数
+		/// </summary>
+		string _CreateUser = Environment.UserName;
+		/// <summary>
+		/// 作成者[CreateUser]プロパティ
+		/// </summary>
+		public string CreateUser
+		{
+			get
+			{
+				return _CreateUser;
+			}
+			set
+			{
+				if (!_CreateUser.Equals(value))
+				{
+					_CreateUser = value;
+					NotifyPropertyChanged("CreateUser");
+				}
+			}
+		}
+		#endregion
+
 		#region 変数リスト[ParameterItems]プロパティ
 		/// <summary>
 		/// 変数リスト[ParameterItems]プロパティ用変数

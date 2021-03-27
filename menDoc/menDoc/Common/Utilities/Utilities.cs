@@ -10,6 +10,12 @@ namespace menDoc.Common.Utilities
 {
     public class Utilities
     {
+        public static string MarkdownEscape(string text)
+        {
+            return text.Replace("<", @"\<");
+        }
+
+        #region Markdown クラス図
         #region クラス図の関係をマークダウンに変換する
         /// <summary>
         /// クラス図の関係をマークダウンに変換する
@@ -252,6 +258,186 @@ namespace menDoc.Common.Utilities
             }
 
             return code_method.ToString();
+        }
+        #endregion
+        #endregion
+
+        #region 関係を日本語文字列に変換する
+        /// <summary>
+        /// 関係を日本語文字列に変換する
+        /// </summary>
+        /// <param name="relation_type">関係のタイプ</param>
+        /// <returns>文字列</returns>
+        public static string ConvertRelation(ClassRelationType relation_type)
+        {
+            string relation = string.Empty;
+            switch (relation_type)
+            {
+                case ClassRelationType.Association:
+                default:
+                    {
+                        relation = "関係";
+                        break;
+                    }
+                case ClassRelationType.Aggregation:
+                    {
+                        relation = "集約";
+                        break;
+                    }
+                case ClassRelationType.Composit:
+                    {
+                        relation = "コンポジション";
+                        break;
+                    }
+                case ClassRelationType.Dependency:
+                    {
+                        relation = "依存";
+                        break;
+                    }
+                case ClassRelationType.Generalization:
+                    {
+                        relation = "汎化";
+                        break;
+                    }
+                case ClassRelationType.Realization:
+                    {
+                        relation = "実現";
+                        break;
+                    }
+            }
+
+            return relation;
+        }
+        #endregion
+
+        #region 修飾子を文字列に変換する
+        /// <summary>
+        /// 修飾子を文字列に変換する
+        /// </summary>
+        /// <param name="accessor">修飾子</param>
+        /// <returns>文字列</returns>
+        public static string ConvertAccessor(AccessModifier accessor)
+        {
+            switch (accessor)
+            {
+                case AccessModifier.Public:
+                default:
+                    {
+                        return "public";
+                    }
+                case AccessModifier.Private:
+                    {
+                        return "private";
+                    }
+                case AccessModifier.Protected:
+                    {
+                        return "protected";
+                    }
+                case AccessModifier.Package:
+                    {
+                        return "package";
+                    }
+            }
+
+        }
+        #endregion
+
+        #region Markdown クラス一覧
+        /// <summary>
+        /// クラス用一覧
+        /// </summary>
+        /// <param name="class_items">クラス要素</param>
+        /// <returns>マークダウン</returns>
+        public static string GetClassClassList(ClassListM class_items)
+        {
+            StringBuilder code = new StringBuilder();
+            code.AppendLine(GetClassFigMarkdownHeader());
+            code.AppendLine(GetClassFigMarkdownBody(class_items));
+            return code.ToString();
+        }
+        #region マークダウンの説明のヘッダ部
+        /// <summary>
+        /// マークダウンの説明のヘッダ部
+        /// </summary>
+        /// <returns>ヘッダ部</returns>
+        public static string GetClassFigMarkdownHeader()
+        {
+            StringBuilder code = new StringBuilder();
+
+            code.AppendLine("|No.|クラス名|クラスの説明|作成日|作成者|");
+            code.Append("|---|---|---|---|---|");
+
+            return code.ToString();
+        }
+        #endregion
+        #region マークダウンの説明のボディ部
+        /// <summary>
+        /// マークダウンの説明のボディ部
+        /// </summary>
+        /// <returns>ボディ部</returns>
+        public static string GetClassFigMarkdownBody(ClassListM class_items)
+        {
+            StringBuilder code = new StringBuilder();
+
+            int index = 1;
+            foreach (var tmp in class_items)
+            {
+                code.AppendLine(string.Format("|{0}|{1}|{2}|{3}|{4}|", index ++, tmp.Name, tmp.Description, tmp.CreateDate.ToShortDateString(), tmp.CreateUser));
+            }
+            return code.ToString();
+        }
+        #endregion
+
+        #endregion
+
+        #region Markdown クラス詳細
+        public static string GetClassDetails(ClassListM list)
+        {
+            StringBuilder code = new StringBuilder();
+            foreach(var class_item in list)
+            {
+                code.AppendLine(string.Format("### クラス名:{0}", class_item.Name));
+                code.AppendLine(GetClassDetail(class_item));
+            }
+
+            return code.ToString();
+        }
+        /// <summary>
+        /// クラス詳細をマークダウンで返却する
+        /// </summary>
+        /// <param name="class_item">クラス要素</param>
+        /// <returns>マークダウン</returns>
+        public static string GetClassDetail(ClassM class_item)
+        {
+            StringBuilder code = new StringBuilder();
+            code.AppendLine("- 変数情報");
+            code.AppendLine();
+
+            code.AppendLine("|No.|型|パラメータ名|修飾子|説明|");
+            code.AppendLine("|---|---|---|---|---|");
+
+            int index = 1;
+            foreach (var param in class_item.ParameterItems)
+            {
+                code.AppendLine(string.Format("|{0}|{1}|{2}|{3}|{4}|",
+                    index++, MarkdownEscape(param.TypeName), MarkdownEscape(param.ValueName), ConvertAccessor(param.Accessor), param.Description));
+            }
+            code.AppendLine();
+
+            code.AppendLine("- 関数情報");
+            code.AppendLine();
+
+            code.AppendLine("|No.|戻り値|関数名|修飾子|説明|");
+            code.AppendLine("|---|---|---|---|---|");
+
+            index = 1;
+            foreach (var param in class_item.MethodItems)
+            {
+                code.AppendLine(string.Format("|{0}|{1}|{2}|{3}|{4}|",
+                    index++, MarkdownEscape(param.ReturnValue), MarkdownEscape(param.MethodName), ConvertAccessor(param.Accessor), param.Description));
+            }
+
+            return code.ToString();
         }
         #endregion
     }

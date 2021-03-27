@@ -83,74 +83,7 @@ namespace menDoc.Models.ClassDiagram
             }
         }
         #endregion
-        #region マークダウンの説明のヘッダ部
-        /// <summary>
-        /// マークダウンの説明のヘッダ部
-        /// </summary>
-        /// <returns>ヘッダ部</returns>
-        public string GetMarkdownHeader()
-        {
-            StringBuilder code = new StringBuilder();
-
-            code.AppendLine("|関係クラス|関係|説明|");
-            code.AppendLine("|---|---|---|");
-
-            return code.ToString();
-        }
-        #endregion
-        #region マークダウンの説明のボディ部
-        /// <summary>
-        /// マークダウンの説明のボディ部
-        /// </summary>
-        /// <returns>ボディ部</returns>
-        public string GetMarkdownBody()
-        {
-            StringBuilder code = new StringBuilder();
-
-            string relation = string.Empty;
-
-            switch (this.Relation)
-            {
-                case ClassRelationType.Association:
-                default:
-                    {
-                        relation = "関係";
-                        break;
-                    }
-                case ClassRelationType.Aggregation:
-                    {
-                        relation = "集約";
-                        break;
-                    }
-                case ClassRelationType.Composit:
-                    {
-                        relation = "コンポジション";
-                        break;
-                    }
-                case ClassRelationType.Dependency:
-                    {
-                        relation = "依存";
-                        break;
-                    }
-                case ClassRelationType.Generalization:
-                    {
-                        relation = "汎化";
-                        break;
-                    }
-                case ClassRelationType.Realization:
-                    {
-                        relation = "実現";
-                        break;
-                    }
-            }
-
-
-            code.AppendLine(string.Format("|{0}|{1}|{2}|", this.TargetClass, relation, this.Description));
-
-            return code.ToString();
-        }
-        #endregion
-
+      
     
         #region クラス図用のマークダウンを取得する
         /// <summary>
