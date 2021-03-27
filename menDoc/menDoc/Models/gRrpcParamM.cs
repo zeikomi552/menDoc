@@ -11,8 +11,6 @@ namespace menDoc.Models
 
 	public class gRrpcParamM : ModelBase
     {
-
-
 		#region 単体・応答識別[SingleRepeat]プロパティ
 		/// <summary>
 		/// 単体・応答識別[SingleRepeat]プロパティ用変数

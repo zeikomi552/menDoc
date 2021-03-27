@@ -29,7 +29,7 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
-            <TabControl>
+            <TabControl TabStripPlacement="Left">
                 <TabItem Header="Markdown">
                     <GroupBox Header="Markdown">
                         <TextBox Margin="5" Text="{Binding Service.Markdown, Mode=OneWay}"/>
