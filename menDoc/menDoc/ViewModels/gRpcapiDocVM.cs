@@ -37,8 +37,10 @@ namespace menDoc.ViewModels
 		}
 		#endregion
 
-
-
+		#region 読み込み処理
+		/// <summary>
+		/// 読み込み処理
+		/// </summary>
 		public void Load()
 		{
 			try
@@ -65,7 +67,12 @@ namespace menDoc.ViewModels
 				ShowMessage.ShowErrorOK(e.Message, "Error");
 			}
 		}
+		#endregion
 
+		#region 保存処理
+		/// <summary>
+		/// 保存処理
+		/// </summary>
 		public void Save()
 		{
 			try
@@ -92,12 +99,17 @@ namespace menDoc.ViewModels
 				ShowMessage.ShowErrorOK(e.Message, "Error");
 			}
 		}
+		#endregion
 
-
+		#region 自動生成コードのリフレッシュ
+		/// <summary>
+		/// 自動生成コードのリフレッシュ
+		/// </summary>
 		public void RefleshProtoCode()
 		{
 			this.Service.RefleshCode();
 		}
+		#endregion
 
 		public override void Init()
         {
