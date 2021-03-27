@@ -68,7 +68,7 @@
                     </StackPanel>
                 </TabItem>
             </TabControl>
-            <Grid Grid.Column="1">
+            <Grid Margin="3" Grid.Column="1">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="auto"/>
                     <RowDefinition Height="*"/>
