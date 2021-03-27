@@ -13,7 +13,10 @@
             <TabItem Header="gRPC">
                 <Views:gRpcapiDocV/>
             </TabItem>
+            <TabItem Header="Class">
+                <Views:ClassDocV/>
+            </TabItem>
         </TabControl>
-        
+
     </Grid>
 </mahApps:MetroWindow>

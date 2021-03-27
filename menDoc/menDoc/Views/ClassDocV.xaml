@@ -60,7 +60,7 @@
                         ItemsSource="{Binding ClassList.ClassItems.Items}" SelectedItem="{Binding ClassList.ClassItems.SelectedItem}">
                         <b:Interaction.Triggers>
                             <b:EventTrigger EventName="SelectionChanged">
-                                <b:CallMethodAction TargetObject="{Binding Mode=OneWay, Source={StaticResource vm}}" MethodName="RefleshProtoCode"/>
+                                <b:CallMethodAction TargetObject="{Binding Mode=OneWay, Source={StaticResource vm}}" MethodName="RefleshCode"/>
                             </b:EventTrigger>
                         </b:Interaction.Triggers>
                         <DataGrid.Columns>
@@ -76,12 +76,14 @@
                     <DataGrid AutoGenerateColumns="False" ItemsSource="{Binding ClassList.ClassItems.SelectedItem.ParameterItems.Items}">
                         <b:Interaction.Triggers>
                             <b:EventTrigger EventName="SelectionChanged">
-                                <b:CallMethodAction TargetObject="{Binding Mode=OneWay, Source={StaticResource vm}}" MethodName="RefleshProtoCode"/>
+                                <b:CallMethodAction TargetObject="{Binding Mode=OneWay, Source={StaticResource vm}}" MethodName="RefleshCode"/>
                             </b:EventTrigger>
                         </b:Interaction.Triggers>
 
                         <DataGrid.Columns>
-                            <DataGridTextColumn Header="Access" Binding="{Binding Accessor}"/>
+                            <DataGridComboBoxColumn Header="Access"
+                                                    SelectedItemBinding="{Binding Accessor}" 
+                                                    ItemsSource="{Binding Mode=OneWay, Source={StaticResource AlignmentValues}}"/>
                             <DataGridTextColumn Header="Type" Binding="{Binding TypeName}"/>
                             <DataGridTextColumn Header="Name" Binding="{Binding ValueName}"/>
                             <DataGridTextColumn Header="Description" Binding="{Binding Description}"/>
@@ -89,15 +91,17 @@
                     </DataGrid>
                 </GroupBox>
                 <GroupBox Grid.Row="2" Header="Method">
-                    <DataGrid AutoGenerateColumns="False" ItemsSource="{Binding ClassList.ClassItems.SelectedItem.MethodItems}">
+                    <DataGrid AutoGenerateColumns="False" ItemsSource="{Binding ClassList.ClassItems.SelectedItem.MethodItems.Items}">
                         <b:Interaction.Triggers>
                             <b:EventTrigger EventName="SelectionChanged">
-                                <b:CallMethodAction TargetObject="{Binding Mode=OneWay, Source={StaticResource vm}}" MethodName="RefleshProtoCode"/>
+                                <b:CallMethodAction TargetObject="{Binding Mode=OneWay, Source={StaticResource vm}}" MethodName="RefleshCode"/>
                             </b:EventTrigger>
                         </b:Interaction.Triggers>
 
                         <DataGrid.Columns>
-                            <DataGridTextColumn Header="Access"/>
+                            <DataGridComboBoxColumn Header="Access"
+                                                    SelectedItemBinding="{Binding Accessor}" 
+                                                    ItemsSource="{Binding Mode=OneWay, Source={StaticResource AlignmentValues}}"/>
                             <DataGridTextColumn Header="Type"/>
                             <DataGridTextColumn Header="Name"/>
                             <DataGridTextColumn Header="Description"/>
@@ -105,10 +109,10 @@
                     </DataGrid>
                 </GroupBox>
                 <GroupBox Grid.Row="3" Header="Relation">
-                    <DataGrid AutoGenerateColumns="False" ItemsSource="{Binding Service.APIs.SelectedItem.Replytems.Items}">
+                    <DataGrid  AutoGenerateColumns="False" ItemsSource="{Binding ClassList.ClassItems.SelectedItem.RelationItems.Items}">
                         <b:Interaction.Triggers>
                             <b:EventTrigger EventName="SelectionChanged">
-                                <b:CallMethodAction TargetObject="{Binding Mode=OneWay, Source={StaticResource vm}}" MethodName="RefleshProtoCode"/>
+                                <b:CallMethodAction TargetObject="{Binding Mode=OneWay, Source={StaticResource vm}}" MethodName="RefleshCode"/>
                             </b:EventTrigger>
                         </b:Interaction.Triggers>
                         <DataGrid.Columns>
@@ -122,14 +126,14 @@
         </Grid>
         <Grid Grid.Row="1">
             <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
-                <Button Margin="5" Width="100" Content="保存">
+                <Button Margin="5" Width="100" Content="Save">
                     <b:Interaction.Triggers>
                         <b:EventTrigger EventName="Click">
                             <b:CallMethodAction TargetObject="{Binding}" MethodName="Save"/>
                         </b:EventTrigger>
                     </b:Interaction.Triggers>
                 </Button>
-                <Button Margin="5" Width="100" Content="読込">
+                <Button Margin="5" Width="100" Content="Load">
                     <b:Interaction.Triggers>
                         <b:EventTrigger EventName="Click">
                             <b:CallMethodAction TargetObject="{Binding}" MethodName="Load"/>

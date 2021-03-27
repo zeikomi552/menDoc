@@ -36,8 +36,6 @@ namespace menDoc.ViewModels
 			}
 		}
 		#endregion
-
-
 		#region 初期化処理
 		/// <summary>
 		/// 初期化処理
@@ -48,7 +46,6 @@ namespace menDoc.ViewModels
 
 		}
 		#endregion
-
 		#region 画面を閉じる処理
 		/// <summary>
 		/// 画面を閉じる処理
@@ -58,8 +55,15 @@ namespace menDoc.ViewModels
 
 		}
 		#endregion
+		#region コードの更新
+		/// <summary>
+		/// コードの更新
+		/// </summary>
+		public void RefleshCode()
+        {
 
-
+        }
+		#endregion
 		#region 読み込み処理
 		/// <summary>
 		/// 読み込み処理
@@ -91,7 +95,6 @@ namespace menDoc.ViewModels
 			}
 		}
 		#endregion
-
 		#region 保存処理
 		/// <summary>
 		/// 保存処理

@@ -131,6 +131,30 @@ namespace menDoc.Models.ClassDiagram
 			}
 		}
 		#endregion
+		#region 関係情報リスト[RelationItems]プロパティ
+		/// <summary>
+		/// 関係情報リスト[RelationItems]プロパティ用変数
+		/// </summary>
+		ModelList<ClassRelationM> _RelationItems = new ModelList<ClassRelationM>();
+		/// <summary>
+		/// 関係情報リスト[RelationItems]プロパティ
+		/// </summary>
+		public ModelList<ClassRelationM> RelationItems
+		{
+			get
+			{
+				return _RelationItems;
+			}
+			set
+			{
+				if (_RelationItems == null || !_RelationItems.Equals(value))
+				{
+					_RelationItems = value;
+					NotifyPropertyChanged("RelationItems");
+				}
+			}
+		}
+		#endregion
 
 	}
 }
