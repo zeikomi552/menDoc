@@ -8,18 +8,6 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
 
-/*******************************************************/
-/*
- *  XMLUtil.cs
- *  
- *  [説明]
- *  　XMLのユーティリティクラス
- * 
- *  Ver.    Date        Author      Comment
- *  1.00    2016/04/21  sfx.Nakai   初版作成
- * 
- * COPYRIGHT (C) 2016 ...
- *******************************************************/
 namespace MVVMCore.Common.Utilities
 {
     /// <summary>
