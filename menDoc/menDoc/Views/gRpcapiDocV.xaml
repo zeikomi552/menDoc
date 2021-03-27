@@ -48,14 +48,16 @@
                 </Grid.RowDefinitions>
 
                 <Grid>
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock Margin="5" Text="Service Name"/>
-                        <TextBlock Margin="5" Text=":"/>
-                        <TextBox Margin="5" Width="100" Text="{Binding Service.ServiceName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                        <TextBlock Margin="5" Text="Description"/>
-                        <TextBlock Margin="5" Text=":"/>
-                        <TextBox Margin="5" Width="250" Text="{Binding Service.ServiceDescriotion, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                    </StackPanel>
+                    <GroupBox Header="Service">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Margin="5" Text="Service Name"/>
+                            <TextBlock Margin="5" Text=":"/>
+                            <TextBox Margin="5" Width="100" Text="{Binding Service.ServiceName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                            <TextBlock Margin="5" Text="Description"/>
+                            <TextBlock Margin="5" Text=":"/>
+                            <TextBox Margin="5" Width="250" Text="{Binding Service.ServiceDescriotion, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                        </StackPanel>
+                    </GroupBox>
                 </Grid>
                 <GroupBox Header="APIs" Grid.Row="1">
 
@@ -74,7 +76,7 @@
                         </DataGrid>
                     </Grid>
                 </GroupBox>
-                <GroupBox Grid.Row="2" Header="Request" Margin="5">
+                <GroupBox Grid.Row="2" Header="Request">
                     <DataGrid AutoGenerateColumns="False" ItemsSource="{Binding Service.APIs.SelectedItem.RequestItems.Items}" Margin="5">
                         <b:Interaction.Triggers>
                             <b:EventTrigger EventName="SelectionChanged">
