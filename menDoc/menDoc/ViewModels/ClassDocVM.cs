@@ -1,4 +1,5 @@
-﻿using Microsoft.Win32;
+﻿using menDoc.Models.ClassDiagram;
+using Microsoft.Win32;
 using MVVMCore.BaseClass;
 using MVVMCore.Common.Utilities;
 using System;
@@ -11,6 +12,32 @@ namespace menDoc.ViewModels
 {
     public class ClassDocVM : ViewModelBase
     {
+		#region クラスのリスト[ClassList]プロパティ
+		/// <summary>
+		/// クラスのリスト[ClassList]プロパティ用変数
+		/// </summary>
+		ClassListM _ClassList = new ClassListM();
+		/// <summary>
+		/// クラスのリスト[ClassList]プロパティ
+		/// </summary>
+		public ClassListM ClassList
+		{
+			get
+			{
+				return _ClassList;
+			}
+			set
+			{
+				if (_ClassList == null || !_ClassList.Equals(value))
+				{
+					_ClassList = value;
+					NotifyPropertyChanged("ClassList");
+				}
+			}
+		}
+		#endregion
+
+
 		#region 初期化処理
 		/// <summary>
 		/// 初期化処理

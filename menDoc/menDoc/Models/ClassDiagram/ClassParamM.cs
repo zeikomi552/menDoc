@@ -84,6 +84,29 @@ namespace menDoc.Models.ClassDiagram
 			}
 		}
 		#endregion
-
+		#region 説明[Description]プロパティ
+		/// <summary>
+		/// 説明[Description]プロパティ用変数
+		/// </summary>
+		string _Description = string.Empty;
+		/// <summary>
+		/// 説明[Description]プロパティ
+		/// </summary>
+		public string Description
+		{
+			get
+			{
+				return _Description;
+			}
+			set
+			{
+				if (!_Description.Equals(value))
+				{
+					_Description = value;
+					NotifyPropertyChanged("Description");
+				}
+			}
+		}
+		#endregion
 	}
 }

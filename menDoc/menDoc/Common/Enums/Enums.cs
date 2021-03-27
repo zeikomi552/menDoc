@@ -29,9 +29,51 @@ namespace menDoc.Common.Enums
 	/// </summary>
 	public enum AccessModifier
     {
+		/// <summary>
+		/// public +
+		/// </summary>
 		Public,
+		/// <summary>
+		/// private -
+		/// </summary>
 		Private,
-		Protected
-    }
-	#endregion
+		/// <summary>
+		/// protected #
+		/// </summary>
+		Protected,
+		/// <summary>
+		/// package ~
+		/// </summary>
+		Package
+	}
+    #endregion
+
+    public enum ClassRelationType
+    {
+		/// <summary>
+		/// 関連
+		/// </summary>
+		Association,
+		/// <summary>
+		/// 集約
+		/// </summary>
+		Aggregation,
+		/// <summary>
+		/// コンポジション
+		/// </summary>
+		Composition,
+		/// <summary>
+		/// 依存
+		/// </summary>
+		Dependency,
+		/// <summary>
+		/// 汎化
+		/// </summary>
+		Generalization,
+		/// <summary>
+		/// 実現
+		/// </summary>
+		Realization
+	}
+
 }

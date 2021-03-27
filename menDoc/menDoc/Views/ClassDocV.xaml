@@ -3,10 +3,140 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:enum="clr-namespace:menDoc.Common.Enums"
+             xmlns:ViewModels="clr-namespace:menDoc.ViewModels"
+             xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
+             xmlns:sys="clr-namespace:System;assembly=mscorlib"
              xmlns:local="clr-namespace:menDoc.Views"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
-            
+    <UserControl.Resources>
+        <ViewModels:ClassDocVM x:Key="vm"/>
+        <ObjectDataProvider MethodName="GetValues" ObjectType="{x:Type sys:Enum}" x:Key="AlignmentValues">
+            <ObjectDataProvider.MethodParameters>
+                <x:Type TypeName="enum:AccessModifier" />
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
+    </UserControl.Resources>
+
+    <Grid DataContext="{Binding Mode=OneWay, Source={StaticResource vm}}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="40"/>
+        </Grid.RowDefinitions>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <TabControl TabStripPlacement="Left">
+                <TabItem Header="Markdown">
+                    <GroupBox Header="Markdown">
+                        <TextBox Margin="5" Text="{Binding Service.Markdown, Mode=OneWay}"/>
+                    </GroupBox>
+                </TabItem>
+
+                <TabItem Header=".cs">
+                    <StackPanel>
+                        <GroupBox Header=".cs">
+                            <StackPanel>
+                                <TextBox Margin="5" IsReadOnly="True" Text="{Binding Service.CsServer, Mode=OneWay}"/>
+                            </StackPanel>
+                        </GroupBox>
+                    </StackPanel>
+                </TabItem>
+            </TabControl>
+            <Grid Margin="3" Grid.Column="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <GroupBox Header="Class">
+                    <DataGrid AutoGenerateColumns="False"
+                        ItemsSource="{Binding ClassList.ClassItems.Items}" SelectedItem="{Binding ClassList.ClassItems.SelectedItem}">
+                        <b:Interaction.Triggers>
+                            <b:EventTrigger EventName="SelectionChanged">
+                                <b:CallMethodAction TargetObject="{Binding Mode=OneWay, Source={StaticResource vm}}" MethodName="RefleshProtoCode"/>
+                            </b:EventTrigger>
+                        </b:Interaction.Triggers>
+                        <DataGrid.Columns>
+                            <DataGridComboBoxColumn Header="Access"
+                                                    SelectedItemBinding="{Binding Accessor}" 
+                                                    ItemsSource="{Binding Mode=OneWay, Source={StaticResource AlignmentValues}}"/>
+                            <DataGridTextColumn Header="Name" Binding="{Binding Name}"/>
+                            <DataGridTextColumn Header="Description" Binding="{Binding Description}"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </GroupBox>
+                <GroupBox Header="Parameters" Grid.Row="1">
+                    <DataGrid AutoGenerateColumns="False" ItemsSource="{Binding ClassList.ClassItems.SelectedItem.ParameterItems.Items}">
+                        <b:Interaction.Triggers>
+                            <b:EventTrigger EventName="SelectionChanged">
+                                <b:CallMethodAction TargetObject="{Binding Mode=OneWay, Source={StaticResource vm}}" MethodName="RefleshProtoCode"/>
+                            </b:EventTrigger>
+                        </b:Interaction.Triggers>
+
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Access" Binding="{Binding Accessor}"/>
+                            <DataGridTextColumn Header="Type" Binding="{Binding TypeName}"/>
+                            <DataGridTextColumn Header="Name" Binding="{Binding ValueName}"/>
+                            <DataGridTextColumn Header="Description" Binding="{Binding Description}"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </GroupBox>
+                <GroupBox Grid.Row="2" Header="Method">
+                    <DataGrid AutoGenerateColumns="False" ItemsSource="{Binding ClassList.ClassItems.SelectedItem.MethodItems}">
+                        <b:Interaction.Triggers>
+                            <b:EventTrigger EventName="SelectionChanged">
+                                <b:CallMethodAction TargetObject="{Binding Mode=OneWay, Source={StaticResource vm}}" MethodName="RefleshProtoCode"/>
+                            </b:EventTrigger>
+                        </b:Interaction.Triggers>
+
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Access"/>
+                            <DataGridTextColumn Header="Type"/>
+                            <DataGridTextColumn Header="Name"/>
+                            <DataGridTextColumn Header="Description"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </GroupBox>
+                <GroupBox Grid.Row="3" Header="Relation">
+                    <DataGrid AutoGenerateColumns="False" ItemsSource="{Binding Service.APIs.SelectedItem.Replytems.Items}">
+                        <b:Interaction.Triggers>
+                            <b:EventTrigger EventName="SelectionChanged">
+                                <b:CallMethodAction TargetObject="{Binding Mode=OneWay, Source={StaticResource vm}}" MethodName="RefleshProtoCode"/>
+                            </b:EventTrigger>
+                        </b:Interaction.Triggers>
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="TargetMethod"/>
+                            <DataGridTextColumn Header="Connection"/>
+                            <DataGridTextColumn Header="Description"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </GroupBox>
+            </Grid>
+        </Grid>
+        <Grid Grid.Row="1">
+            <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
+                <Button Margin="5" Width="100" Content="保存">
+                    <b:Interaction.Triggers>
+                        <b:EventTrigger EventName="Click">
+                            <b:CallMethodAction TargetObject="{Binding}" MethodName="Save"/>
+                        </b:EventTrigger>
+                    </b:Interaction.Triggers>
+                </Button>
+                <Button Margin="5" Width="100" Content="読込">
+                    <b:Interaction.Triggers>
+                        <b:EventTrigger EventName="Click">
+                            <b:CallMethodAction TargetObject="{Binding}" MethodName="Load"/>
+                        </b:EventTrigger>
+                    </b:Interaction.Triggers>
+                </Button>
+            </StackPanel>
+        </Grid>
     </Grid>
 </UserControl>

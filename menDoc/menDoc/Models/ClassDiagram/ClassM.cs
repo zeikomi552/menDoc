@@ -1,4 +1,5 @@
-﻿using MVVMCore.BaseClass;
+﻿using menDoc.Common.Enums;
+using MVVMCore.BaseClass;
 using MVVMCore.Common.Utilities;
 using System;
 using System.Collections.Generic;
@@ -10,6 +11,30 @@ namespace menDoc.Models.ClassDiagram
 {
     public class ClassM : ModelBase
     {
+		#region アクセス修飾子[Accessor]プロパティ
+		/// <summary>
+		/// アクセス修飾子[Accessor]プロパティ用変数
+		/// </summary>
+		AccessModifier _Accessor = new AccessModifier();
+		/// <summary>
+		/// アクセス修飾子[Accessor]プロパティ
+		/// </summary>
+		public AccessModifier Accessor
+		{
+			get
+			{
+				return _Accessor;
+			}
+			set
+			{
+				if (!_Accessor.Equals(value))
+				{
+					_Accessor = value;
+					NotifyPropertyChanged("Accessor");
+				}
+			}
+		}
+		#endregion
 		#region クラス名[Name]プロパティ
 		/// <summary>
 		/// クラス名[Name]プロパティ用変数
@@ -82,29 +107,30 @@ namespace menDoc.Models.ClassDiagram
 			}
 		}
 		#endregion
-		#region 関数リスト[MthodItems]プロパティ
+		#region 関数リスト[MethodItems]プロパティ
 		/// <summary>
-		/// 関数リスト[MthodItems]プロパティ用変数
+		/// 関数リスト[MethodItems]プロパティ用変数
 		/// </summary>
-		ModelList<ClassMethodM> _MthodItems = new ModelList<ClassMethodM>();
+		ModelList<ClassMethodM> _MethodItems = new ModelList<ClassMethodM>();
 		/// <summary>
-		/// 関数リスト[MthodItems]プロパティ
+		/// 関数リスト[MethodItems]プロパティ
 		/// </summary>
-		public ModelList<ClassMethodM> MthodItems
+		public ModelList<ClassMethodM> MethodItems
 		{
 			get
 			{
-				return _MthodItems;
+				return _MethodItems;
 			}
 			set
 			{
-				if (_MthodItems == null || !_MthodItems.Equals(value))
+				if (_MethodItems == null || !_MethodItems.Equals(value))
 				{
-					_MthodItems = value;
-					NotifyPropertyChanged("MthodItems");
+					_MethodItems = value;
+					NotifyPropertyChanged("MethodItems");
 				}
 			}
 		}
 		#endregion
+
 	}
 }
