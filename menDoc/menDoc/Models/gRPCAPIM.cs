@@ -10,9 +10,6 @@ namespace menDoc.Models
 {
     public class gRPCAPIM : ModelBase
     {
-
-
-
 		#region 名前[Name]プロパティ
 		/// <summary>
 		/// 名前[Name]プロパティ用変数

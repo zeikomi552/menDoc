@@ -1,4 +1,5 @@
-﻿using MVVMCore.BaseClass;
+﻿using menDoc.Common.Enums;
+using MVVMCore.BaseClass;
 using MVVMCore.Common.Utilities;
 using System;
 using System.Collections.Generic;
@@ -232,7 +233,15 @@ namespace menDoc.Models
 				int index = 1;
 				foreach (var request in api.RequestItems)
 				{
-					code.AppendLine(string.Format("\t{0} {1} = {2};", request.TypeName, request.ValueName, index));
+					// repeatの判別
+					if (request.SingleRepeat == SingleRepeatEnum.Single)
+					{
+						code.AppendLine(string.Format("\t{0} {1} = {2};", request.TypeName, request.ValueName, index));
+					}
+					else
+					{
+						code.AppendLine(string.Format("\trepeated {0} {1} = {2};", request.TypeName, request.ValueName, index));
+					}
 					index++;
 				}
 				code.AppendLine("}");

@@ -1,4 +1,5 @@
-﻿using MVVMCore.BaseClass;
+﻿using menDoc.Common.Enums;
+using MVVMCore.BaseClass;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,24 +8,10 @@ using System.Threading.Tasks;
 
 namespace menDoc.Models
 {
-    public class gRrpcParamM : ModelBase
+
+	public class gRrpcParamM : ModelBase
     {
-		#region Single/Repeat 列挙子
-		/// <summary>
-		/// Single/Repeat 列挙子
-		/// </summary>
-		public enum SingleRepeatEnum
-        {
-            /// <summary>
-            /// 単体
-            /// </summary>
-            Single = 0,
-            /// <summary>
-            /// 繰り返し
-            /// </summary>
-            Repeat
-        }
-		#endregion
+
 
 		#region 単体・応答識別[SingleRepeat]プロパティ
 		/// <summary>
