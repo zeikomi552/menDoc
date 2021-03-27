@@ -22,4 +22,16 @@ namespace menDoc.Common.Enums
 		Repeat
 	}
 	#endregion
+
+	#region アクセス修飾子
+	/// <summary>
+	/// アクセス修飾子
+	/// </summary>
+	public enum AccessModifier
+    {
+		Public,
+		Private,
+		Protected
+    }
+	#endregion
 }

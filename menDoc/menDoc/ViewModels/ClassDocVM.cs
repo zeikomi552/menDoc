@@ -1,5 +1,4 @@
-﻿using menDoc.Models;
-using Microsoft.Win32;
+﻿using Microsoft.Win32;
 using MVVMCore.BaseClass;
 using MVVMCore.Common.Utilities;
 using System;
@@ -10,32 +9,29 @@ using System.Threading.Tasks;
 
 namespace menDoc.ViewModels
 {
-    public class gRpcapiDocVM : ViewModelBase
+    public class ClassDocVM : ViewModelBase
     {
-		#region サービス[Service]プロパティ
+		#region 初期化処理
 		/// <summary>
-		/// サービス[Service]プロパティ用変数
+		/// 初期化処理
 		/// </summary>
-		gRPCServiceM _Service = new gRPCServiceM();
-		/// <summary>
-		/// サービス[Service]プロパティ
-		/// </summary>
-		public gRPCServiceM Service
+		public override void Init()
 		{
-			get
-			{
-				return _Service;
-			}
-			set
-			{
-				if (_Service == null || !_Service.Equals(value))
-				{
-					_Service = value;
-					NotifyPropertyChanged("Service");
-				}
-			}
+
+
 		}
 		#endregion
+
+		#region 画面を閉じる処理
+		/// <summary>
+		/// 画面を閉じる処理
+		/// </summary>
+		public override void Close()
+		{
+
+		}
+		#endregion
+
 
 		#region 読み込み処理
 		/// <summary>
@@ -49,13 +45,13 @@ namespace menDoc.ViewModels
 				var dialog = new OpenFileDialog();
 
 				// ファイルの種類を設定
-				dialog.Filter = "menDoc gRPC用ファイル (*.mdgrpc)|*.mdgrpc";
+				dialog.Filter = "menDoc Class図用ファイル (*.mdclass)|*.mdclass";
 
 				// ダイアログを表示する
 				if (dialog.ShowDialog() == true)
 				{
 					// 保存ファイルから読み込み
-					this.Service = XMLUtil.Deserialize<gRPCServiceM>(dialog.FileName);
+					//this.Service = XMLUtil.Deserialize<gRPCServiceM>(dialog.FileName);
 
 					// 成功メッセージ
 					//ShowMessage.ShowNoticeOK("Load Success!!", "Information");
@@ -81,13 +77,13 @@ namespace menDoc.ViewModels
 				var dialog = new SaveFileDialog();
 
 				// ファイルの種類を設定
-				dialog.Filter = "menDoc gRPC用ファイル (*.mdgrpc)|*.mdgrpc";
+				dialog.Filter = "menDoc Class図用ファイル (*.mdclass)|*.mdclass";
 
 				// ダイアログを表示する
 				if (dialog.ShowDialog() == true)
 				{
 					// ファイルに保存
-					XMLUtil.Seialize<gRPCServiceM>(dialog.FileName, this.Service);
+					//XMLUtil.Seialize<gRPCServiceM>(dialog.FileName, this.Service);
 
 					// 成功メッセージ
 					ShowMessage.ShowNoticeOK("Save Success!!", "Information");
@@ -99,37 +95,6 @@ namespace menDoc.ViewModels
 				ShowMessage.ShowErrorOK(e.Message, "Error");
 			}
 		}
-		#endregion
-
-		#region 自動生成コードのリフレッシュ
-		/// <summary>
-		/// 自動生成コードのリフレッシュ
-		/// </summary>
-		public void RefleshProtoCode()
-		{
-			this.Service.RefleshCode();
-		}
-		#endregion
-
-		#region 初期化処理
-		/// <summary>
-		/// 初期化処理
-		/// </summary>
-		public override void Init()
-        {
-            
-
-        }
-		#endregion
-
-		#region 画面を閉じる処理
-		/// <summary>
-		/// 画面を閉じる処理
-		/// </summary>
-		public override void Close()
-        {
-
-        }
 		#endregion
 	}
 }
