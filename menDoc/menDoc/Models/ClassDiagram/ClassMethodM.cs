@@ -107,5 +107,50 @@ namespace menDoc.Models.ClassDiagram
 		}
 		#endregion
 
+		#region クラス図用のマークダウンを取得する
+		/// <summary>
+		/// クラス図用のマークダウンを取得する
+		/// </summary>
+		/// <returns></returns>
+		public string GetMarkdownForClassDiagram()
+		{
+			StringBuilder code_method = new StringBuilder();
+
+			// 修飾子を確認
+            switch (this.Accessor)
+            {
+				case AccessModifier.Public:	// public
+				default:
+					{
+						code_method.Append('+');
+						break;
+					}
+				case AccessModifier.Private: // private
+					{
+						code_method.Append('-');
+						break;
+					}
+				case AccessModifier.Protected: // protected
+					{
+						code_method.Append('#');
+						break;
+					}
+				case AccessModifier.Package: // package
+					{
+						code_method.Append('~');
+						break;
+					}
+			}
+
+			// 戻り値のセット
+			code_method.Append(this.ReturnValue + " ");
+
+			// 関数名のセット
+			code_method.Append(this.MethodName);
+
+			// 値を返却する
+			return code_method.ToString();
+		}
+		#endregion
 	}
 }

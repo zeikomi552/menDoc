@@ -59,21 +59,41 @@ namespace menDoc.Common.Enums
 		/// </summary>
 		Aggregation,
 		/// <summary>
-		/// コンポジション
+		/// 集約(逆向き)
 		/// </summary>
-		Composition,
+		AggregationR,
+		/// <summary>
+		/// コンポジット
+		/// </summary>
+		Composit,
+		/// <summary>
+		/// コンポジット(逆向き)
+		/// </summary>
+		CompositR,
 		/// <summary>
 		/// 依存
 		/// </summary>
 		Dependency,
 		/// <summary>
+		/// 依存(逆向き)
+		/// </summary>
+		DependencyR,
+		/// <summary>
 		/// 汎化
 		/// </summary>
 		Generalization,
 		/// <summary>
+		/// 汎化(逆向き)
+		/// </summary>
+		GeneralizationR,
+		/// <summary>
 		/// 実現
 		/// </summary>
-		Realization
+		Realization,
+		/// <summary>
+		/// 実現(逆向き)
+		/// </summary>
+		RealizationR
 	}
 
 }

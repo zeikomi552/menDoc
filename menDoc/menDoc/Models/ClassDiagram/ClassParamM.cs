@@ -1,4 +1,5 @@
 ﻿using menDoc.Common.Enums;
+using menDoc.Common.Utilities;
 using MVVMCore.BaseClass;
 using System;
 using System.Collections.Generic;
@@ -34,8 +35,6 @@ namespace menDoc.Models.ClassDiagram
 			}
 		}
 		#endregion
-
-
 		#region 型名[TypeName]プロパティ
 		/// <summary>
 		/// 型名[TypeName]プロパティ用変数
@@ -106,6 +105,18 @@ namespace menDoc.Models.ClassDiagram
 					NotifyPropertyChanged("Description");
 				}
 			}
+		}
+		#endregion
+
+		#region クラス図用のマークダウンを取得する
+		/// <summary>
+		/// クラス図用のマークダウンを取得する
+		/// </summary>
+		/// <returns></returns>
+		public string GetMarkdownForClassDiagram()
+		{
+			// 値を返却する
+			return Utilities.GetClassParameterMarkdown(this);
 		}
 		#endregion
 	}

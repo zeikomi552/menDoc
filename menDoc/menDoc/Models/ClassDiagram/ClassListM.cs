@@ -43,5 +43,48 @@ namespace menDoc.Models.ClassDiagram
 		}
 		#endregion
 
+		#region マークダウン
+		/// <summary>
+		/// マークダウン
+		/// </summary>
+		public string Markdown
+        {
+            get
+            {
+				return CreateMarkdown();
+			}
+        }
+		#endregion
+
+		#region マークダウンの作成
+		/// <summary>
+		/// マークダウンの作成
+		/// </summary>
+		/// <returns>マークダウン</returns>
+		private string CreateMarkdown()
+		{
+			StringBuilder code = new StringBuilder();
+			code.AppendLine("```mermaid");
+			code.AppendLine("classDiagram");
+			foreach (var classitem in this.ClassItems)
+			{
+				var class_markdown = classitem.Markdown;
+				code.AppendLine(class_markdown);
+			}
+			code.AppendLine("```");
+
+			return code.ToString();
+		}
+		#endregion
+
+		#region コードの更新
+		/// <summary>
+		/// コードの更新
+		/// </summary>
+		public void RefleshCode()
+		{
+			NotifyPropertyChanged("Markdown");
+		}
+		#endregion
 	}
 }

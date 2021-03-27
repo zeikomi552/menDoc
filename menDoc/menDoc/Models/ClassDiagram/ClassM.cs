@@ -1,4 +1,5 @@
 ﻿using menDoc.Common.Enums;
+using menDoc.Common.Utilities;
 using MVVMCore.BaseClass;
 using MVVMCore.Common.Utilities;
 using System;
@@ -9,32 +10,8 @@ using System.Threading.Tasks;
 
 namespace menDoc.Models.ClassDiagram
 {
-    public class ClassM : ModelBase
-    {
-		#region アクセス修飾子[Accessor]プロパティ
-		/// <summary>
-		/// アクセス修飾子[Accessor]プロパティ用変数
-		/// </summary>
-		AccessModifier _Accessor = new AccessModifier();
-		/// <summary>
-		/// アクセス修飾子[Accessor]プロパティ
-		/// </summary>
-		public AccessModifier Accessor
-		{
-			get
-			{
-				return _Accessor;
-			}
-			set
-			{
-				if (!_Accessor.Equals(value))
-				{
-					_Accessor = value;
-					NotifyPropertyChanged("Accessor");
-				}
-			}
-		}
-		#endregion
+	public class ClassM : ModelBase
+	{
 		#region クラス名[Name]プロパティ
 		/// <summary>
 		/// クラス名[Name]プロパティ用変数
@@ -156,5 +133,29 @@ namespace menDoc.Models.ClassDiagram
 		}
 		#endregion
 
+		/// <summary>
+		/// マークダウン
+		/// </summary>
+		[System.Xml.Serialization.XmlIgnore]
+		public string Markdown
+		{
+			get
+			{
+				return GetMarkdownForClass();
+			}
+		}
+
+		
+			
+		#region クラス用のマークダウンの取得
+		/// <summary>
+		/// クラス用のマークダウンの取得
+		/// </summary>
+		/// <returns>クラス用のマークダウン</returns>
+		public string GetMarkdownForClass()
+        {	
+			return Utilities.GetClassMarkdown(this);
+		}
+		#endregion
 	}
 }

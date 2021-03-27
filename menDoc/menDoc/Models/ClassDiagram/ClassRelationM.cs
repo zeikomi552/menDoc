@@ -1,4 +1,5 @@
 ﻿using menDoc.Common.Enums;
+using menDoc.Common.Utilities;
 using MVVMCore.BaseClass;
 using System;
 using System.Collections.Generic;
@@ -121,7 +122,7 @@ namespace menDoc.Models.ClassDiagram
                         relation = "集約";
                         break;
                     }
-                case ClassRelationType.Composition:
+                case ClassRelationType.Composit:
                     {
                         relation = "コンポジション";
                         break;
@@ -147,6 +148,19 @@ namespace menDoc.Models.ClassDiagram
             code.AppendLine(string.Format("|{0}|{1}|{2}|", this.TargetClass, relation, this.Description));
 
             return code.ToString();
+        }
+        #endregion
+
+    
+        #region クラス図用のマークダウンを取得する
+        /// <summary>
+        /// クラス図用のマークダウンを取得する
+        /// </summary>
+        /// <returns>マークダウン</returns>
+        public string GetMarkdownForClassDiagram(string own_class)
+        {
+            // 値を返却する
+            return Utilities.GetClassRelationMarkdown(own_class, this);
         }
         #endregion
     }

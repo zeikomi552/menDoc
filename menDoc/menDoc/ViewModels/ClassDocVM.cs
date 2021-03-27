@@ -60,9 +60,9 @@ namespace menDoc.ViewModels
 		/// コードの更新
 		/// </summary>
 		public void RefleshCode()
-        {
-
-        }
+		{
+			this.ClassList.RefleshCode();
+		}
 		#endregion
 		#region 読み込み処理
 		/// <summary>
@@ -82,7 +82,7 @@ namespace menDoc.ViewModels
 				if (dialog.ShowDialog() == true)
 				{
 					// 保存ファイルから読み込み
-					//this.Service = XMLUtil.Deserialize<gRPCServiceM>(dialog.FileName);
+					this.ClassList = XMLUtil.Deserialize<ClassListM>(dialog.FileName);
 
 					// 成功メッセージ
 					//ShowMessage.ShowNoticeOK("Load Success!!", "Information");
@@ -113,7 +113,7 @@ namespace menDoc.ViewModels
 				if (dialog.ShowDialog() == true)
 				{
 					// ファイルに保存
-					//XMLUtil.Seialize<gRPCServiceM>(dialog.FileName, this.Service);
+					XMLUtil.Seialize<ClassListM>(dialog.FileName, this.ClassList);
 
 					// 成功メッセージ
 					ShowMessage.ShowNoticeOK("Save Success!!", "Information");

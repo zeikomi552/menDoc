@@ -17,6 +17,11 @@
                 <x:Type TypeName="enum:AccessModifier" />
             </ObjectDataProvider.MethodParameters>
         </ObjectDataProvider>
+        <ObjectDataProvider MethodName="GetValues" ObjectType="{x:Type sys:Enum}" x:Key="RelationValues">
+            <ObjectDataProvider.MethodParameters>
+                <x:Type TypeName="enum:ClassRelationType" />
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
     </UserControl.Resources>
 
     <Grid DataContext="{Binding Mode=OneWay, Source={StaticResource vm}}">
@@ -33,7 +38,7 @@
             <TabControl TabStripPlacement="Left">
                 <TabItem Header="Markdown">
                     <GroupBox Header="Markdown">
-                        <TextBox Margin="5" Text="{Binding Service.Markdown, Mode=OneWay}"/>
+                        <TextBox Margin="5" Text="{Binding ClassList.Markdown, Mode=OneWay}"/>
                     </GroupBox>
                 </TabItem>
 
@@ -64,9 +69,6 @@
                             </b:EventTrigger>
                         </b:Interaction.Triggers>
                         <DataGrid.Columns>
-                            <DataGridComboBoxColumn Header="Access"
-                                                    SelectedItemBinding="{Binding Accessor}" 
-                                                    ItemsSource="{Binding Mode=OneWay, Source={StaticResource AlignmentValues}}"/>
                             <DataGridTextColumn Header="Name" Binding="{Binding Name}"/>
                             <DataGridTextColumn Header="Description" Binding="{Binding Description}"/>
                         </DataGrid.Columns>
@@ -102,9 +104,9 @@
                             <DataGridComboBoxColumn Header="Access"
                                                     SelectedItemBinding="{Binding Accessor}" 
                                                     ItemsSource="{Binding Mode=OneWay, Source={StaticResource AlignmentValues}}"/>
-                            <DataGridTextColumn Header="Type"/>
-                            <DataGridTextColumn Header="Name"/>
-                            <DataGridTextColumn Header="Description"/>
+                            <DataGridTextColumn Header="Type" Binding="{Binding ReturnValue}"/>
+                            <DataGridTextColumn Header="Name" Binding="{Binding MethodName}"/>
+                            <DataGridTextColumn Header="Description" Binding="{Binding Description}"/>
                         </DataGrid.Columns>
                     </DataGrid>
                 </GroupBox>
@@ -116,9 +118,10 @@
                             </b:EventTrigger>
                         </b:Interaction.Triggers>
                         <DataGrid.Columns>
-                            <DataGridTextColumn Header="TargetMethod"/>
-                            <DataGridTextColumn Header="Connection"/>
-                            <DataGridTextColumn Header="Description"/>
+                            <DataGridTextColumn Header="TargetClass" Binding="{Binding TargetClass}"/>
+                            <DataGridComboBoxColumn Header="Connection" SelectedItemBinding="{Binding Relation}" 
+                                                    ItemsSource="{Binding Mode=OneWay, Source={StaticResource RelationValues}}"/>
+                            <DataGridTextColumn Header="Description" Binding="{Binding Description}"/>
                         </DataGrid.Columns>
                     </DataGrid>
                 </GroupBox>
