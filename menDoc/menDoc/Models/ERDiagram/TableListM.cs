@@ -56,11 +56,27 @@ namespace menDoc.Models.ERDiagram
 		/// <returns>マークダウン</returns>
 		public string CreateMarkdown()
 		{
-			return ERDiagramMarkdown();
+			StringBuilder code = new StringBuilder();
+			code.AppendLine("## ER図");
+			code.AppendLine(string.Format("- 作成日:{0}", DateTime.Today.ToShortDateString()));
+			code.AppendLine(string.Format("- 作成者:{0}", Environment.UserName));
+			code.AppendLine();
+			code.AppendLine(ERDiagramMarkdown());
+			code.AppendLine();
+			code.AppendLine("## テーブル一覧");
+			code.AppendLine(CreateTableListMarkdown());
+			code.AppendLine();
+
+			foreach (var table in this.TableItems)
+			{
+				code.AppendLine(string.Format("## テーブル：{0}情報", table.Name));
+				code.AppendLine(GetTableMarkdown(table));
+
+			}
+
+			return code.ToString();
 		}
 		#endregion
-
-		
 
 		#region ER図用マークダウン
 		/// <summary>
@@ -73,6 +89,7 @@ namespace menDoc.Models.ERDiagram
 
 			code.AppendLine("```mermaid");
 			code.AppendLine("erDiagram");
+			code.AppendLine();
 
 			// テーブルの要素を一通り並べる
 			foreach (var table in this.TableItems)
@@ -85,8 +102,10 @@ namespace menDoc.Models.ERDiagram
 				}
 
 				code.AppendLine("}");
+				code.AppendLine();
 			}
 
+			// テーブル同士の関係を列挙する
 			foreach (var table in this.TableItems)
 			{
 				foreach (var rel in table.TableRelationList)
@@ -118,6 +137,52 @@ namespace menDoc.Models.ERDiagram
 		}
 		#endregion
 
+		#region テーブル一覧用マークダウンの作成
+		public string CreateTableListMarkdown()
+		{
+			StringBuilder code = new StringBuilder();
+
+			code.AppendLine("|No.|テーブル名|説明|作成日|作成者|");
+			code.AppendLine("|---|---|---|---|---|");
+
+			int index = 1;
+			foreach (var table in this.TableItems)
+            {
+				code.AppendLine(string.Format("|{0}|{1}|{2}|{3}|{4}|", index++, table.Name, table.Description, table.CreateDate.ToShortDateString(), table.CreateUser));
+			}
+
+			return code.ToString();
+		}
+		#endregion
+
+		public string GetTableMarkdown(TableM table)
+		{
+			StringBuilder code = new StringBuilder();
+
+			code.AppendLine("|No.|PK|NotNull|型|サイズ|変数名|説明|");
+			code.AppendLine("|---|---|---|---|---|---|---|");
+			int index = 0;
+			foreach (var param in table.ParameterItems)
+            {
+				code.AppendLine(string.Format("|{0}|{1}|{2}|{3}|{4}|{5}|{6}|",
+					index++,
+					param.PrimaryKey ? "〇" : "",
+					param.NotNull ? "〇" : "",
+					param.Type,
+					param.Size,
+					param.Name,
+					param.Description
+					));
+			}
+
+			return code.ToString();
+		}
+
+		#region 列挙 foreach用
+		/// <summary>
+		/// 列挙 foreach用
+		/// </summary>
+		/// <returns></returns>
 		public IEnumerator<TableM> GetEnumerator()
 		{
 			foreach (var item in this.TableItems)
@@ -125,5 +190,6 @@ namespace menDoc.Models.ERDiagram
 				yield return item;  // ここでパーツを返す
 			}
 		}
+		#endregion
 	}
 }
