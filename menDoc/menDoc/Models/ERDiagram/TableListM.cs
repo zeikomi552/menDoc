@@ -155,6 +155,12 @@ namespace menDoc.Models.ERDiagram
 		}
 		#endregion
 
+		#region テーブル情報のマークダウン作成
+		/// <summary>
+		/// テーブル情報のマークダウン作成
+		/// </summary>
+		/// <param name="table">テーブル情報</param>
+		/// <returns>マークダウン</returns>
 		public string GetTableMarkdown(TableM table)
 		{
 			StringBuilder code = new StringBuilder();
@@ -177,6 +183,7 @@ namespace menDoc.Models.ERDiagram
 
 			return code.ToString();
 		}
+		#endregion
 
 		#region 列挙 foreach用
 		/// <summary>
