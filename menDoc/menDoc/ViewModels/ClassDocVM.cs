@@ -123,5 +123,22 @@ namespace menDoc.ViewModels
 			}
 		}
 		#endregion
+
+
+		/// <summary>
+		/// 上へ移動
+		/// </summary>
+		public void MoveUp_ClassList()
+		{
+			this.ClassList.ClassItems.MoveUP();
+		}
+
+		/// <summary>
+		/// 下へ移動
+		/// </summary>
+		public void MoveDown_ClassList()
+		{
+			this.ClassList.ClassItems.MoveDown();
+		}
 	}
 }

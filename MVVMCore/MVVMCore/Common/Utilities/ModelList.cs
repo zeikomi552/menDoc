@@ -100,6 +100,8 @@ namespace MVVMCore.Common.Utilities
 					this.Items.RemoveAt(index);
 					// 一つ上の要素に挿入する
 					this.Items.Insert(index - 1, elem);
+					// 選択要素をセット
+					this.SelectedItem = elem;
 				}
 			}
 		}
@@ -123,6 +125,8 @@ namespace MVVMCore.Common.Utilities
 					this.Items.RemoveAt(index);
 					// 一つ上の要素に挿入する
 					this.Items.Insert(index + 1, elem);
+					// 選択要素をセット
+					this.SelectedItem = elem;
 				}
 			}
 		}
