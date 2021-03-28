@@ -11,8 +11,8 @@ using System.Threading.Tasks;
 
 namespace menDoc.ViewModels
 {
-    public class ClassDocVM : ViewModelBase
-    {
+	public class ClassDocVM : ViewModelBase
+	{
 		#region クラスのリスト[ClassList]プロパティ
 		/// <summary>
 		/// クラスのリスト[ClassList]プロパティ
@@ -124,21 +124,184 @@ namespace menDoc.ViewModels
 		}
 		#endregion
 
-
+		#region クラスリスト上へ移動
 		/// <summary>
-		/// 上へ移動
+		/// クラスリスト上へ移動
 		/// </summary>
 		public void MoveUp_ClassList()
 		{
-			this.ClassList.ClassItems.MoveUP();
+			try
+			{
+				// nullチェック
+				if (this.ClassList.ClassItems.SelectedItem != null)
+				{
+					// 上へ移動
+					this.ClassList.ClassItems.MoveUP();
+				}
+			}
+			catch (Exception e)
+			{
+				ShowMessage.ShowErrorOK(e.Message, "Error");
+			}
 		}
+		#endregion
 
+		#region クラスリスト下へ移動
 		/// <summary>
-		/// 下へ移動
+		/// クラスリスト下へ移動
 		/// </summary>
 		public void MoveDown_ClassList()
 		{
-			this.ClassList.ClassItems.MoveDown();
+			try
+			{
+				// nullチェック
+				if(this.ClassList.ClassItems.SelectedItem != null)
+                {
+					// 下へ移動
+					this.ClassList.ClassItems.MoveDown();
+				}
+			}
+			catch (Exception e)
+			{
+				ShowMessage.ShowErrorOK(e.Message, "Error");
+			}
 		}
+		#endregion
+
+		#region パラメータリスト上へ移動
+		/// <summary>
+		/// パラメータリスト上へ移動
+		/// </summary>
+		public void MoveUp_ParamList()
+		{
+			try
+			{
+				// 選択されているかどうかをチェック
+				if (this.ClassList.ClassItems.SelectedItem != null
+					&& this.ClassList.ClassItems.SelectedItem.ParameterItems.SelectedItem != null)
+				{
+					// 上へ移動
+					this.ClassList.ClassItems.SelectedItem.ParameterItems.MoveUP();
+				}
+			}
+			catch (Exception e)
+			{
+				ShowMessage.ShowErrorOK(e.Message, "Error");
+			}
+		}
+		#endregion
+
+		#region パラメータリスト下へ移動
+		/// <summary>
+		/// パラメータリスト下へ移動
+		/// </summary>
+		public void MoveDown_ParamList()
+		{
+			try
+			{
+				// 選択されているかどうかをチェック
+				if (this.ClassList.ClassItems.SelectedItem != null
+					&& this.ClassList.ClassItems.SelectedItem.ParameterItems.SelectedItem != null)
+				{
+					// 下へ移動
+					this.ClassList.ClassItems.SelectedItem.ParameterItems.MoveDown();
+				}
+			}
+			catch (Exception e)
+			{
+				ShowMessage.ShowErrorOK(e.Message, "Error");
+			}
+		}
+		#endregion
+		#region 関数リスト上へ移動
+		/// <summary>
+		/// 関数リスト上へ移動
+		/// </summary>
+		public void MoveUp_MethodList()
+		{
+			try
+			{
+				// 選択されているかどうかをチェック
+				if (this.ClassList.ClassItems.SelectedItem != null
+					&& this.ClassList.ClassItems.SelectedItem.MethodItems.SelectedItem != null)
+				{
+					// 上へ移動
+					this.ClassList.ClassItems.SelectedItem.MethodItems.MoveUP();
+				}
+			}
+			catch (Exception e)
+			{
+				ShowMessage.ShowErrorOK(e.Message, "Error");
+			}
+		}
+		#endregion
+
+		#region 関数リスト下へ移動
+		/// <summary>
+		/// 関数リスト下へ移動
+		/// </summary>
+		public void MoveDown_MethodList()
+		{
+			try
+			{
+				// 選択されているかどうかをチェック
+				if (this.ClassList.ClassItems.SelectedItem != null
+					&& this.ClassList.ClassItems.SelectedItem.MethodItems.SelectedItem != null)
+				{
+					// 下へ移動
+					this.ClassList.ClassItems.SelectedItem.MethodItems.MoveDown();
+				}
+			}
+			catch (Exception e)
+			{
+				ShowMessage.ShowErrorOK(e.Message, "Error");
+			}
+		}
+		#endregion
+		#region リレーションリスト上へ移動
+		/// <summary>
+		/// リレーションリスト上へ移動
+		/// </summary>
+		public void MoveUp_RelationList()
+		{
+			try
+			{
+				// 選択されているかどうかをチェック
+				if (this.ClassList.ClassItems.SelectedItem != null
+					&& this.ClassList.ClassItems.SelectedItem.RelationItems.SelectedItem != null)
+				{
+					// 上へ移動
+					this.ClassList.ClassItems.SelectedItem.RelationItems.MoveUP();
+				}
+			}
+			catch (Exception e)
+			{
+				ShowMessage.ShowErrorOK(e.Message, "Error");
+			}
+		}
+		#endregion
+
+		#region リレーションリスト下へ移動
+		/// <summary>
+		/// リレーションリスト下へ移動
+		/// </summary>
+		public void MoveDown_RelationList()
+		{
+			try
+			{
+				// 選択されているかどうかをチェック
+				if (this.ClassList.ClassItems.SelectedItem != null
+					&& this.ClassList.ClassItems.SelectedItem.RelationItems.SelectedItem != null)
+				{
+					// 下へ移動
+					this.ClassList.ClassItems.SelectedItem.RelationItems.MoveDown();
+				}
+			}
+			catch (Exception e)
+			{
+				ShowMessage.ShowErrorOK(e.Message, "Error");
+			}
+		}
+		#endregion
 	}
 }

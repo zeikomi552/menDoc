@@ -87,6 +87,7 @@
                                 <RowDefinition Height="*"/>
                                 <RowDefinition Height="*"/>
                                 <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
                             </Grid.RowDefinitions>
                             <Button Grid.Row="1" Content="↑">
                                 <b:Interaction.Triggers>
@@ -95,7 +96,7 @@
                                     </b:EventTrigger>
                                 </b:Interaction.Triggers>
                             </Button>
-                            <Button Grid.Row="2" Content="↓">
+                            <Button Grid.Row="3" Content="↓">
                                 <b:Interaction.Triggers>
                                     <b:EventTrigger EventName="Click">
                                         <b:CallMethodAction TargetObject="{Binding}" MethodName="MoveDown_ClassList"/>
@@ -106,55 +107,145 @@
                     </Grid>
                 </GroupBox>
                 <GroupBox Header="Parameters" Grid.Row="1">
-                    <DataGrid AutoGenerateColumns="False" ItemsSource="{Binding ClassList.ClassItems.SelectedItem.ParameterItems.Items}">
-                        <b:Interaction.Triggers>
-                            <b:EventTrigger EventName="SelectionChanged">
-                                <b:CallMethodAction TargetObject="{Binding Mode=OneWay, Source={StaticResource vm}}" MethodName="RefleshCode"/>
-                            </b:EventTrigger>
-                        </b:Interaction.Triggers>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="30"/>
+                        </Grid.ColumnDefinitions>
+                        <DataGrid AutoGenerateColumns="False" ItemsSource="{Binding ClassList.ClassItems.SelectedItem.ParameterItems.Items}"
+                                  SelectedItem="{Binding ClassList.ClassItems.SelectedItem.ParameterItems.SelectedItem}">
+                            <b:Interaction.Triggers>
+                                <b:EventTrigger EventName="SelectionChanged">
+                                    <b:CallMethodAction TargetObject="{Binding Mode=OneWay, Source={StaticResource vm}}" MethodName="RefleshCode"/>
+                                </b:EventTrigger>
+                            </b:Interaction.Triggers>
 
-                        <DataGrid.Columns>
-                            <DataGridComboBoxColumn Header="Access"
+                            <DataGrid.Columns>
+                                <DataGridComboBoxColumn Header="Access"
                                                     SelectedItemBinding="{Binding Accessor}" 
                                                     ItemsSource="{Binding Mode=OneWay, Source={StaticResource AlignmentValues}}"/>
-                            <DataGridTextColumn Header="Type" Binding="{Binding TypeName}"/>
-                            <DataGridTextColumn Header="Name" Binding="{Binding ValueName}"/>
-                            <DataGridTextColumn Header="Description" Binding="{Binding Description}"/>
-                        </DataGrid.Columns>
-                    </DataGrid>
+                                <DataGridTextColumn Header="Type" Binding="{Binding TypeName}"/>
+                                <DataGridTextColumn Header="Name" Binding="{Binding ValueName}"/>
+                                <DataGridTextColumn Header="Description" Binding="{Binding Description}"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                        <Grid Grid.Column="1">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <Button Grid.Row="1" Content="↑">
+                                <b:Interaction.Triggers>
+                                    <b:EventTrigger EventName="Click">
+                                        <b:CallMethodAction TargetObject="{Binding}" MethodName="MoveUp_ParamList"/>
+                                    </b:EventTrigger>
+                                </b:Interaction.Triggers>
+                            </Button>
+                            <Button Grid.Row="3" Content="↓">
+                                <b:Interaction.Triggers>
+                                    <b:EventTrigger EventName="Click">
+                                        <b:CallMethodAction TargetObject="{Binding}" MethodName="MoveDown_ParamList"/>
+                                    </b:EventTrigger>
+                                </b:Interaction.Triggers>
+                            </Button>
+                        </Grid>
+                    </Grid>
                 </GroupBox>
                 <GroupBox Grid.Row="2" Header="Method">
-                    <DataGrid AutoGenerateColumns="False" ItemsSource="{Binding ClassList.ClassItems.SelectedItem.MethodItems.Items}">
-                        <b:Interaction.Triggers>
-                            <b:EventTrigger EventName="SelectionChanged">
-                                <b:CallMethodAction TargetObject="{Binding Mode=OneWay, Source={StaticResource vm}}" MethodName="RefleshCode"/>
-                            </b:EventTrigger>
-                        </b:Interaction.Triggers>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="30"/>
+                        </Grid.ColumnDefinitions>
+                        <DataGrid AutoGenerateColumns="False" ItemsSource="{Binding ClassList.ClassItems.SelectedItem.MethodItems.Items}"
+                                  SelectedItem="{Binding ClassList.ClassItems.SelectedItem.MethodItems.SelectedItem}">
+                            <b:Interaction.Triggers>
+                                <b:EventTrigger EventName="SelectionChanged">
+                                    <b:CallMethodAction TargetObject="{Binding Mode=OneWay, Source={StaticResource vm}}" MethodName="RefleshCode"/>
+                                </b:EventTrigger>
+                            </b:Interaction.Triggers>
 
-                        <DataGrid.Columns>
-                            <DataGridComboBoxColumn Header="Access"
+                            <DataGrid.Columns>
+                                <DataGridComboBoxColumn Header="Access"
                                                     SelectedItemBinding="{Binding Accessor}" 
                                                     ItemsSource="{Binding Mode=OneWay, Source={StaticResource AlignmentValues}}"/>
-                            <DataGridTextColumn Header="Type" Binding="{Binding ReturnValue}"/>
-                            <DataGridTextColumn Header="Name" Binding="{Binding MethodName}"/>
-                            <DataGridTextColumn Header="Description" Binding="{Binding Description}"/>
-                        </DataGrid.Columns>
-                    </DataGrid>
+                                <DataGridTextColumn Header="Type" Binding="{Binding ReturnValue}"/>
+                                <DataGridTextColumn Header="Name" Binding="{Binding MethodName}"/>
+                                <DataGridTextColumn Header="Description" Binding="{Binding Description}"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                        <Grid Grid.Column="1">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <Button Grid.Row="1" Content="↑">
+                                <b:Interaction.Triggers>
+                                    <b:EventTrigger EventName="Click">
+                                        <b:CallMethodAction TargetObject="{Binding}" MethodName="MoveUp_MethodList"/>
+                                    </b:EventTrigger>
+                                </b:Interaction.Triggers>
+                            </Button>
+                            <Button Grid.Row="3" Content="↓">
+                                <b:Interaction.Triggers>
+                                    <b:EventTrigger EventName="Click">
+                                        <b:CallMethodAction TargetObject="{Binding}" MethodName="MoveDown_MethodList"/>
+                                    </b:EventTrigger>
+                                </b:Interaction.Triggers>
+                            </Button>
+                        </Grid>
+                    </Grid>
                 </GroupBox>
                 <GroupBox Grid.Row="3" Header="Relation">
-                    <DataGrid  AutoGenerateColumns="False" ItemsSource="{Binding ClassList.ClassItems.SelectedItem.RelationItems.Items}">
-                        <b:Interaction.Triggers>
-                            <b:EventTrigger EventName="SelectionChanged">
-                                <b:CallMethodAction TargetObject="{Binding Mode=OneWay, Source={StaticResource vm}}" MethodName="RefleshCode"/>
-                            </b:EventTrigger>
-                        </b:Interaction.Triggers>
-                        <DataGrid.Columns>
-                            <DataGridTextColumn Header="TargetClass" Binding="{Binding TargetClass}"/>
-                            <DataGridComboBoxColumn Header="Connection" SelectedItemBinding="{Binding Relation}" 
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="30"/>
+                        </Grid.ColumnDefinitions>
+                        <DataGrid  AutoGenerateColumns="False" ItemsSource="{Binding ClassList.ClassItems.SelectedItem.RelationItems.Items}"
+                                   SelectedItem="{Binding  ClassList.ClassItems.SelectedItem.RelationItems.SelectedItem}">
+                            <b:Interaction.Triggers>
+                                <b:EventTrigger EventName="SelectionChanged">
+                                    <b:CallMethodAction TargetObject="{Binding Mode=OneWay, Source={StaticResource vm}}" MethodName="RefleshCode"/>
+                                </b:EventTrigger>
+                            </b:Interaction.Triggers>
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="TargetClass" Binding="{Binding TargetClass}"/>
+                                <DataGridComboBoxColumn Header="Connection" SelectedItemBinding="{Binding Relation}" 
                                                     ItemsSource="{Binding Mode=OneWay, Source={StaticResource RelationValues}}"/>
-                            <DataGridTextColumn Header="Description" Binding="{Binding Description}"/>
-                        </DataGrid.Columns>
-                    </DataGrid>
+                                <DataGridTextColumn Header="Description" Binding="{Binding Description}"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                        <Grid Grid.Column="1">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <Button Grid.Row="1" Content="↑">
+                                <b:Interaction.Triggers>
+                                    <b:EventTrigger EventName="Click">
+                                        <b:CallMethodAction TargetObject="{Binding}" MethodName="MoveUp_RelationList"/>
+                                    </b:EventTrigger>
+                                </b:Interaction.Triggers>
+                            </Button>
+                            <Button Grid.Row="3" Content="↓">
+                                <b:Interaction.Triggers>
+                                    <b:EventTrigger EventName="Click">
+                                        <b:CallMethodAction TargetObject="{Binding}" MethodName="MoveDown_RelationList"/>
+                                    </b:EventTrigger>
+                                </b:Interaction.Triggers>
+                            </Button>
+                        </Grid>
+                    </Grid>
                 </GroupBox>
             </Grid>
         </Grid>
