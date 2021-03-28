@@ -164,16 +164,18 @@ namespace menDoc.Models.ERDiagram
 		public string GetTableMarkdown(TableM table)
 		{
 			StringBuilder code = new StringBuilder();
-
+			code.AppendLine("テーブルの説明：" + table.Description);
+			code.AppendLine();
+			
 			code.AppendLine("|No.|PK|NotNull|型|サイズ|変数名|説明|");
 			code.AppendLine("|---|---|---|---|---|---|---|");
-			int index = 0;
+			int index = 1;
 			foreach (var param in table.ParameterItems)
             {
 				code.AppendLine(string.Format("|{0}|{1}|{2}|{3}|{4}|{5}|{6}|",
 					index++,
-					param.PrimaryKey ? "〇" : "",
-					param.NotNull ? "〇" : "",
+					param.PrimaryKey ? "x" : "",
+					param.NotNull ? "x" : "",
 					param.Type,
 					param.Size,
 					param.Name,
