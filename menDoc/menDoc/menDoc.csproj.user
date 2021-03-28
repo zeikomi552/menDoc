@@ -10,6 +10,9 @@
     <Compile Update="Views\ClassDocV.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Views\ERDocV.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Views\gRpcapiDocV.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -19,6 +22,9 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\ClassDocV.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\ERDocV.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\gRpcapiDocV.xaml">

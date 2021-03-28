@@ -28,7 +28,7 @@ namespace menDoc.Common.Enums
 	/// アクセス修飾子
 	/// </summary>
 	public enum AccessModifier
-    {
+	{
 		/// <summary>
 		/// public +
 		/// </summary>
@@ -46,10 +46,14 @@ namespace menDoc.Common.Enums
 		/// </summary>
 		Package
 	}
-    #endregion
+	#endregion
 
-    public enum ClassRelationType
-    {
+	#region クラスの関係
+	/// <summary>
+	/// クラスの関係
+	/// </summary>
+	public enum ClassRelationType
+	{
 		/// <summary>
 		/// 関連
 		/// </summary>
@@ -95,5 +99,25 @@ namespace menDoc.Common.Enums
 		/// </summary>
 		RealizationR
 	}
+	#endregion
 
+	#region 多重度
+	/// <summary>
+	/// 多重度
+	/// </summary>
+	public enum Multiplicity
+	{
+		ZeroOne,    /* 0..1 */
+		ZeroMulti,  /* 0..* */
+		OneOne,     /* 1..1 */
+		OneMulti,   /* 1..*	*/
+		Multi       /* *..*	*/
+	}
+	#endregion
+
+	public enum TableDirection
+	{
+		Source,
+		Target
+	}
 }

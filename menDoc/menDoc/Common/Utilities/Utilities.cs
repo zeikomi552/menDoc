@@ -310,6 +310,43 @@ namespace menDoc.Common.Utilities
         }
         #endregion
 
+        #region 多重度を記号で表す
+        /// <summary>
+        /// 多重度を記号で表す
+        /// </summary>
+        /// <param name="direction">方向</param>
+        /// <param name="multi">多重度</param>
+        /// <returns>マークダウン記号</returns>
+        public static string ConvertMultiplicity(TableDirection direction, Multiplicity multi)
+        {
+            switch (multi)
+            {
+                case Multiplicity.ZeroOne:
+                    {
+                        if (direction == TableDirection.Source) return "|o";
+                        else return "o|";
+                    }
+                case Multiplicity.ZeroMulti:
+                    {
+                        if (direction == TableDirection.Source) return "}o";
+                        else return "o{";
+                    }
+                case Multiplicity.OneOne:
+                    {
+                        if (direction == TableDirection.Source) return "||";
+                        else return "||";
+                    }
+                case Multiplicity.OneMulti:
+                default:
+                    {
+                        if (direction == TableDirection.Source) return "}|";
+                        else return "|{";
+                    }
+            }
+
+        }
+        #endregion
+
         #region 修飾子を文字列に変換する
         /// <summary>
         /// 修飾子を文字列に変換する

@@ -16,6 +16,9 @@
             <TabItem Header="Class">
                 <Views:ClassDocV/>
             </TabItem>
+            <TabItem Header="ER-Diagram">
+                <Views:ERDocV/>
+            </TabItem>
         </TabControl>
 
     </Grid>
