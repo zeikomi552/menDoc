@@ -318,7 +318,7 @@ namespace menDoc.Models
 				code.AppendLine("|---|---|---|---|---|");
 
 				index = 1;
-				foreach (var request in api.RequestItems)
+				foreach (var request in api.Replytems)
 				{
 					code.AppendLine(string.Format("|{0}|{1}|{2}|{3}|{4}|",
 						index++, request.SingleRepeat.ToString()
