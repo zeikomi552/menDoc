@@ -107,6 +107,55 @@ namespace menDoc.Models.ClassDiagram
 			}
 		}
 		#endregion
+		#region 主キー属性(EntityFramework用)[PrimaryKeyAttribute]プロパティ
+		/// <summary>
+		/// 主キー属性(EntityFramework用)[PrimaryKeyAttribute]プロパティ用変数
+		/// </summary>
+		bool _PrimaryKeyAttribute = false;
+		/// <summary>
+		/// 主キー属性(EntityFramework用)[PrimaryKeyAttribute]プロパティ
+		/// </summary>
+		public bool PrimaryKeyAttribute
+		{
+			get
+			{
+				return _PrimaryKeyAttribute;
+			}
+			set
+			{
+				if (!_PrimaryKeyAttribute.Equals(value))
+				{
+					_PrimaryKeyAttribute = value;
+					NotifyPropertyChanged("PrimaryKeyAttribute");
+				}
+			}
+		}
+		#endregion
+		#region カラム属性(EntityFramework用)[ColumnAttribute]プロパティ
+		/// <summary>
+		/// カラム属性(EntityFramework用)[ColumnAttribute]プロパティ用変数
+		/// </summary>
+		string _ColumnAttribute = string.Empty;
+		/// <summary>
+		/// カラム属性(EntityFramework用)[ColumnAttribute]プロパティ
+		/// </summary>
+		public string ColumnAttribute
+		{
+			get
+			{
+				return _ColumnAttribute;
+			}
+			set
+			{
+				if (!_ColumnAttribute.Equals(value))
+				{
+					_ColumnAttribute = value;
+					NotifyPropertyChanged("ColumnAttribute");
+				}
+			}
+		}
+		#endregion
+
 
 		#region クラス図用のマークダウンを取得する
 		/// <summary>

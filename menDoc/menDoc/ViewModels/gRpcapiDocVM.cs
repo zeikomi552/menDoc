@@ -1,4 +1,5 @@
-﻿using menDoc.Models;
+﻿using menDoc.Common;
+using menDoc.Models;
 using Microsoft.Win32;
 using MVVMCore.BaseClass;
 using MVVMCore.Common.Utilities;
@@ -14,23 +15,19 @@ namespace menDoc.ViewModels
     {
 		#region サービス[Service]プロパティ
 		/// <summary>
-		/// サービス[Service]プロパティ用変数
-		/// </summary>
-		gRPCServiceM _Service = new gRPCServiceM();
-		/// <summary>
 		/// サービス[Service]プロパティ
 		/// </summary>
 		public gRPCServiceM Service
 		{
 			get
 			{
-				return _Service;
+				return GlobalValue.Service;
 			}
 			set
 			{
-				if (_Service == null || !_Service.Equals(value))
+				if (GlobalValue.Service == null || !GlobalValue.Service.Equals(value))
 				{
-					_Service = value;
+					GlobalValue.Service = value;
 					NotifyPropertyChanged("Service");
 				}
 			}

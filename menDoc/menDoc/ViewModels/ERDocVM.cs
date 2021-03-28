@@ -1,4 +1,5 @@
-﻿using menDoc.Models.ERDiagram;
+﻿using menDoc.Common;
+using menDoc.Models.ERDiagram;
 using Microsoft.Win32;
 using MVVMCore.BaseClass;
 using MVVMCore.Common.Utilities;
@@ -14,23 +15,19 @@ namespace menDoc.ViewModels
 	{
 		#region テーブルリスト[TableList]プロパティ
 		/// <summary>
-		/// テーブルリスト[TableList]プロパティ用変数
-		/// </summary>
-		TableListM _TableList = new TableListM();
-		/// <summary>
 		/// テーブルリスト[TableList]プロパティ
 		/// </summary>
 		public TableListM TableList
 		{
 			get
 			{
-				return _TableList;
+				return GlobalValue.TableList;
 			}
 			set
 			{
-				if (_TableList == null || !_TableList.Equals(value))
+				if (GlobalValue.TableList == null || !GlobalValue.TableList.Equals(value))
 				{
-					_TableList = value;
+					GlobalValue.TableList = value;
 					NotifyPropertyChanged("TableList");
 				}
 			}
@@ -55,6 +52,28 @@ namespace menDoc.ViewModels
 
 		}
 		#endregion
+		/// <summary>
+		/// Class図の方へ値を入力する
+		/// </summary>
+		public void SetClass()
+        {
+			try
+			{
+				if (ShowMessage.ShowQuestionYesNo("クラスへ登録します。よろしいですか？", "確認") == System.Windows.MessageBoxResult.Yes)
+				{
+					// nullチェック
+					if (this.TableList.TableItems.SelectedItem != null)
+					{
+						// 選択箇所をクラスに変換してセットする
+						GlobalValue.ClassList.SetTable(this.TableList.TableItems.SelectedItem);
+					}
+				}
+			}
+			catch(Exception e)
+            {
+				ShowMessage.ShowErrorOK(e.Message, "Error");
+			}
+		}
 		#region コードの更新
 		/// <summary>
 		/// コードの更新

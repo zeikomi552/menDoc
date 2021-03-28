@@ -27,6 +27,7 @@
                 <x:Type TypeName="enum:Multiplicity" />
             </ObjectDataProvider.MethodParameters>
         </ObjectDataProvider>
+
     </UserControl.Resources>
     <Grid DataContext="{Binding Mode=OneWay, Source={StaticResource vm}}">
         <Grid.RowDefinitions>
@@ -67,6 +68,24 @@
                 <GroupBox Header="Table">
                     <DataGrid AutoGenerateColumns="False"
                         ItemsSource="{Binding TableList.TableItems.Items}" SelectedItem="{Binding TableList.TableItems.SelectedItem}">
+                        <DataGrid.Resources>
+                            <Style BasedOn="{StaticResource MaterialDesignDataGridCell}" TargetType="DataGridCell">
+                                <Setter Property="ContextMenu">
+                                    <Setter.Value>
+                                        <!--右クリックで表示されるメニュー-->
+                                        <ContextMenu>
+                                            <MenuItem Header="クラスに追加" >
+                                                <b:Interaction.Triggers>
+                                                    <b:EventTrigger EventName="Click">
+                                                        <b:CallMethodAction TargetObject="{Binding Source={StaticResource vm}}" MethodName="SetClass"/>
+                                                    </b:EventTrigger>
+                                                </b:Interaction.Triggers>
+                                            </MenuItem>
+                                        </ContextMenu>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </DataGrid.Resources>
                         <b:Interaction.Triggers>
                             <b:EventTrigger EventName="SelectionChanged">
                                 <b:CallMethodAction TargetObject="{Binding Mode=OneWay, Source={StaticResource vm}}" MethodName="RefleshCode"/>

@@ -1,4 +1,5 @@
 ﻿using menDoc.Common.Utilities;
+using menDoc.Models.ERDiagram;
 using MVVMCore.BaseClass;
 using MVVMCore.Common.Utilities;
 using System;
@@ -18,6 +19,17 @@ namespace menDoc.Models.ClassDiagram
 				yield return item;  // ここでパーツを返す
 			}
 		}
+
+		#region テーブルからクラスを作成してセットする
+		/// <summary>
+		/// テーブルからクラスを作成してセットする
+		/// </summary>
+		/// <param name="table">テーブル情報</param>
+		public void SetTable(TableM table)
+		{
+			this.ClassItems.Items.Add(ClassM.ConvertTableToClass(table));
+		}
+		#endregion
 
 		#region クラスのリスト[ClassItems]プロパティ
 		/// <summary>

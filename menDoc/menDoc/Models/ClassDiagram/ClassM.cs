@@ -1,5 +1,6 @@
 ﻿using menDoc.Common.Enums;
 using menDoc.Common.Utilities;
+using menDoc.Models.ERDiagram;
 using MVVMCore.BaseClass;
 using MVVMCore.Common.Utilities;
 using System;
@@ -108,6 +109,30 @@ namespace menDoc.Models.ClassDiagram
 			}
 		}
 		#endregion
+		#region テーブル属性(EntityFramework用)[TableAttribute]プロパティ
+		/// <summary>
+		/// テーブル属性(EntityFramework用)[TableAttribute]プロパティ用変数
+		/// </summary>
+		string _TableAttribute = string.Empty;
+		/// <summary>
+		/// テーブル属性(EntityFramework用)[TableAttribute]プロパティ
+		/// </summary>
+		public string TableAttribute
+		{
+			get
+			{
+				return _TableAttribute;
+			}
+			set
+			{
+				if (!_TableAttribute.Equals(value))
+				{
+					_TableAttribute = value;
+					NotifyPropertyChanged("TableAttribute");
+				}
+			}
+		}
+		#endregion
 
 		#region 変数リスト[ParameterItems]プロパティ
 		/// <summary>
@@ -182,6 +207,76 @@ namespace menDoc.Models.ClassDiagram
 		}
 		#endregion
 
+		#region テーブル情報からクラスをつくる関数
+		/// <summary>
+		/// テーブル情報からクラスをつくる関数
+		/// </summary>
+		/// <param name="table">テーブル情報</param>
+		/// <returns>クラス情報</returns>
+		public static ClassM ConvertTableToClass(TableM table)
+        {
+			// 宣言
+			ClassM class_item = new ();
+
+			// 作成日を今日でセット
+			class_item.CreateDate = DateTime.Today;
+
+			// 作成者はPCのユーザー名
+			class_item.CreateUser = Environment.UserName;
+
+			// クラス名はテーブル名に_Mをつける
+			class_item.Name = table.Name + "_M";
+
+			// 属性にテーブル名を入れる
+			class_item.TableAttribute = table.Name;
+
+			// 説明はテーブルをコンバートした旨を記載
+			class_item.Description = string.Format("テーブル:{0}に相当するクラス。<br>テーブル説明:{1}", table.Name, table.Description);
+
+			ModelList<ClassParamM> param_list = new ModelList<ClassParamM>();
+			// 変数要素の追加
+			foreach (var col in table.ParameterItems)
+			{
+				// クラスのオブジェクトを作成
+				ClassParamM param = new ClassParamM();
+
+				// 変数名は一致させる
+				param.ValueName = col.Name;
+
+				// CSharpの型に変換する
+				param.TypeName = Utilities.ConvertTypeDBtoCSharp(Utilities.DBtype.MSSQLServer, col.Type);
+
+				// Null許容の場合
+				if (!col.NotNull)
+				{
+					// string型以外は?を付けてnull許容型にする
+					if(!param.TypeName.ToLower().Equals("String".ToLower()))
+                    {
+						// Null許可
+						param.TypeName += "?";
+					}
+
+				}
+				// 主キー属性をセット
+				param.PrimaryKeyAttribute = col.PrimaryKey;
+
+				// カラム属性をセット
+				param.ColumnAttribute = col.Name;
+
+				// カラムの説明をそのまま転用
+				param.Description = col.Description;
+
+				param_list.Items.Add(param);
+			}
+
+			// 作成した変数のリストをセット
+			class_item.ParameterItems = param_list;
+
+			return class_item;
+		}
+		#endregion
+
+		#region マークダウン
 		/// <summary>
 		/// マークダウン
 		/// </summary>
@@ -193,9 +288,9 @@ namespace menDoc.Models.ClassDiagram
 				return GetMarkdownForClass();
 			}
 		}
+		#endregion
 
-		
-			
+
 		#region クラス用のマークダウンの取得
 		/// <summary>
 		/// クラス用のマークダウンの取得
