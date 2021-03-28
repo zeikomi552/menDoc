@@ -145,5 +145,140 @@ namespace menDoc.ViewModels
 			}
 		}
 		#endregion
+
+		#region テーブルリスト上へ移動
+		/// <summary>
+		/// テーブルリスト上へ移動
+		/// </summary>
+		public void MoveUp_ClassList()
+		{
+			try
+			{
+				// nullチェック
+				if (this.TableList.TableItems.SelectedItem != null)
+				{
+					// 上へ移動
+					this.TableList.TableItems.MoveUP();
+				}
+			}
+			catch (Exception e)
+			{
+				ShowMessage.ShowErrorOK(e.Message, "Error");
+			}
+		}
+		#endregion
+
+		#region テーブルリスト下へ移動
+		/// <summary>
+		/// テーブルリスト下へ移動
+		/// </summary>
+		public void MoveDown_ClassList()
+		{
+			try
+			{
+				// nullチェック
+				if (this.TableList.TableItems.SelectedItem != null)
+				{
+					// 下へ移動
+					this.TableList.TableItems.MoveDown();
+				}
+			}
+			catch (Exception e)
+			{
+				ShowMessage.ShowErrorOK(e.Message, "Error");
+			}
+		}
+		#endregion
+
+		#region パラメータリスト上へ移動
+		/// <summary>
+		/// パラメータリスト上へ移動
+		/// </summary>
+		public void MoveUp_ParamList()
+		{
+			try
+			{
+				// 選択されているかどうかをチェック
+				if (this.TableList.TableItems.SelectedItem != null
+					&& this.TableList.TableItems.SelectedItem.ParameterItems.SelectedItem != null)
+				{
+					// 上へ移動
+					this.TableList.TableItems.SelectedItem.ParameterItems.MoveUP();
+				}
+			}
+			catch (Exception e)
+			{
+				ShowMessage.ShowErrorOK(e.Message, "Error");
+			}
+		}
+		#endregion
+
+		#region パラメータリスト下へ移動
+		/// <summary>
+		/// パラメータリスト下へ移動
+		/// </summary>
+		public void MoveDown_ParamList()
+		{
+			try
+			{
+				// 選択されているかどうかをチェック
+				if (this.TableList.TableItems.SelectedItem != null
+					&& this.TableList.TableItems.SelectedItem.ParameterItems.SelectedItem != null)
+				{
+					// 下へ移動
+					this.TableList.TableItems.SelectedItem.ParameterItems.MoveDown();
+				}
+			}
+			catch (Exception e)
+			{
+				ShowMessage.ShowErrorOK(e.Message, "Error");
+			}
+		}
+		#endregion
+		#region 関係リスト上へ移動
+		/// <summary>
+		/// 関係リスト上へ移動
+		/// </summary>
+		public void MoveUp_MethodList()
+		{
+			try
+			{
+				// 選択されているかどうかをチェック
+				if (this.TableList.TableItems.SelectedItem != null
+					&& this.TableList.TableItems.SelectedItem.TableRelationList.SelectedItem != null)
+				{
+					// 上へ移動
+					this.TableList.TableItems.SelectedItem.TableRelationList.MoveUP();
+				}
+			}
+			catch (Exception e)
+			{
+				ShowMessage.ShowErrorOK(e.Message, "Error");
+			}
+		}
+		#endregion
+
+		#region 関数リスト下へ移動
+		/// <summary>
+		/// 関数リスト下へ移動
+		/// </summary>
+		public void MoveDown_MethodList()
+		{
+			try
+			{
+				// 選択されているかどうかをチェック
+				if (this.TableList.TableItems.SelectedItem != null
+					&& this.TableList.TableItems.SelectedItem.TableRelationList.SelectedItem != null)
+				{
+					// 下へ移動
+					this.TableList.TableItems.SelectedItem.TableRelationList.MoveDown();
+				}
+			}
+			catch (Exception e)
+			{
+				ShowMessage.ShowErrorOK(e.Message, "Error");
+			}
+		}
+		#endregion
 	}
 }
