@@ -1,5 +1,6 @@
 ﻿using menDoc.Common;
 using menDoc.Models.ClassDiagram;
+using menDoc.Views;
 using Microsoft.Win32;
 using MVVMCore.BaseClass;
 using MVVMCore.Common.Utilities;
@@ -33,6 +34,7 @@ namespace menDoc.ViewModels
 			}
 		}
 		#endregion
+
 		#region 初期化処理
 		/// <summary>
 		/// 初期化処理
@@ -43,6 +45,7 @@ namespace menDoc.ViewModels
 
 		}
 		#endregion
+
 		#region 画面を閉じる処理
 		/// <summary>
 		/// 画面を閉じる処理
@@ -52,6 +55,7 @@ namespace menDoc.ViewModels
 
 		}
 		#endregion
+
 		#region コードの更新
 		/// <summary>
 		/// コードの更新
@@ -61,6 +65,7 @@ namespace menDoc.ViewModels
 			this.ClassList.RefleshCode();
 		}
 		#endregion
+
 		#region 読み込み処理
 		/// <summary>
 		/// 読み込み処理
@@ -92,6 +97,7 @@ namespace menDoc.ViewModels
 			}
 		}
 		#endregion
+
 		#region 保存処理
 		/// <summary>
 		/// 保存処理
@@ -213,6 +219,7 @@ namespace menDoc.ViewModels
 			}
 		}
 		#endregion
+
 		#region 関数リスト上へ移動
 		/// <summary>
 		/// 関数リスト上へ移動
@@ -258,6 +265,7 @@ namespace menDoc.ViewModels
 			}
 		}
 		#endregion
+
 		#region リレーションリスト上へ移動
 		/// <summary>
 		/// リレーションリスト上へ移動
@@ -302,6 +310,45 @@ namespace menDoc.ViewModels
 				ShowMessage.ShowErrorOK(e.Message, "Error");
 			}
 		}
-		#endregion
+        #endregion
+
+        public void SetRelation()
+        {
+			try
+			{
+				if (this.ClassList.ClassItems.SelectedItem == null)
+				{
+					ShowMessage.ShowNoticeOK("Classが選択されていません。", "通知");
+					return;
+				}
+
+				ClassDoc_SetRelationV wnd = new ClassDoc_SetRelationV();
+				var vm = wnd.BaseGird.DataContext as ClassDoc_SetRelationVM;
+
+				// クラスのリストをビューモデルに渡す
+				vm.ClassList = this.ClassList;
+
+
+				if (wnd.ShowDialog() == true)
+				{
+					// nullチェック
+					if (vm.ClassNames.SelectedItem == null)
+					{
+						ShowMessage.ShowNoticeOK("登録相手のClassが選択されませんでした。", "通知");
+						return;
+					}
+
+					ClassRelationM relation = new ClassRelationM();
+					relation.TargetClass = vm.ClassNames.SelectedItem;
+
+					vm.ClassList.ClassItems.SelectedItem.RelationItems.Items.Add(relation);
+				}
+			}
+			catch (Exception e)
+			{
+				ShowMessage.ShowErrorOK(e.Message, "Error");
+			}
+
+		}
 	}
 }
