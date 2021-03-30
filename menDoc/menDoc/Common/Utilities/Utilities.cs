@@ -466,10 +466,18 @@ namespace menDoc.Common.Utilities
         /// <returns>マークダウン</returns>
         public static string GetClassClassList(ClassListM class_items)
         {
-            StringBuilder code = new StringBuilder();
-            code.AppendLine(GetClassFigMarkdownHeader());
-            code.AppendLine(GetClassFigMarkdownBody(class_items));
-            return code.ToString();
+            if (class_items.ClassItems.Items.Count > 0)
+            {
+                StringBuilder code = new StringBuilder();
+                code.AppendLine(GetClassFigMarkdownHeader());
+                code.AppendLine(GetClassFigMarkdownBody(class_items));
+                return code.ToString();
+            }
+            else
+            {
+                return string.Empty;
+            }
+
         }
         #region マークダウンの説明のヘッダ部
         /// <summary>
@@ -529,28 +537,43 @@ namespace menDoc.Common.Utilities
             code.AppendLine("- 変数情報");
             code.AppendLine();
 
-            code.AppendLine("|No.|型|パラメータ名|修飾子|説明|");
-            code.AppendLine("|---|---|---|---|---|");
-
             int index = 1;
-            foreach (var param in class_item.ParameterItems)
+            if (class_item.ParameterItems.Items.Count > 0)
             {
-                code.AppendLine(string.Format("|{0}|{1}|{2}|{3}|{4}|",
-                    index++, MarkdownEscape(param.TypeName), MarkdownEscape(param.ValueName), ConvertAccessor(param.Accessor), param.Description));
+                code.AppendLine("|No.|型|パラメータ名|修飾子|説明|");
+                code.AppendLine("|---|---|---|---|---|");
+
+                foreach (var param in class_item.ParameterItems)
+                {
+                    code.AppendLine(string.Format("|{0}|{1}|{2}|{3}|{4}|",
+                        index++, MarkdownEscape(param.TypeName), MarkdownEscape(param.ValueName), ConvertAccessor(param.Accessor), param.Description));
+                }
             }
+            else
+            {
+                code.AppendLine("\t- なし");
+            }
+
             code.AppendLine();
 
             code.AppendLine("- 関数情報");
             code.AppendLine();
 
-            code.AppendLine("|No.|戻り値|関数名|修飾子|説明|");
-            code.AppendLine("|---|---|---|---|---|");
-
-            index = 1;
-            foreach (var param in class_item.MethodItems)
+            if(class_item.MethodItems.Items.Count > 0)
             {
-                code.AppendLine(string.Format("|{0}|{1}|{2}|{3}|{4}|",
-                    index++, MarkdownEscape(param.ReturnValue), MarkdownEscape(param.MethodName), ConvertAccessor(param.Accessor), param.Description));
+                code.AppendLine("|No.|戻り値|関数名|修飾子|説明|");
+                code.AppendLine("|---|---|---|---|---|");
+
+                index = 1;
+                foreach (var param in class_item.MethodItems)
+                {
+                    code.AppendLine(string.Format("|{0}|{1}|{2}|{3}|{4}|",
+                        index++, MarkdownEscape(param.ReturnValue), MarkdownEscape(param.MethodName), ConvertAccessor(param.Accessor), param.Description));
+                }
+            }
+            else
+            {
+                code.AppendLine("\t- なし");
             }
 
             return code.ToString();
