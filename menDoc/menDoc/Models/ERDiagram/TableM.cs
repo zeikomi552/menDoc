@@ -1,7 +1,9 @@
-﻿using MVVMCore.BaseClass;
+﻿using menDoc.Common.Utilities;
+using MVVMCore.BaseClass;
 using MVVMCore.Common.Utilities;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -156,5 +158,76 @@ namespace menDoc.Models.ERDiagram
 			}
 		}
 		#endregion
+
+
+		string TempletePath = @".\Common\Templete\CSharpCode\EntityFramework\ClassCode.mdtmpl";
+
+		#region EntityFramework用C#のClass作成コード
+		/// <summary>
+		/// EntityFramework用C#のClass作成コード
+		/// </summary>
+		/// <returns>C#コード</returns>
+		public string CreateClassCode()
+		{
+			// テンプレート用のパスのセット
+			string path = TempletePath;
+			// UTF-8
+			StreamReader sr = new StreamReader(path, Encoding.UTF8);
+
+			// テンプレートファイル読み出し
+			string class_tmpl = sr.ReadToEnd();
+
+			// name部の置換
+			class_tmpl = class_tmpl.Replace("{mendoc:name}", this.Name);
+
+			// description部の置換
+			class_tmpl = class_tmpl.Replace("{mendoc:description}", this.Description);
+
+			// createdate部の置換
+			class_tmpl = class_tmpl.Replace("{mendoc:createdate}", this.CreateDate.ToShortDateString());
+
+			// createuser部の置換
+			class_tmpl = class_tmpl.Replace("{mendoc:createuser}", this.CreateUser);
+
+			string parameters = ParameterCode();
+
+			// 変数のセット
+			class_tmpl = class_tmpl.Replace("{mendoc:parameters}", parameters);
+
+			// コードを戻す
+			return class_tmpl;
+		}
+		#endregion
+
+
+		public string ParameterCode()
+		{
+			// テンプレートファイルの読み出し
+			string path = @".\Common\Templete\CSharpCode\EntityFramework\ParameterCode.mdtmpl";
+
+			StreamReader sr = new StreamReader(path, Encoding.UTF8);
+
+			string templete = sr.ReadToEnd();
+
+			StringBuilder parameters_code = new StringBuilder();
+
+			// カラム分回す
+			foreach (var col in this.ParameterItems)
+			{
+
+				string parameter = templete;
+				parameter = parameter.Replace("{mendoc:column}", col.Name);	// column部の置換
+				parameter = parameter.Replace("{mendoc:name}", col.Name);	// name部の置換
+				parameter = parameter.Replace("{mendoc:description}", col.Description);	// description部の置換
+				parameter = parameter.Replace("{mendoc:type}", Utilities.ConvertTypeDBtoCSharp(Utilities.DBtype.MSSQLServer, col.Type));	// type部の置換
+				parameters_code.AppendLine(parameter);
+
+			}
+
+			return parameters_code.ToString();
+		}
 	}
+
+
+
 }

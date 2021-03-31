@@ -57,6 +57,11 @@
                         <TextBox Margin="5" Text="{Binding TableList.Markdown, Mode=OneWay}"/>
                     </GroupBox>
                 </TabItem>
+                <TabItem Header="EntityFramework">
+                    <GroupBox Header="C#">
+                        <TextBox Margin="5" Text="{Binding TableList.EntityCode, Mode=OneWay}"/>
+                    </GroupBox>
+                </TabItem>
             </TabControl>
             <Grid Margin="3" Grid.Column="1">
                 <Grid.RowDefinitions>

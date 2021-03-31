@@ -1,0 +1,22 @@
+﻿/// <summary>
+/// {mendoc:description}
+/// {mendoc:name}テーブルをベースに作成しています
+/// 作成日：{mendoc:createdate} 作成者{mendoc:createuser}
+/// </summary>
+public class {mendoc:name}M : INotifyPropertyChanged 
+{
+
+{mendoc:parameters}
+
+	#region INotifyPropertyChanged 
+	public event PropertyChangedEventHandler PropertyChanged; 
+	 
+	private void NotifyPropertyChanged(String info) 
+	{ 
+		if (PropertyChanged != null) 
+		{ 
+			PropertyChanged(this, new PropertyChangedEventArgs(info)); 
+		} 
+	} 
+	#endregion 
+} 

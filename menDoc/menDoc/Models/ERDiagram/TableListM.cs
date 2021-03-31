@@ -3,13 +3,14 @@ using MVVMCore.BaseClass;
 using MVVMCore.Common.Utilities;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace menDoc.Models.ERDiagram
 {
-    public class TableListM : ModelBase
+	public class TableListM : ModelBase
 	{
 		#region テーブルリスト[TableItems]プロパティ
 		/// <summary>
@@ -49,6 +50,14 @@ namespace menDoc.Models.ERDiagram
 		}
 		#endregion
 
+		public string EntityCode
+		{
+			get
+			{
+				return EntityFrameworkCode();
+			}
+		}
+
 		#region マークダウンの作成処理
 		/// <summary>
 		/// マークダウンの作成処理
@@ -78,6 +87,39 @@ namespace menDoc.Models.ERDiagram
 		}
 		#endregion
 
+		#region コードの更新
+		/// <summary>
+		/// コードの更新
+		/// </summary>
+		public void RefleshCode()
+		{
+			NotifyPropertyChanged("Markdown");
+			NotifyPropertyChanged("EntityCode");
+		}
+		#endregion
+
+		#region EntityFramework(CSharp)用コード
+
+
+
+
+
+		public string EntityFrameworkCode()
+        {
+            if (this.TableItems.SelectedItem != null)
+            {
+                return this.TableItems.SelectedItem.CreateClassCode();
+
+            }
+            else
+			{
+				return string.Empty;
+			}
+		}
+
+		#endregion
+
+		#region マークダウン用コード
 		#region ER図用マークダウン
 		/// <summary>
 		/// ER図用マークダウン
@@ -127,16 +169,6 @@ namespace menDoc.Models.ERDiagram
 		}
         #endregion
 
-        #region コードの更新
-        /// <summary>
-        /// コードの更新
-        /// </summary>
-        public void RefleshCode()
-		{
-			NotifyPropertyChanged("Markdown");
-		}
-		#endregion
-
 		#region テーブル一覧用マークダウンの作成
 		public string CreateTableListMarkdown()
 		{
@@ -185,6 +217,7 @@ namespace menDoc.Models.ERDiagram
 
 			return code.ToString();
 		}
+		#endregion
 		#endregion
 
 		#region 列挙 foreach用

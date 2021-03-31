@@ -1,0 +1,25 @@
+﻿	#region {mendoc:description}[{mendoc:name}]プロパティ
+	/// <summary>
+	/// {mendoc:description}[{mendoc:name}]プロパティ用変数
+	/// </summary>
+	{mendoc:type} _{mendoc:name} = string.Empty;
+	/// <summary>
+	/// {mendoc:description}[{mendoc:name}]プロパティ
+	/// </summary>
+	[Column("{mendoc:column}")]
+	public {mendoc:type} {mendoc:name}
+	{
+		get
+		{
+			return _{mendoc:name};
+		}
+		set
+		{
+			if (_{mendoc:name} == null || !_{mendoc:name}.Equals(value))
+			{
+				_{mendoc:name} = value;
+				NotifyPropertyChanged("{mendoc:name}");
+			}
+		}
+	}
+	#endregion

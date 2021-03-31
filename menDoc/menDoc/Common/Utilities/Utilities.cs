@@ -331,6 +331,7 @@ namespace menDoc.Common.Utilities
                         if (db_param_type.ToLower().Equals("VarBinary".ToLower())) return "Byte[]";
                         if (db_param_type.ToLower().Equals("String".ToLower())) return "VarChar";
                         if (db_param_type.ToLower().Equals("Xml".ToLower())) return "Xml";
+                        if (db_param_type.ToLower().Equals("Bit".ToLower())) return "bool";
                         return db_param_type;
                     }
                 default:

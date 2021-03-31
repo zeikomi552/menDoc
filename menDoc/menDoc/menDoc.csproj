@@ -16,4 +16,13 @@
     <ProjectReference Include="..\..\MVVMCore\MVVMCore\MVVMCore.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="Common\Templete\CSharpCode\EntityFramework\ClassCode.mdtmpl">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Common\Templete\CSharpCode\EntityFramework\ParameterCode.mdtmpl">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>
