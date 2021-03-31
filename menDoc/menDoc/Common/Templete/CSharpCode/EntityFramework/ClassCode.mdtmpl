@@ -4,7 +4,7 @@
 /// 作成日：{mendoc:createdate} 作成者{mendoc:createuser}
 /// </summary>
 [Table("{mendoc:name}")]
-public class {mendoc:name}M : INotifyPropertyChanged 
+public class {mendoc:name}_M : INotifyPropertyChanged 
 {
 
 {mendoc:parameters}

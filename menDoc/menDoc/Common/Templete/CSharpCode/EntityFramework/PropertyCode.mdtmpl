@@ -6,7 +6,7 @@
 	/// <summary>
 	/// {mendoc:description}[{mendoc:name}]プロパティ
 	/// </summary>
-	[Column("{mendoc:column}")]
+	{mendoc:primarykey}[Column("{mendoc:column}")]
 	public {mendoc:type} {mendoc:name}
 	{
 		get

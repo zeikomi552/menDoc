@@ -20,7 +20,7 @@
     <None Update="Common\Templete\CSharpCode\EntityFramework\ClassCode.mdtmpl">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Common\Templete\CSharpCode\EntityFramework\ParameterCode.mdtmpl">
+    <None Update="Common\Templete\CSharpCode\EntityFramework\PropertyCode.mdtmpl">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>

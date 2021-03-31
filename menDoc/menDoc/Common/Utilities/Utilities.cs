@@ -10,10 +10,17 @@ namespace menDoc.Common.Utilities
 {
     public class Utilities
     {
+        #region Markdownのエスケープ文字
+        /// <summary>
+        /// Markdownのエスケープ文字
+        /// </summary>
+        /// <param name="text"></param>
+        /// <returns></returns>
         public static string MarkdownEscape(string text)
         {
             return text.Replace("<", @"\<");
         }
+        #endregion
 
         #region Markdown クラス図
         #region クラス図の関係をマークダウンに変換する
@@ -262,12 +269,18 @@ namespace menDoc.Common.Utilities
         #endregion
         #endregion
 
+        #region データベースタイプ
+        /// <summary>
+        /// データベースタイプ
+        /// </summary>
         public enum DBtype
         {
             MSSQLServer,
             SQLite
         }
+        #endregion
 
+        #region データベース上の型がmatch_typeに等しい場合(大文字小文字の違いは無視)はreplace_typeに置き換える
         /// <summary>
         /// データベース上の型がmatch_typeに等しい場合(大文字小文字の違いは無視)は
         /// replace_typeに置き換える
@@ -287,7 +300,9 @@ namespace menDoc.Common.Utilities
                 return false;
             }
         }
+        #endregion
 
+        #region DBの型をC#の型に変換する
         /// <summary>
         /// DBの型をC#の型に変換する
         /// </summary>
@@ -380,7 +395,16 @@ namespace menDoc.Common.Utilities
             }
 
         }
+        #endregion
 
+        #region C#用変数の初期化処理を自動生成する
+        /// <summary>
+        /// C#用変数の初期化処理を自動生成する
+        /// </summary>
+        /// <param name="db_type">データベースタイプ</param>
+        /// <param name="notnull">NotNull制約</param>
+        /// <param name="db_param_type">データベースの型</param>
+        /// <returns>C#のコード</returns>
         public static string CSharpTypeInitCode(DBtype db_type, bool notnull, string db_param_type)
         {
             switch (db_type)
@@ -467,6 +491,7 @@ namespace menDoc.Common.Utilities
                     }
             }
         }
+        #endregion
 
         #region 関係を日本語文字列に変換する
         /// <summary>
