@@ -2,7 +2,7 @@
 	/// <summary>
 	/// {mendoc:description}[{mendoc:name}]プロパティ用変数
 	/// </summary>
-	{mendoc:type} _{mendoc:name} = string.Empty;
+	{mendoc:type} _{mendoc:name} = {mendoc:initparam};
 	/// <summary>
 	/// {mendoc:description}[{mendoc:name}]プロパティ
 	/// </summary>

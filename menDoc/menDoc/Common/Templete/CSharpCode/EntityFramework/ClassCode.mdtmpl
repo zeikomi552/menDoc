@@ -3,6 +3,7 @@
 /// {mendoc:name}テーブルをベースに作成しています
 /// 作成日：{mendoc:createdate} 作成者{mendoc:createuser}
 /// </summary>
+[Table("{mendoc:name}")]
 public class {mendoc:name}M : INotifyPropertyChanged 
 {
 

@@ -244,19 +244,8 @@ namespace menDoc.Models.ClassDiagram
 				param.ValueName = col.Name;
 
 				// CSharpの型に変換する
-				param.TypeName = Utilities.ConvertTypeDBtoCSharp(Utilities.DBtype.MSSQLServer, col.Type);
+				param.TypeName = Utilities.ConvertTypeDBtoCSharp(Utilities.DBtype.MSSQLServer, col.NotNull, col.Type);
 
-				// Null許容の場合
-				if (!col.NotNull)
-				{
-					// string型以外は?を付けてnull許容型にする
-					if(!param.TypeName.ToLower().Equals("String".ToLower()))
-                    {
-						// Null許可
-						param.TypeName += "?";
-					}
-
-				}
 				// 主キー属性をセット
 				param.PrimaryKeyAttribute = col.PrimaryKey;
 

@@ -294,45 +294,84 @@ namespace menDoc.Common.Utilities
         /// <param name="db_type">データベースのタイプ/param>
         /// <param name="db_param_type">データベース側の型</param>
         /// <returns>C#での型</returns>
-        public static string ConvertTypeDBtoCSharp(DBtype db_type, string db_param_type)
+        public static string ConvertTypeDBtoCSharp(DBtype db_type, bool notnull, string db_param_type)
         {
             switch (db_type)
             {
                 case DBtype.MSSQLServer:
                     {
-                        if (db_param_type.ToLower().Equals("BigInt".ToLower())) return "Int64";
-                        if (db_param_type.ToLower().Equals("VarBinary".ToLower())) return "Byte[]";
-                        if (db_param_type.ToLower().Equals("Char".ToLower())) return "String";
-                        if (db_param_type.ToLower().Equals("Date".ToLower())) return "DateTime";
-                        if (db_param_type.ToLower().Equals("DateTime".ToLower())) return "DateTime";
-                        if (db_param_type.ToLower().Equals("DateTime2".ToLower())) return "DateTime";
-                        if (db_param_type.ToLower().Equals("DateTimeOffset".ToLower())) return "DateTimeOffset";
-                        if (db_param_type.ToLower().Equals("Decimal".ToLower())) return "Decimal";
-                        if (db_param_type.ToLower().Equals("VarBinary".ToLower())) return "Byte[]";
-                        if (db_param_type.ToLower().Equals("Float".ToLower())) return "Double";
-                        if (db_param_type.ToLower().Equals("Binary".ToLower())) return "Byte[]";
-                        if (db_param_type.ToLower().Equals("Int".ToLower())) return "Int32";
-                        if (db_param_type.ToLower().Equals("Money".ToLower())) return "Decimal";
-                        if (db_param_type.ToLower().Equals("NChar".ToLower())) return "String";
-                        if (db_param_type.ToLower().Equals("NText".ToLower())) return "String";
-                        if (db_param_type.ToLower().Equals("Decimal".ToLower())) return "Decimal";
-                        if (db_param_type.ToLower().Equals("NVarChar".ToLower())) return "String";
-                        if (db_param_type.ToLower().Equals("Real".ToLower())) return "Single";
-                        if (db_param_type.ToLower().Equals("Timestamp".ToLower())) return "Byte[]";
-                        if (db_param_type.ToLower().Equals("DateTime".ToLower())) return "DateTime";
-                        if (db_param_type.ToLower().Equals("SmallInt".ToLower())) return "Int16";
-                        if (db_param_type.ToLower().Equals("SmallMoney".ToLower())) return "Decimal";
-                        if (db_param_type.ToLower().Equals("Variant".ToLower())) return "Object";
-                        if (db_param_type.ToLower().Equals("Text".ToLower())) return "String";
-                        if (db_param_type.ToLower().Equals("Time".ToLower())) return "TimeSpan";
-                        if (db_param_type.ToLower().Equals("Timestamp".ToLower())) return "Byte[]";
-                        if (db_param_type.ToLower().Equals("TinyInt".ToLower())) return "Byte";
-                        if (db_param_type.ToLower().Equals("UniqueIdentifier".ToLower())) return "GUID";
-                        if (db_param_type.ToLower().Equals("VarBinary".ToLower())) return "Byte[]";
-                        if (db_param_type.ToLower().Equals("String".ToLower())) return "VarChar";
-                        if (db_param_type.ToLower().Equals("Xml".ToLower())) return "Xml";
-                        if (db_param_type.ToLower().Equals("Bit".ToLower())) return "bool";
-                        return db_param_type;
+                        if (notnull)
+                        {
+                            if (db_param_type.ToLower().Equals("BigInt".ToLower())) return "Int64";
+                            if (db_param_type.ToLower().Equals("VarBinary".ToLower())) return "Byte[]";
+                            if (db_param_type.ToLower().Equals("Char".ToLower())) return "String";
+                            if (db_param_type.ToLower().Equals("Date".ToLower())) return "DateTime";
+                            if (db_param_type.ToLower().Equals("DateTime".ToLower())) return "DateTime";
+                            if (db_param_type.ToLower().Equals("DateTime2".ToLower())) return "DateTime";
+                            if (db_param_type.ToLower().Equals("DateTimeOffset".ToLower())) return "DateTimeOffset";
+                            if (db_param_type.ToLower().Equals("Decimal".ToLower())) return "Decimal";
+                            if (db_param_type.ToLower().Equals("VarBinary".ToLower())) return "Byte[]";
+                            if (db_param_type.ToLower().Equals("Float".ToLower())) return "Double";
+                            if (db_param_type.ToLower().Equals("Binary".ToLower())) return "Byte[]";
+                            if (db_param_type.ToLower().Equals("Int".ToLower())) return "Int32";
+                            if (db_param_type.ToLower().Equals("Money".ToLower())) return "Decimal";
+                            if (db_param_type.ToLower().Equals("NChar".ToLower())) return "String";
+                            if (db_param_type.ToLower().Equals("NText".ToLower())) return "String";
+                            if (db_param_type.ToLower().Equals("Decimal".ToLower())) return "Decimal";
+                            if (db_param_type.ToLower().Equals("NVarChar".ToLower())) return "String";
+                            if (db_param_type.ToLower().Equals("Real".ToLower())) return "Single";
+                            if (db_param_type.ToLower().Equals("Timestamp".ToLower())) return "Byte[]";
+                            if (db_param_type.ToLower().Equals("DateTime".ToLower())) return "DateTime";
+                            if (db_param_type.ToLower().Equals("SmallInt".ToLower())) return "Int16";
+                            if (db_param_type.ToLower().Equals("SmallMoney".ToLower())) return "Decimal";
+                            if (db_param_type.ToLower().Equals("Variant".ToLower())) return "Object";
+                            if (db_param_type.ToLower().Equals("Text".ToLower())) return "String";
+                            if (db_param_type.ToLower().Equals("Time".ToLower())) return "TimeSpan";
+                            if (db_param_type.ToLower().Equals("Timestamp".ToLower())) return "Byte[]";
+                            if (db_param_type.ToLower().Equals("TinyInt".ToLower())) return "Byte";
+                            if (db_param_type.ToLower().Equals("UniqueIdentifier".ToLower())) return "Guid";
+                            if (db_param_type.ToLower().Equals("VarBinary".ToLower())) return "Byte[]";
+                            if (db_param_type.ToLower().Equals("String".ToLower())) return "VarChar";
+                            if (db_param_type.ToLower().Equals("Xml".ToLower())) return "Xml";
+                            if (db_param_type.ToLower().Equals("Bit".ToLower())) return "bool";
+                            return db_param_type;
+                        }
+                        else
+                        {
+                            if (db_param_type.ToLower().Equals("BigInt".ToLower())) return "Int64?";
+                            if (db_param_type.ToLower().Equals("VarBinary".ToLower())) return "Byte[]";
+                            if (db_param_type.ToLower().Equals("Char".ToLower())) return "String";
+                            if (db_param_type.ToLower().Equals("Date".ToLower())) return "DateTime?";
+                            if (db_param_type.ToLower().Equals("DateTime".ToLower())) return "DateTime?";
+                            if (db_param_type.ToLower().Equals("DateTime2".ToLower())) return "DateTime?";
+                            if (db_param_type.ToLower().Equals("DateTimeOffset".ToLower())) return "DateTimeOffset";
+                            if (db_param_type.ToLower().Equals("Decimal".ToLower())) return "Decimal?";
+                            if (db_param_type.ToLower().Equals("VarBinary".ToLower())) return "Byte[]";
+                            if (db_param_type.ToLower().Equals("Float".ToLower())) return "Double?";
+                            if (db_param_type.ToLower().Equals("Binary".ToLower())) return "Byte[]";
+                            if (db_param_type.ToLower().Equals("Int".ToLower())) return "Int32?";
+                            if (db_param_type.ToLower().Equals("Money".ToLower())) return "Decimal?";
+                            if (db_param_type.ToLower().Equals("NChar".ToLower())) return "String";
+                            if (db_param_type.ToLower().Equals("NText".ToLower())) return "String";
+                            if (db_param_type.ToLower().Equals("Decimal".ToLower())) return "Decimal?";
+                            if (db_param_type.ToLower().Equals("NVarChar".ToLower())) return "String";
+                            if (db_param_type.ToLower().Equals("Real".ToLower())) return "Single?";
+                            if (db_param_type.ToLower().Equals("Timestamp".ToLower())) return "Byte[]";
+                            if (db_param_type.ToLower().Equals("DateTime".ToLower())) return "DateTime?";
+                            if (db_param_type.ToLower().Equals("SmallInt".ToLower())) return "Int16?";
+                            if (db_param_type.ToLower().Equals("SmallMoney".ToLower())) return "Decimal?";
+                            if (db_param_type.ToLower().Equals("Variant".ToLower())) return "Object";
+                            if (db_param_type.ToLower().Equals("Text".ToLower())) return "String";
+                            if (db_param_type.ToLower().Equals("Time".ToLower())) return "TimeSpan?";
+                            if (db_param_type.ToLower().Equals("Timestamp".ToLower())) return "Byte[]";
+                            if (db_param_type.ToLower().Equals("TinyInt".ToLower())) return "Byte?";
+                            if (db_param_type.ToLower().Equals("UniqueIdentifier".ToLower())) return "Guid?";
+                            if (db_param_type.ToLower().Equals("VarBinary".ToLower())) return "Byte[]";
+                            if (db_param_type.ToLower().Equals("String".ToLower())) return "String";
+                            //if (db_param_type.ToLower().Equals("Xml".ToLower())) return "Xml";
+                            if (db_param_type.ToLower().Equals("Bit".ToLower())) return "bool?";
+                            return db_param_type;
+                        }
                     }
                 default:
                     {
@@ -340,6 +379,93 @@ namespace menDoc.Common.Utilities
                     }
             }
 
+        }
+
+        public static string CSharpTypeInitCode(DBtype db_type, bool notnull, string db_param_type)
+        {
+            switch (db_type)
+            {
+                case DBtype.MSSQLServer:
+                    {
+                        if(notnull)
+                        {
+                            if (db_param_type.ToLower().Equals("BigInt".ToLower())) return "0";
+                            if (db_param_type.ToLower().Equals("VarBinary".ToLower())) return "new Byte[]";
+                            if (db_param_type.ToLower().Equals("Char".ToLower())) return "string.Empty";
+                            if (db_param_type.ToLower().Equals("Date".ToLower())) return "DateTime.MinValue";
+                            if (db_param_type.ToLower().Equals("DateTime".ToLower())) return "DateTime.MinValue";
+                            if (db_param_type.ToLower().Equals("DateTime2".ToLower())) return "DateTime.MinValue";
+                            if (db_param_type.ToLower().Equals("DateTimeOffset".ToLower())) return "DateTimeOffset.MinValue";
+                            if (db_param_type.ToLower().Equals("Decimal".ToLower())) return "0";
+                            if (db_param_type.ToLower().Equals("VarBinary".ToLower())) return "null";
+                            if (db_param_type.ToLower().Equals("Float".ToLower())) return "Double";
+                            if (db_param_type.ToLower().Equals("Binary".ToLower())) return "Byte[]";
+                            if (db_param_type.ToLower().Equals("Int".ToLower())) return "0";
+                            if (db_param_type.ToLower().Equals("Money".ToLower())) return "0";
+                            if (db_param_type.ToLower().Equals("NChar".ToLower())) return "string.Empty";
+                            if (db_param_type.ToLower().Equals("NText".ToLower())) return "string.Empty";
+                            if (db_param_type.ToLower().Equals("Decimal".ToLower())) return "0";
+                            if (db_param_type.ToLower().Equals("NVarChar".ToLower())) return "string.Empty";
+                            if (db_param_type.ToLower().Equals("Real".ToLower())) return "0";
+                            if (db_param_type.ToLower().Equals("Timestamp".ToLower())) return "null";
+                            if (db_param_type.ToLower().Equals("DateTime".ToLower())) return "DateTime.MinValue";
+                            if (db_param_type.ToLower().Equals("SmallInt".ToLower())) return "0";
+                            if (db_param_type.ToLower().Equals("SmallMoney".ToLower())) return "0";
+                            if (db_param_type.ToLower().Equals("Variant".ToLower())) return "new Object()";
+                            if (db_param_type.ToLower().Equals("Text".ToLower())) return "string.Empty";
+                            if (db_param_type.ToLower().Equals("Time".ToLower())) return "TimeSpan()";
+                            if (db_param_type.ToLower().Equals("Timestamp".ToLower())) return "null";
+                            if (db_param_type.ToLower().Equals("TinyInt".ToLower())) return "new byte()";
+                            if (db_param_type.ToLower().Equals("UniqueIdentifier".ToLower())) return "new Guid()";
+                            if (db_param_type.ToLower().Equals("VarBinary".ToLower())) return "null";
+                            if (db_param_type.ToLower().Equals("String".ToLower())) return "string.Empty";
+                            //if (db_param_type.ToLower().Equals("Xml".ToLower())) return "Xml";
+                            if (db_param_type.ToLower().Equals("Bit".ToLower())) return "false";
+                            return db_param_type;
+                        }
+                        else
+                        {
+                            if (db_param_type.ToLower().Equals("BigInt".ToLower())) return "0";
+                            if (db_param_type.ToLower().Equals("VarBinary".ToLower())) return "new Byte[]";
+                            if (db_param_type.ToLower().Equals("Char".ToLower())) return "string.Empty";
+                            if (db_param_type.ToLower().Equals("Date".ToLower())) return "null";
+                            if (db_param_type.ToLower().Equals("DateTime".ToLower())) return "null";
+                            if (db_param_type.ToLower().Equals("DateTime2".ToLower())) return "null";
+                            if (db_param_type.ToLower().Equals("DateTimeOffset".ToLower())) return "DateTimeOffset.MinValue";
+                            if (db_param_type.ToLower().Equals("Decimal".ToLower())) return "0";
+                            if (db_param_type.ToLower().Equals("VarBinary".ToLower())) return "null";
+                            if (db_param_type.ToLower().Equals("Float".ToLower())) return "Double";
+                            if (db_param_type.ToLower().Equals("Binary".ToLower())) return "Byte[]";
+                            if (db_param_type.ToLower().Equals("Int".ToLower())) return "0";
+                            if (db_param_type.ToLower().Equals("Money".ToLower())) return "0";
+                            if (db_param_type.ToLower().Equals("NChar".ToLower())) return "string.Empty";
+                            if (db_param_type.ToLower().Equals("NText".ToLower())) return "string.Empty";
+                            if (db_param_type.ToLower().Equals("Decimal".ToLower())) return "0";
+                            if (db_param_type.ToLower().Equals("NVarChar".ToLower())) return "string.Empty";
+                            if (db_param_type.ToLower().Equals("Real".ToLower())) return "0";
+                            if (db_param_type.ToLower().Equals("Timestamp".ToLower())) return "null";
+                            if (db_param_type.ToLower().Equals("DateTime".ToLower())) return "null";
+                            if (db_param_type.ToLower().Equals("SmallInt".ToLower())) return "0";
+                            if (db_param_type.ToLower().Equals("SmallMoney".ToLower())) return "0";
+                            if (db_param_type.ToLower().Equals("Variant".ToLower())) return "new Object()";
+                            if (db_param_type.ToLower().Equals("Text".ToLower())) return "string.Empty";
+                            if (db_param_type.ToLower().Equals("Time".ToLower())) return "TimeSpan()";
+                            if (db_param_type.ToLower().Equals("Timestamp".ToLower())) return "null";
+                            if (db_param_type.ToLower().Equals("TinyInt".ToLower())) return "new byte()";
+                            if (db_param_type.ToLower().Equals("UniqueIdentifier".ToLower())) return "new Guid()";
+                            if (db_param_type.ToLower().Equals("VarBinary".ToLower())) return "null";
+                            if (db_param_type.ToLower().Equals("String".ToLower())) return "string.Empty";
+                            //if (db_param_type.ToLower().Equals("Xml".ToLower())) return "Xml";
+                            if (db_param_type.ToLower().Equals("Bit".ToLower())) return "false";
+                            return db_param_type;
+                        }
+                        
+                    }
+                default:
+                    {
+                        return "string";
+                    }
+            }
         }
 
         #region 関係を日本語文字列に変換する

@@ -199,7 +199,11 @@ namespace menDoc.Models.ERDiagram
 		}
 		#endregion
 
-
+		#region 変数用コードの作成処理
+		/// <summary>
+		/// 変数用コードの作成処理
+		/// </summary>
+		/// <returns>変数用のコード</returns>
 		public string ParameterCode()
 		{
 			// テンプレートファイルの読み出し
@@ -218,14 +222,19 @@ namespace menDoc.Models.ERDiagram
 				string parameter = templete;
 				parameter = parameter.Replace("{mendoc:column}", col.Name);	// column部の置換
 				parameter = parameter.Replace("{mendoc:name}", col.Name);	// name部の置換
-				parameter = parameter.Replace("{mendoc:description}", col.Description);	// description部の置換
-				parameter = parameter.Replace("{mendoc:type}", Utilities.ConvertTypeDBtoCSharp(Utilities.DBtype.MSSQLServer, col.Type));	// type部の置換
+				parameter = parameter.Replace("{mendoc:description}", col.Description); // description部の置換
+				parameter = parameter.Replace("{mendoc:type}", Utilities.ConvertTypeDBtoCSharp(Utilities.DBtype.MSSQLServer, col.NotNull, col.Type));    // type部の置換
+
+
+				parameter = parameter.Replace("{mendoc:initparam}", Utilities.CSharpTypeInitCode(Utilities.DBtype.MSSQLServer, col.NotNull, col.Type));    // type部の置換
+
 				parameters_code.AppendLine(parameter);
 
 			}
 
 			return parameters_code.ToString();
 		}
+		#endregion
 	}
 
 
