@@ -20,6 +20,12 @@
     <None Update="Common\Templete\CSharpCode\EntityFramework\ClassCode.mdtmpl">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="Common\Templete\CSharpCode\EntityFramework\InterfaceClassCode.mdtmpl">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Common\Templete\CSharpCode\EntityFramework\InterfacePropertyCode.mdtmpl">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="Common\Templete\CSharpCode\EntityFramework\PropertyCode.mdtmpl">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

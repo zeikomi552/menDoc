@@ -68,7 +68,7 @@ namespace menDoc.Models.ERDiagram
 		{
 			get
             {
-				return string.Empty;
+				return InterfaceClassCode();
 
             }
 		}
@@ -111,6 +111,7 @@ namespace menDoc.Models.ERDiagram
 		{
 			NotifyPropertyChanged("Markdown");
 			NotifyPropertyChanged("EntityCode");
+			NotifyPropertyChanged("InterfaceCode");
 		}
 		#endregion
 
@@ -127,6 +128,25 @@ namespace menDoc.Models.ERDiagram
 
             }
             else
+			{
+				return string.Empty;
+			}
+		}
+		#endregion
+
+		#region インターフェースクラス用コード
+		/// <summary>
+		/// インターフェースクラス用コード
+		/// </summary>
+		/// <returns></returns>
+		public string InterfaceClassCode()
+		{
+			if (this.TableItems.SelectedItem != null)
+			{
+				return this.TableItems.SelectedItem.CreateInterfaceClassCode();
+
+			}
+			else
 			{
 				return string.Empty;
 			}

@@ -1,4 +1,9 @@
-﻿interface I{mendoc:name}
+﻿/// <summary>
+/// {mendoc:description}
+/// {mendoc:name}テーブルをベースに作成したインターフェースクラス
+/// 作成日：{mendoc:createdate} 作成者{mendoc:createuser}
+/// </summary>
+interface I{mendoc:name}
 {
-{mendoc:iparameters}
+{mendoc:parameters}
 }

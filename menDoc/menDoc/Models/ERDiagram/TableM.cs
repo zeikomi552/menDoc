@@ -161,6 +161,12 @@ namespace menDoc.Models.ERDiagram
 
 
 		string TempletePath = @".\Common\Templete\CSharpCode\EntityFramework\ClassCode.mdtmpl";
+		#region プロパティ用テンプレートコード
+		/// <summary>
+		/// プロパティ用テンプレートコード
+		/// </summary>
+		string PropertyCode = @".\Common\Templete\CSharpCode\EntityFramework\PropertyCode.mdtmpl";
+		#endregion
 
 		#region EntityFramework用C#のClass作成コード
 		/// <summary>
@@ -169,46 +175,19 @@ namespace menDoc.Models.ERDiagram
 		/// <returns>C#コード</returns>
 		public string CreateClassCode()
 		{
-			// テンプレート用のパスのセット
-			string path = TempletePath;
-			// UTF-8
-			StreamReader sr = new StreamReader(path, Encoding.UTF8);
-
-			// テンプレートファイル読み出し
-			string class_tmpl = sr.ReadToEnd();
-
-			// name部の置換
-			class_tmpl = class_tmpl.Replace("{mendoc:name}", this.Name);
-
-			// description部の置換
-			class_tmpl = class_tmpl.Replace("{mendoc:description}", this.Description);
-
-			// createdate部の置換
-			class_tmpl = class_tmpl.Replace("{mendoc:createdate}", this.CreateDate.ToShortDateString());
-
-			// createuser部の置換
-			class_tmpl = class_tmpl.Replace("{mendoc:createuser}", this.CreateUser);
-
-			string parameters = ParameterCode();
-
-			// 変数のセット
-			class_tmpl = class_tmpl.Replace("{mendoc:parameters}", parameters);
-
-			// コードを戻す
-			return class_tmpl;
+			// EntityFramework用コードを渡す
+			return CreateCode(TempletePath, PropertyCode);
 		}
 		#endregion
+
 
 		#region 変数用コードの作成処理
 		/// <summary>
 		/// 変数用コードの作成処理
 		/// </summary>
 		/// <returns>変数用のコード</returns>
-		public string ParameterCode()
+		public string ParameterCode(string path)
 		{
-			// テンプレートファイルの読み出し
-			string path = @".\Common\Templete\CSharpCode\EntityFramework\PropertyCode.mdtmpl";
-
 			StreamReader sr = new StreamReader(path, Encoding.UTF8);
 
 			string templete = sr.ReadToEnd();
@@ -234,6 +213,57 @@ namespace menDoc.Models.ERDiagram
 			}
 
 			return parameters_code.ToString();
+		}
+		#endregion
+
+		string InterfaceClassTempletePath = @".\Common\Templete\CSharpCode\EntityFramework\InterfaceClassCode.mdtmpl";
+		string InterfacePropertyTempletePath = @".\Common\Templete\CSharpCode\EntityFramework\InterfacePropertyCode.mdtmpl";
+
+		#region インターフェース用クラスコードの作成
+		/// <summary>
+		/// インターフェース用クラスコードの作成
+		/// </summary>
+		/// <returns></returns>
+		public string CreateInterfaceClassCode()
+        {
+			// インターフェース用クラスコードのパスを渡す
+			return CreateCode(InterfaceClassTempletePath, InterfacePropertyTempletePath);
+		}
+		#endregion
+
+		#region テンプレートを使用したコードの作成
+		/// <summary>
+		/// テンプレートを使用したコードの作成
+		/// </summary>
+		/// <param name="path"></param>
+		/// <returns></returns>
+		private string CreateCode(string class_path, string property_path)
+		{
+			// UTF-8
+			StreamReader sr = new StreamReader(class_path, Encoding.UTF8);
+
+			// テンプレートファイル読み出し
+			string class_tmpl = sr.ReadToEnd();
+
+			// name部の置換
+			class_tmpl = class_tmpl.Replace("{mendoc:name}", this.Name);
+
+			// description部の置換
+			class_tmpl = class_tmpl.Replace("{mendoc:description}", this.Description);
+
+			// createdate部の置換
+			class_tmpl = class_tmpl.Replace("{mendoc:createdate}", this.CreateDate.ToShortDateString());
+
+			// createuser部の置換
+			class_tmpl = class_tmpl.Replace("{mendoc:createuser}", this.CreateUser);
+
+			string parameters = ParameterCode(property_path);
+
+			// 変数のセット
+			class_tmpl = class_tmpl.Replace("{mendoc:parameters}", parameters);
+
+			// コードを戻す
+			return class_tmpl;
 		}
 		#endregion
 	}
