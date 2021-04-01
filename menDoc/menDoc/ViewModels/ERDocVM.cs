@@ -52,6 +52,7 @@ namespace menDoc.ViewModels
 
 		}
 		#endregion
+		#region Class図の方へ値を入力する
 		/// <summary>
 		/// Class図の方へ値を入力する
 		/// </summary>
@@ -74,6 +75,33 @@ namespace menDoc.ViewModels
 				ShowMessage.ShowErrorOK(e.Message, "Error");
 			}
 		}
+		#endregion
+
+		#region gRPCへセットする
+		/// <summary>
+		/// gRPCへセットする
+		/// </summary>
+		public void SetgRPC()
+		{
+			try
+			{
+				if (ShowMessage.ShowQuestionYesNo("gRPCへ登録します。よろしいですか？", "確認") == System.Windows.MessageBoxResult.Yes)
+				{
+					// nullチェック
+					if (this.TableList.TableItems.SelectedItem != null)
+					{
+						// 選択箇所をクラスに変換してセットする
+						GlobalValue.Service.SetTable(this.TableList.TableItems.SelectedItem);
+					}
+				}
+			}
+			catch (Exception e)
+			{
+				ShowMessage.ShowErrorOK(e.Message, "Error");
+			}
+		}
+		#endregion
+
 		#region コードの更新
 		/// <summary>
 		/// コードの更新

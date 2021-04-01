@@ -101,7 +101,14 @@
                                                     </b:EventTrigger>
                                                 </b:Interaction.Triggers>
                                             </MenuItem>
-                                        </ContextMenu>
+                                                <MenuItem Header="gRPCに追加" >
+                                                    <b:Interaction.Triggers>
+                                                        <b:EventTrigger EventName="Click">
+                                                            <b:CallMethodAction TargetObject="{Binding Source={StaticResource vm}}" MethodName="SetgRPC"/>
+                                                        </b:EventTrigger>
+                                                    </b:Interaction.Triggers>
+                                                </MenuItem>
+                                            </ContextMenu>
                                     </Setter.Value>
                                 </Setter>
                             </Style>

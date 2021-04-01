@@ -1,4 +1,6 @@
 ﻿using menDoc.Common.Enums;
+using menDoc.Common.Utilities;
+using menDoc.Models.ERDiagram;
 using MVVMCore.BaseClass;
 using MVVMCore.Common.Utilities;
 using System;
@@ -11,6 +13,18 @@ namespace menDoc.Models
 {
 	public class gRPCServiceM : ModelBase
 	{
+		#region プロジェクトタイプ enum
+		/// <summary>
+		/// プロジェクトタイプ enum
+		/// </summary>
+		public enum ProjType
+		{
+			Server = 0,
+			Client,
+			Both
+		}
+		#endregion
+
 		#region .protoファイルのコード[ProtoCode]プロパティ
 		/// <summary>
 		/// .protoファイルのコード[ProtoCode]プロパティ
@@ -111,6 +125,7 @@ namespace menDoc.Models
 			NotifyPropertyChanged("CsClient");
 		}
 		#endregion
+
 		#region マークダウン[Markdown]プロパティ
 		/// <summary>
 		/// マークダウン[Markdown]プロパティ
@@ -124,6 +139,7 @@ namespace menDoc.Models
 			}
 		}
 		#endregion
+
 		#region サービス名[ServiceName]プロパティ
 		/// <summary>
 		/// サービス名[ServiceName]プロパティ用変数
@@ -149,6 +165,7 @@ namespace menDoc.Models
 			}
 		}
 		#endregion
+
 		#region サービスの説明[ServiceDescriotion]プロパティ
 		/// <summary>
 		/// サービスの説明[ServiceDescriotion]プロパティ用変数
@@ -174,6 +191,7 @@ namespace menDoc.Models
 			}
 		}
 		#endregion
+
 		#region APIリスト[APIs]プロパティ
 		/// <summary>
 		/// APIリスト[APIs]プロパティ用変数
@@ -199,6 +217,7 @@ namespace menDoc.Models
 			}
 		}
 		#endregion
+
 		#region .protoファイル用Codeの作成
 		/// <summary>
 		/// .protoファイル用Codeの作成
@@ -333,15 +352,6 @@ namespace menDoc.Models
 		}
 		#endregion
 
-		/// <summary>
-		/// プロジェクトタイプ
-		/// </summary>
-		public enum ProjType
-        {
-			Server=0,
-			Client,
-			Both
-        }
 		#region プロジェクトファイルのサンプル
 		/// <summary>
 		/// プロジェクトファイルのサンプル
@@ -413,6 +423,37 @@ namespace menDoc.Models
 			code.AppendLine("}");
 			return code.ToString();
 
+		}
+		#endregion
+
+		#region テーブル情報からセットする
+		/// <summary>
+		/// テーブル情報からセットする
+		/// </summary>
+		/// <param name="table"></param>
+		public void SetTable(TableM table)
+		{
+			gRPCAPIM api = new gRPCAPIM();
+			api.Name = table.Name;
+			api.Description = table.Description;
+
+			foreach (var col in table.ParameterItems)
+			{
+				gRrpcParamM param = new gRrpcParamM();
+				// 型のセット
+				param.TypeName = Utilities.ConvertTypeDBtoProtop(col.Type);
+				// 変数名のセット
+				param.ValueName = col.Name;
+				// 説明のセット
+				param.Description = col.Description;
+				// 繰り返しなしでセット
+				param.SingleRepeat = SingleRepeatEnum.Single;
+				// パラメータのセット
+				api.RequestItems.Items.Add(param);
+				api.Replytems.Items.Add(param);
+			}
+			// APIリストにセット
+			this.APIs.Items.Add(api);
 		}
 		#endregion
 	}
