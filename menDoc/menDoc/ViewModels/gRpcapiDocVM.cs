@@ -108,6 +108,137 @@ namespace menDoc.ViewModels
 		}
 		#endregion
 
+		#region APIを下へ移動
+		/// <summary>
+		/// APIを下へ移動
+		/// </summary>
+		public void MoveDown_gAPI()
+		{
+			try
+			{
+				// nullチェック
+				if (this.Service.APIs.SelectedItem != null)
+				{
+					// 上へ移動
+					this.Service.APIs.MoveDown();
+				}
+			}
+			catch (Exception e)
+			{
+				ShowMessage.ShowErrorOK(e.Message, "Error");
+			}
+		}
+		#endregion
+
+		#region APIを上へ移動
+		/// <summary>
+		/// APIを上へ移動
+		/// </summary>
+		public void MoveUp_gAPI()
+		{
+			try
+			{
+				// nullチェック
+				if (this.Service.APIs.SelectedItem != null)
+				{
+					// 上へ移動
+					this.Service.APIs.MoveUP();
+				}
+			}
+			catch (Exception e)
+			{
+				ShowMessage.ShowErrorOK(e.Message, "Error");
+			}
+		}
+		#endregion
+
+		#region Requestを下へ移動
+		/// <summary>
+		/// Requestを下へ移動
+		/// </summary>
+		public void MoveDown_RequestItesm()
+		{
+			try
+			{
+				// nullチェック
+				if (this.Service.APIs.SelectedItem != null && this.Service.APIs.SelectedItem.RequestItems.SelectedItem != null)
+				{
+					// 上へ移動
+					this.Service.APIs.SelectedItem.RequestItems.MoveDown();
+				}
+			}
+			catch (Exception e)
+			{
+				ShowMessage.ShowErrorOK(e.Message, "Error");
+			}
+		}
+		#endregion
+
+		#region Requestを上へ移動
+		/// <summary>
+		/// Requestを上へ移動
+		/// </summary>
+		public void MoveUp_RequestItems()
+		{
+			try
+			{
+				// nullチェック
+				if (this.Service.APIs.SelectedItem != null && this.Service.APIs.SelectedItem.RequestItems.SelectedItem != null)
+				{
+					// 上へ移動
+					this.Service.APIs.SelectedItem.RequestItems.MoveUP();
+				}
+			}
+			catch (Exception e)
+			{
+				ShowMessage.ShowErrorOK(e.Message, "Error");
+			}
+		}
+		#endregion
+
+		#region Replyを下へ移動
+		/// <summary>
+		/// Replyを下へ移動
+		/// </summary>
+		public void MoveDown_ReplyItesm()
+		{
+			try
+			{
+				// nullチェック
+				if (this.Service.APIs.SelectedItem != null && this.Service.APIs.SelectedItem.Replytems.SelectedItem != null)
+				{
+					// 上へ移動
+					this.Service.APIs.SelectedItem.Replytems.MoveDown();
+				}
+			}
+			catch (Exception e)
+			{
+				ShowMessage.ShowErrorOK(e.Message, "Error");
+			}
+		}
+		#endregion
+
+		#region Requestを上へ移動
+		/// <summary>
+		/// Requestを上へ移動
+		/// </summary>
+		public void MoveUp_ReplyItems()
+		{
+			try
+			{
+				// nullチェック
+				if (this.Service.APIs.SelectedItem != null && this.Service.APIs.SelectedItem.RequestItems.SelectedItem != null)
+				{
+					// 上へ移動
+					this.Service.APIs.SelectedItem.Replytems.MoveUP();
+				}
+			}
+			catch (Exception e)
+			{
+				ShowMessage.ShowErrorOK(e.Message, "Error");
+			}
+		}
+		#endregion
 		#region 初期化処理
 		/// <summary>
 		/// 初期化処理
