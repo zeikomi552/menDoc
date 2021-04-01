@@ -194,6 +194,7 @@ namespace menDoc.Models.ERDiagram
 
 			StringBuilder parameters_code = new StringBuilder();
 
+			int index = 1;
 			// カラム分回す
 			foreach (var col in this.ParameterItems)
 			{
@@ -204,6 +205,7 @@ namespace menDoc.Models.ERDiagram
 				parameter = parameter.Replace("{mendoc:name}", col.Name);	// name部の置換
 				parameter = parameter.Replace("{mendoc:description}", col.Description); // description部の置換
 				parameter = parameter.Replace("{mendoc:type}", Utilities.ConvertTypeDBtoCSharp(Utilities.DBtype.MSSQLServer, col.NotNull, col.Type));    // type部の置換
+				parameter = parameter.Replace("{mendoc:no}", (index++).ToString());    // no部の置換
 
 
 				parameter = parameter.Replace("{mendoc:initparam}", Utilities.CSharpTypeInitCode(Utilities.DBtype.MSSQLServer, col.NotNull, col.Type));    // type部の置換
@@ -231,6 +233,94 @@ namespace menDoc.Models.ERDiagram
 		}
 		#endregion
 
+		string ProtoClassTempletePath = @".\Common\Templete\CSharpCode\EntityFramework\ProtoMessageClassCode.mdtmpl";
+		string ProtoPropertyTempletePath = @".\Common\Templete\CSharpCode\EntityFramework\ProtoMessagePropertyCode.mdtmpl";
+
+		#region .proto用クラスコードの作成
+		/// <summary>
+		/// .proto用クラスコードの作成
+		/// </summary>
+		/// <returns>.proto用クラスコード</returns>
+		public string CreateProtoMessageCode()
+		{
+			// インターフェース用クラスコードのパスを渡す
+			return CreateProtoCode(ProtoClassTempletePath, ProtoPropertyTempletePath);
+		}
+		#endregion
+
+
+		#region テンプレートを使用したコードの作成
+		/// <summary>
+		/// テンプレートを使用したコードの作成
+		/// </summary>
+		/// <param name="path"></param>
+		/// <returns></returns>
+		private string CreateProtoCode(string class_path, string property_path)
+		{
+			// UTF-8
+			StreamReader sr = new StreamReader(class_path, Encoding.UTF8);
+
+			// テンプレートファイル読み出し
+			string class_tmpl = sr.ReadToEnd();
+
+			// name部の置換
+			class_tmpl = class_tmpl.Replace("{mendoc:name}", this.Name);
+
+			// description部の置換
+			class_tmpl = class_tmpl.Replace("{mendoc:description}", this.Description);
+
+			// createdate部の置換
+			class_tmpl = class_tmpl.Replace("{mendoc:createdate}", this.CreateDate.ToShortDateString());
+
+			// createuser部の置換
+			class_tmpl = class_tmpl.Replace("{mendoc:createuser}", this.CreateUser);
+
+			string parameters = ProtoParameterCode(property_path);
+
+			// 変数のセット
+			class_tmpl = class_tmpl.Replace("{mendoc:parameters}", parameters);
+
+			// コードを戻す
+			return class_tmpl;
+		}
+		#endregion
+
+		#region 変数用コードの作成処理
+		/// <summary>
+		/// 変数用コードの作成処理
+		/// </summary>
+		/// <returns>変数用のコード</returns>
+		public string ProtoParameterCode(string path)
+		{
+			StreamReader sr = new StreamReader(path, Encoding.UTF8);
+
+			string templete = sr.ReadToEnd();
+
+			StringBuilder parameters_code = new StringBuilder();
+
+			int index = 1;
+			// カラム分回す
+			foreach (var col in this.ParameterItems)
+			{
+
+				string parameter = templete;
+				parameter = parameter.Replace("{mendoc:primarykey}", col.PrimaryKey ? "[Key]" : "");    // primarykey部の置換
+				parameter = parameter.Replace("{mendoc:column}", col.Name); // column部の置換
+				parameter = parameter.Replace("{mendoc:name}", col.Name);   // name部の置換
+				parameter = parameter.Replace("{mendoc:description}", col.Description); // description部の置換
+				parameter = parameter.Replace("{mendoc:type}", Utilities.ConvertTypeDBtoProtop(col.Type));    // type部の置換
+				parameter = parameter.Replace("{mendoc:no}", (index++).ToString());    // no部の置換
+
+
+				parameter = parameter.Replace("{mendoc:initparam}", Utilities.CSharpTypeInitCode(Utilities.DBtype.MSSQLServer, col.NotNull, col.Type));    // type部の置換
+
+				parameters_code.AppendLine(parameter);
+
+			}
+
+			return parameters_code.ToString();
+		}
+		#endregion
 		#region テンプレートを使用したコードの作成
 		/// <summary>
 		/// テンプレートを使用したコードの作成

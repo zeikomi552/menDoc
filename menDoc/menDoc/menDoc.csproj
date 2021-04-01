@@ -29,6 +29,12 @@
     <None Update="Common\Templete\CSharpCode\EntityFramework\PropertyCode.mdtmpl">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="Common\Templete\CSharpCode\EntityFramework\ProtoMessageClassCode.mdtmpl">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Common\Templete\CSharpCode\EntityFramework\ProtoMessagePropertyCode.mdtmpl">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>

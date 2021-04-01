@@ -103,6 +103,15 @@ namespace menDoc.Models.ERDiagram
 		}
 		#endregion
 
+		public string ProtoCode
+		{
+			get
+			{
+				return ProtoCodeMessageCode();
+			}
+		}
+		
+
 		#region コードの更新
 		/// <summary>
 		/// コードの更新
@@ -112,6 +121,7 @@ namespace menDoc.Models.ERDiagram
 			NotifyPropertyChanged("Markdown");
 			NotifyPropertyChanged("EntityCode");
 			NotifyPropertyChanged("InterfaceCode");
+			NotifyPropertyChanged("ProtoCode");
 		}
 		#endregion
 
@@ -144,6 +154,25 @@ namespace menDoc.Models.ERDiagram
 			if (this.TableItems.SelectedItem != null)
 			{
 				return this.TableItems.SelectedItem.CreateInterfaceClassCode();
+
+			}
+			else
+			{
+				return string.Empty;
+			}
+		}
+		#endregion
+
+		#region .protoファイル用コード
+		/// <summary>
+		/// .protoファイル用コード
+		/// </summary>
+		/// <returns>.protoファイル用コード</returns>
+		public string ProtoCodeMessageCode()
+		{
+			if (this.TableItems.SelectedItem != null)
+			{
+				return this.TableItems.SelectedItem.CreateProtoMessageCode();
 
 			}
 			else

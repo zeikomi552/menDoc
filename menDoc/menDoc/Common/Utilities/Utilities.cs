@@ -301,6 +301,51 @@ namespace menDoc.Common.Utilities
             }
         }
         #endregion
+        #region DBの型を.protoの型に変換する
+        /// <summary>
+        /// DBの型を.protoの型に変換する
+        /// </summary>
+        /// <param name="db_type">データベースのタイプ/param>
+        /// <param name="db_param_type">データベース側の型</param>
+        /// <returns>.protoでの型</returns>
+        public static string ConvertTypeDBtoProtop(string db_param_type)
+        {
+            if (db_param_type.ToLower().Equals("BigInt".ToLower())) return "int64";
+            if (db_param_type.ToLower().Equals("VarBinary".ToLower())) return "string";
+            if (db_param_type.ToLower().Equals("Char".ToLower())) return "string";
+            if (db_param_type.ToLower().Equals("Date".ToLower())) return "string";
+            if (db_param_type.ToLower().Equals("DateTime".ToLower())) return "string";
+            if (db_param_type.ToLower().Equals("DateTime2".ToLower())) return "string";
+            if (db_param_type.ToLower().Equals("DateTimeOffset".ToLower())) return "string";
+            if (db_param_type.ToLower().Equals("Decimal".ToLower())) return "string";
+            if (db_param_type.ToLower().Equals("VarBinary".ToLower())) return "string";
+            if (db_param_type.ToLower().Equals("Float".ToLower())) return "double";
+            if (db_param_type.ToLower().Equals("Binary".ToLower())) return "string";
+            if (db_param_type.ToLower().Equals("Int".ToLower())) return "int32";
+            if (db_param_type.ToLower().Equals("Money".ToLower())) return "decimal";
+            if (db_param_type.ToLower().Equals("NChar".ToLower())) return "string";
+            if (db_param_type.ToLower().Equals("NText".ToLower())) return "string";
+            if (db_param_type.ToLower().Equals("Decimal".ToLower())) return "decimal";
+            if (db_param_type.ToLower().Equals("NVarChar".ToLower())) return "string";
+            if (db_param_type.ToLower().Equals("Real".ToLower())) return "string";
+            if (db_param_type.ToLower().Equals("Timestamp".ToLower())) return "string";
+            if (db_param_type.ToLower().Equals("DateTime".ToLower())) return "string";
+            if (db_param_type.ToLower().Equals("SmallInt".ToLower())) return "int32";
+            if (db_param_type.ToLower().Equals("SmallMoney".ToLower())) return "string";
+            if (db_param_type.ToLower().Equals("Variant".ToLower())) return "string";
+            if (db_param_type.ToLower().Equals("Text".ToLower())) return "string";
+            if (db_param_type.ToLower().Equals("Time".ToLower())) return "string";
+            if (db_param_type.ToLower().Equals("Timestamp".ToLower())) return "string";
+            if (db_param_type.ToLower().Equals("TinyInt".ToLower())) return "string";
+            if (db_param_type.ToLower().Equals("UniqueIdentifier".ToLower())) return "string";
+            if (db_param_type.ToLower().Equals("VarBinary".ToLower())) return "string";
+            if (db_param_type.ToLower().Equals("String".ToLower())) return "string";
+            if (db_param_type.ToLower().Equals("Xml".ToLower())) return "string";
+            if (db_param_type.ToLower().Equals("Bit".ToLower())) return "bool";
+            return db_param_type;
+
+        }
+        #endregion
 
         #region DBの型をC#の型に変換する
         /// <summary>
