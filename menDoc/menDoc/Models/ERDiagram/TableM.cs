@@ -12,6 +12,12 @@ namespace menDoc.Models.ERDiagram
 {
     public class TableM : ModelBase
 	{
+		string TempletePath = @".\Common\Templete\CSharpCode\EntityFramework\ClassCode.mdtmpl";
+		string InterfaceClassTempletePath = @".\Common\Templete\CSharpCode\EntityFramework\InterfaceClassCode.mdtmpl";
+		string InterfacePropertyTempletePath = @".\Common\Templete\CSharpCode\EntityFramework\InterfacePropertyCode.mdtmpl";
+		string ProtoClassTempletePath = @".\Common\Templete\CSharpCode\EntityFramework\ProtoMessageClassCode.mdtmpl";
+		string ProtoPropertyTempletePath = @".\Common\Templete\CSharpCode\EntityFramework\ProtoMessagePropertyCode.mdtmpl";
+
 		#region テーブル名[Name]プロパティ
 		/// <summary>
 		/// テーブル名[Name]プロパティ用変数
@@ -108,7 +114,6 @@ namespace menDoc.Models.ERDiagram
 			}
 		}
 		#endregion
-
 		#region 変数一覧[ParameterItems]プロパティ
 		/// <summary>
 		/// 変数一覧[ParameterItems]プロパティ用変数
@@ -133,7 +138,6 @@ namespace menDoc.Models.ERDiagram
 			}
 		}
 		#endregion
-
 		#region テーブルの関係リスト[TableRelationList]プロパティ
 		/// <summary>
 		/// テーブルの関係リスト[TableRelationList]プロパティ用変数
@@ -158,16 +162,12 @@ namespace menDoc.Models.ERDiagram
 			}
 		}
 		#endregion
-
-
-		string TempletePath = @".\Common\Templete\CSharpCode\EntityFramework\ClassCode.mdtmpl";
 		#region プロパティ用テンプレートコード
 		/// <summary>
 		/// プロパティ用テンプレートコード
 		/// </summary>
 		string PropertyCode = @".\Common\Templete\CSharpCode\EntityFramework\PropertyCode.mdtmpl";
 		#endregion
-
 		#region EntityFramework用C#のClass作成コード
 		/// <summary>
 		/// EntityFramework用C#のClass作成コード
@@ -179,8 +179,6 @@ namespace menDoc.Models.ERDiagram
 			return CreateCode(TempletePath, PropertyCode);
 		}
 		#endregion
-
-
 		#region 変数用コードの作成処理
 		/// <summary>
 		/// 変数用コードの作成処理
@@ -217,10 +215,6 @@ namespace menDoc.Models.ERDiagram
 			return parameters_code.ToString();
 		}
 		#endregion
-
-		string InterfaceClassTempletePath = @".\Common\Templete\CSharpCode\EntityFramework\InterfaceClassCode.mdtmpl";
-		string InterfacePropertyTempletePath = @".\Common\Templete\CSharpCode\EntityFramework\InterfacePropertyCode.mdtmpl";
-
 		#region インターフェース用クラスコードの作成
 		/// <summary>
 		/// インターフェース用クラスコードの作成
@@ -232,10 +226,6 @@ namespace menDoc.Models.ERDiagram
 			return CreateCode(InterfaceClassTempletePath, InterfacePropertyTempletePath);
 		}
 		#endregion
-
-		string ProtoClassTempletePath = @".\Common\Templete\CSharpCode\EntityFramework\ProtoMessageClassCode.mdtmpl";
-		string ProtoPropertyTempletePath = @".\Common\Templete\CSharpCode\EntityFramework\ProtoMessagePropertyCode.mdtmpl";
-
 		#region .proto用クラスコードの作成
 		/// <summary>
 		/// .proto用クラスコードの作成
@@ -247,8 +237,6 @@ namespace menDoc.Models.ERDiagram
 			return CreateProtoCode(ProtoClassTempletePath, ProtoPropertyTempletePath);
 		}
 		#endregion
-
-
 		#region テンプレートを使用したコードの作成
 		/// <summary>
 		/// テンプレートを使用したコードの作成
@@ -284,7 +272,6 @@ namespace menDoc.Models.ERDiagram
 			return class_tmpl;
 		}
 		#endregion
-
 		#region 変数用コードの作成処理
 		/// <summary>
 		/// 変数用コードの作成処理
@@ -357,7 +344,4 @@ namespace menDoc.Models.ERDiagram
 		}
 		#endregion
 	}
-
-
-
 }
