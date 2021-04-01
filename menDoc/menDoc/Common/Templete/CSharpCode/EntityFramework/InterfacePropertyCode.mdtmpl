@@ -1,0 +1,6 @@
+﻿	#region {mendoc:description}[{mendoc:name}]プロパティ
+	/// <summary>
+	/// {mendoc:description}[{mendoc:name}]インターフェースクラス
+	/// </summary>
+	{mendoc:type} {mendoc:name}{ get; set; }
+	#endregion

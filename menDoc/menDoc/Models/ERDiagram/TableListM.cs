@@ -50,6 +50,10 @@ namespace menDoc.Models.ERDiagram
 		}
 		#endregion
 
+		#region EntityFramework用コード
+		/// <summary>
+		/// EntityFramework用コード
+		/// </summary>
 		public string EntityCode
 		{
 			get
@@ -57,6 +61,18 @@ namespace menDoc.Models.ERDiagram
 				return EntityFrameworkCode();
 			}
 		}
+		#endregion
+
+		#region Interfaceクラス用コード
+		public string InterfaceCode
+		{
+			get
+            {
+				return string.Empty;
+
+            }
+		}
+		#endregion
 
 		#region マークダウンの作成処理
 		/// <summary>
@@ -99,11 +115,10 @@ namespace menDoc.Models.ERDiagram
 		#endregion
 
 		#region EntityFramework(CSharp)用コード
-
-
-
-
-
+		/// <summary>
+		/// EntityFramework(CSharp)用コード
+		/// </summary>
+		/// <returns></returns>
 		public string EntityFrameworkCode()
         {
             if (this.TableItems.SelectedItem != null)
@@ -116,7 +131,6 @@ namespace menDoc.Models.ERDiagram
 				return string.Empty;
 			}
 		}
-
 		#endregion
 
 		#region マークダウン用コード
