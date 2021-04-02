@@ -10,8 +10,8 @@ using System.Threading.Tasks;
 
 namespace menDoc.Models.ClassDiagram
 {
-    public class ClassListM : ModelBase
-    {
+	public class ClassListM : ModelBase
+	{
 		public IEnumerator<ClassM> GetEnumerator()
 		{
 			foreach (var item in this.ClassItems)
@@ -61,12 +61,12 @@ namespace menDoc.Models.ClassDiagram
 		/// マークダウン
 		/// </summary>
 		public string Markdown
-        {
-            get
-            {
+		{
+			get
+			{
 				return CreateMarkdown();
 			}
-        }
+		}
 		#endregion
 
 		#region マークダウンの作成

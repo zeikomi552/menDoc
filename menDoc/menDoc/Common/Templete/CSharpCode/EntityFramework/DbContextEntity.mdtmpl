@@ -1,0 +1,1 @@
+﻿        modelBuilder.Entity<{mendoc:name}Base>().HasKey(c => new { {mendoc:parameters} });

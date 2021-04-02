@@ -1,0 +1,1 @@
+﻿    public DbSet<{mendoc:name}Base> DbSet_{mendoc:name}_M { get; internal set; }

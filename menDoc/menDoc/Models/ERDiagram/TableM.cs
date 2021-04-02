@@ -162,11 +162,12 @@ namespace menDoc.Models.ERDiagram
 			}
 		}
 		#endregion
-		#region プロパティ用テンプレートコード
-		/// <summary>
-		/// プロパティ用テンプレートコード
-		/// </summary>
-		string PropertyCode = @".\Common\Templete\CSharpCode\EntityFramework\PropertyCode.mdtmpl";
+
+        #region プロパティ用テンプレートコード
+        /// <summary>
+        /// プロパティ用テンプレートコード
+        /// </summary>
+        string PropertyCode = @".\Common\Templete\CSharpCode\EntityFramework\PropertyCode.mdtmpl";
 		#endregion
 		#region EntityFramework用C#のClass作成コード
 		/// <summary>

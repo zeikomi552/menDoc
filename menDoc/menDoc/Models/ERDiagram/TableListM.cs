@@ -74,6 +74,19 @@ namespace menDoc.Models.ERDiagram
 		}
 		#endregion
 
+		#region DbContext用コード
+		/// <summary>
+		/// DbContext用コード
+		/// </summary>
+		public string DbContext
+        {
+			get
+			{
+				return DbContextCode();
+			}
+        }
+		#endregion
+
 		#region マークダウンの作成処理
 		/// <summary>
 		/// マークダウンの作成処理
@@ -103,6 +116,10 @@ namespace menDoc.Models.ERDiagram
 		}
 		#endregion
 
+		#region .proto用コード
+		/// <summary>
+		/// .proto用コード
+		/// </summary>
 		public string ProtoCode
 		{
 			get
@@ -110,7 +127,8 @@ namespace menDoc.Models.ERDiagram
 				return ProtoCodeMessageCode();
 			}
 		}
-		
+		#endregion
+
 
 		#region コードの更新
 		/// <summary>
@@ -122,6 +140,115 @@ namespace menDoc.Models.ERDiagram
 			NotifyPropertyChanged("EntityCode");
 			NotifyPropertyChanged("InterfaceCode");
 			NotifyPropertyChanged("ProtoCode");
+			NotifyPropertyChanged("DbContext");
+		}
+		#endregion
+
+		string DbContextTempletePath = @".\Common\Templete\CSharpCode\EntityFramework\DbContext.mdtmpl";
+		string DbContextDbSetTempletePath = @".\Common\Templete\CSharpCode\EntityFramework\DbContextDbSet.mdtmpl";
+		string DbContextDbEntityTempletePath = @".\Common\Templete\CSharpCode\EntityFramework\DbContextEntity.mdtmpl";
+		string DbContextEntityPrimaryKeyTempletePath = @".\Common\Templete\CSharpCode\EntityFramework\DbContextEntityPrimaryKey.mdtmpl";
+
+		#region DbContext用C#コードの作成関数
+		/// <summary>
+		/// DbContext用C#コードの作成関数
+		/// </summary>
+		/// <returns>DbContext用C#コードの作成関数</returns>
+		public string DbContextCode()
+		{
+			// UTF-8
+			StreamReader sr = new StreamReader(DbContextTempletePath, Encoding.UTF8);
+
+			// テンプレートファイル読み出し
+			string dbcontext = sr.ReadToEnd();
+
+			string dbset_code = CreateDbSetCode();
+			dbcontext = dbcontext.Replace("{mendoc:dbsets}", dbset_code);
+
+			string entity_code = CreateEntityCode();
+			string entity =
+			dbcontext = dbcontext.Replace("{mendoc:entities}", entity_code);
+
+			return dbcontext;
+
+		}
+		#endregion
+
+		#region DbSet用C#コード
+		/// <summary>
+		/// DbSet用C#コードの作成関数
+		/// </summary>
+		/// <returns>DbSet用C#コード</returns>
+		private string CreateDbSetCode()
+		{
+			StreamReader sr = new StreamReader(DbContextDbSetTempletePath, Encoding.UTF8);
+			string templete = sr.ReadToEnd();
+
+			StringBuilder parameters_code = new StringBuilder();
+
+			// テーブル数分回す
+			foreach (var table in this.TableItems)
+			{
+				string parameter = templete;
+				parameter = parameter.Replace("{mendoc:name}", table.Name);    // テーブル名部の置換
+				parameters_code.AppendLine(parameter);
+			}
+
+			return parameters_code.ToString();
+		}
+		#endregion
+
+		#region DbContext用 Entity部のコードを作成する
+		/// <summary>
+		/// DbContext用 Entity部のコードを作成する
+		/// </summary>
+		/// <returns>DbContext用 Entity部のコード</returns>
+		private string CreateEntityCode()
+		{
+			// DbSet部用テンプレートファイルの読み込み
+			StreamReader sr = new StreamReader(DbContextDbEntityTempletePath, Encoding.UTF8);
+			string templete = sr.ReadToEnd();
+
+			// Entity部用のテンプレートファイルの読み込み
+			StreamReader pk_sr = new StreamReader(DbContextEntityPrimaryKeyTempletePath, Encoding.UTF8);
+			string pk_templete = pk_sr.ReadToEnd();
+
+			// コード保持用
+			StringBuilder parameters_code = new StringBuilder();
+
+			// テーブル数分回す
+			foreach (var table in this.TableItems)
+			{
+				string parameter = templete;
+				parameter = parameter.Replace("{mendoc:name}", table.Name);    // テーブル名部の置換
+
+				StringBuilder pk = new StringBuilder();
+
+				bool pk_find = false;	// primary keyを見つけたかどうかを判定するフラグ
+
+				// パラメータ分回す
+				foreach (var col in table.ParameterItems)
+				{
+					// 主キー？
+					if (col.PrimaryKey)
+					{
+						// 既に見つかってる？
+						if (!pk_find)
+						{
+							pk.Append(pk_templete.Replace("{mendoc:name}", col.Name));
+						}
+						else
+						{
+							pk.Append("," + pk_templete.Replace("{mendoc:name}", col.Name));
+						}
+						pk_find = true;
+					}
+				}
+				parameter = parameter.Replace("{mendoc:parameters}", pk.ToString());
+				parameters_code.AppendLine(parameter);
+			}
+
+			return parameters_code.ToString();
 		}
 		#endregion
 
@@ -181,6 +308,8 @@ namespace menDoc.Models.ERDiagram
 			}
 		}
 		#endregion
+
+
 
 		#region マークダウン用コード
 		#region ER図用マークダウン
@@ -269,10 +398,10 @@ namespace menDoc.Models.ERDiagram
             {
 				code.AppendLine(string.Format("|{0}|{1}|{2}|{3}|{4}|{5}|{6}|",
 					index++,
-					param.PrimaryKey ? "x" : "",
-					param.NotNull ? "x" : "",
+					param.PrimaryKey ? "〇" : "-",
+					param.NotNull ? "〇" : "-",
 					param.Type,
-					param.Size,
+					param.Size != null ? param.Size : "-",
 					param.Name,
 					param.Description
 					));

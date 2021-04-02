@@ -57,18 +57,40 @@
                         <TextBox Margin="5" Text="{Binding TableList.Markdown, Mode=OneWay}"/>
                     </GroupBox>
                 </TabItem>
-                <TabItem Header="EntityFramework">
-                    <GroupBox Header="C#">
-                        <TextBox Margin="5" Text="{Binding TableList.EntityCode, Mode=OneWay}"/>
-                    </GroupBox>
+                <TabItem Header="C#">
+                    <TabControl TabStripPlacement="Left">
+                        <TabControl.Resources>
+                            <Style BasedOn="{StaticResource MahApps.Styles.TabItem}" TargetType="{x:Type TabItem}">
+                                <Setter Property="LayoutTransform">
+                                    <Setter.Value>
+                                        <TransformGroup>
+                                            <RotateTransform Angle="90"/>
+                                        </TransformGroup>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </TabControl.Resources>
+                        <TabItem Header="Interface">
+                            <GroupBox Header="Interface">
+                                <TextBox Margin="5" Text="{Binding TableList.InterfaceCode, Mode=OneWay}"/>
+                            </GroupBox>
+                        </TabItem>
+                        <TabItem Header="EntityCode(C#)">
+                            <GroupBox Header="C#">
+                                <TextBox Margin="5" Text="{Binding TableList.EntityCode, Mode=OneWay}"/>
+                            </GroupBox>
+                        </TabItem>
+                        <TabItem Header="DbContext(C#)">
+                            <GroupBox Header="C#">
+                                <TextBox Margin="5" Text="{Binding TableList.DbContext, Mode=OneWay}"/>
+                            </GroupBox>
+                        </TabItem>
+                    </TabControl>
+
                 </TabItem>
-                <TabItem Header="Interface">
-                    <GroupBox Header="C#">
-                        <TextBox Margin="5" Text="{Binding TableList.InterfaceCode, Mode=OneWay}"/>
-                    </GroupBox>
-                </TabItem>
-                <TabItem Header="Interface">
-                    <GroupBox Header="C#">
+
+                <TabItem Header="gRPC">
+                    <GroupBox Header=".proto">
                         <TextBox Margin="5" Text="{Binding TableList.ProtoCode, Mode=OneWay}"/>
                     </GroupBox>
                 </TabItem>

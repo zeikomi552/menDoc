@@ -1,0 +1,18 @@
+﻿public class SQLiteDataContext : DbContext
+{
+{mendoc:dbsets}
+
+    // 最初にココを変更する
+    string db_file_path = @"C:\Work\develop\DestinationBoard.db";
+
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    {
+        var connectionString = new SqliteConnectionStringBuilder { DataSource = db_file_path }.ToString();
+        optionsBuilder.UseSqlite(new SqliteConnection(connectionString));
+    }
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+{mendoc:entities}
+    }
+}
