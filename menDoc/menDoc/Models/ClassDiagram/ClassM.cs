@@ -224,8 +224,8 @@ namespace menDoc.Models.ClassDiagram
 			// 作成者はPCのユーザー名
 			class_item.CreateUser = Environment.UserName;
 
-			// クラス名はテーブル名に_Mをつける
-			class_item.Name = table.Name + "_M";
+			// クラス名はテーブル名にBaseをつける
+			class_item.Name = table.Name + "Base";
 
 			// 属性にテーブル名を入れる
 			class_item.TableAttribute = table.Name;
