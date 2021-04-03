@@ -27,7 +27,38 @@ namespace menDoc.Models.ClassDiagram
 		/// <param name="table">テーブル情報</param>
 		public void SetTable(TableM table)
 		{
-			this.ClassItems.Items.Add(ClassM.ConvertTableToClass(table));
+			var class_item = ClassM.ConvertTableToClass(table);
+
+			class_item.MethodItems.Items.Add(new ClassMethodM()
+			{
+				MethodName = string.Format("Insert({0} item)", table.Name),
+				ReturnValue = "void",
+				Description = "データベースへInsertを行います",
+			}
+			);
+			class_item.MethodItems.Items.Add(new ClassMethodM()
+			{
+				MethodName = "Select()",
+				ReturnValue = string.Format("List<{0}>", table.Name),
+				Description = "データベースへSelectを行います",
+			}
+			);
+			class_item.MethodItems.Items.Add(new ClassMethodM()
+			{
+				MethodName = string.Format("Update({0} pk_item, {0} insert_item)", table.Name),
+				ReturnValue = "void",
+				Description = "データベースへUpdateを行います",
+
+			}
+			);
+			class_item.MethodItems.Items.Add(new ClassMethodM()
+			{
+				MethodName = string.Format("Delete({0} item)", table.Name),
+				ReturnValue = "void",
+				Description = "データベースへDeleteを行います",
+			}
+			);
+			this.ClassItems.Items.Add(class_item);
 		}
 		#endregion
 

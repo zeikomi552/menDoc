@@ -61,6 +61,22 @@ namespace menDoc.ViewModels
 		/// </summary>
 		public void SetClass()
         {
+			try
+			{
+				if (ShowMessage.ShowQuestionYesNo("クラスへ登録します。よろしいですか？", "確認") == System.Windows.MessageBoxResult.Yes)
+				{
+					// nullチェック
+					if (this.TableList.TableItems.SelectedItem != null)
+					{
+						// 選択箇所をクラスに変換してセットする
+						GlobalValue.ClassList.SetTable(this.TableList.TableItems.SelectedItem);
+					}
+				}
+			}
+			catch (Exception e)
+			{
+				ShowMessage.ShowErrorOK(e.Message, "Error");
+			}
 		}
 		#endregion
 

@@ -43,24 +43,24 @@
                 </TabControl.Resources>
                 <TabItem Header="Markdown">
                     <GroupBox Header="Markdown">
-                        <TextBox Margin="5" Text="{Binding Service.Markdown, Mode=OneWay}"/>
+                        <TextBox VerticalScrollBarVisibility="Auto" Margin="5" Text="{Binding Service.Markdown, Mode=OneWay}"/>
                     </GroupBox>
                 </TabItem>
                 <TabItem Header=".proto">
                     <GroupBox Header="Proto File">
-                        <TextBox Margin="5" IsReadOnly="True" Text="{Binding Service.ProtoCode, Mode=OneWay}"/>
+                        <TextBox VerticalScrollBarVisibility="Auto" Margin="5" IsReadOnly="True" Text="{Binding Service.ProtoCode, Mode=OneWay}"/>
                     </GroupBox>
                 </TabItem>
                 <TabItem Header=".csproj">
                     <StackPanel>
                         <GroupBox Header=".csproj(Server)">
-                            <TextBox Margin="5" IsReadOnly="True" Text="{Binding Service.CsprojServer, Mode=OneWay}"/>
+                            <TextBox VerticalScrollBarVisibility="Auto" Margin="5" IsReadOnly="True" Text="{Binding Service.CsprojServer, Mode=OneWay}"/>
                         </GroupBox>
                         <GroupBox Header=".csproj(Client)">
-                            <TextBox Margin="5" IsReadOnly="True" Text="{Binding Service.CsprojClient, Mode=OneWay}"/>
+                            <TextBox VerticalScrollBarVisibility="Auto" Margin="5" IsReadOnly="True" Text="{Binding Service.CsprojClient, Mode=OneWay}"/>
                         </GroupBox>
                         <GroupBox Header=".csproj(Both用)">
-                            <TextBox Margin="5" IsReadOnly="True" Text="{Binding Service.CsprojBoth, Mode=OneWay}"/>
+                            <TextBox VerticalScrollBarVisibility="Auto" Margin="5" IsReadOnly="True" Text="{Binding Service.CsprojBoth, Mode=OneWay}"/>
                         </GroupBox>
                     </StackPanel>
                 </TabItem>
@@ -68,12 +68,12 @@
                     <StackPanel>
                         <GroupBox Header=".cs Server Code">
                             <StackPanel>
-                                <TextBox Margin="5" IsReadOnly="True" Text="{Binding Service.CsServer, Mode=OneWay}"/>
+                                <TextBox VerticalScrollBarVisibility="Auto" Margin="5" IsReadOnly="True" Text="{Binding Service.CsServer, Mode=OneWay}"/>
                             </StackPanel>
                         </GroupBox>
                         <GroupBox Header=".cs Client Code">
                             <StackPanel>
-                                <TextBox Margin="5" IsReadOnly="True" Text="{Binding Service.CsClient, Mode=OneWay}"/>
+                                <TextBox VerticalScrollBarVisibility="Auto" Margin="5" IsReadOnly="True" Text="{Binding Service.CsClient, Mode=OneWay}"/>
                             </StackPanel>
                         </GroupBox>
                     </StackPanel>
