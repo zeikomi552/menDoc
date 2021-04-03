@@ -1,4 +1,37 @@
-﻿	#region Insert処理
+﻿	#region コンストラクタ
+	/// <summary>
+	/// コンストラクタ
+	/// </summary>
+	public {mendoc:name}Base()
+	{
+
+	}
+	#endregion
+
+	#region コピーコンストラクタ
+	/// <summary>
+	/// コピーコンストラクタ
+	/// </summary>
+	/// <param name="item">コピー内容</param>
+	public {mendoc:name}Base({mendoc:name}Base item)
+	{
+		// 要素のコピー
+		Copy(item);
+	}
+	#endregion
+
+	#region コピー
+	/// <summary>
+	/// コピー
+	/// </summary>
+	/// <param name="item">コピー内容</param>
+	public void Copy({mendoc:name}Base item)
+	{
+{mendoc:copyparameters}
+	}
+	#endregion
+
+	#region Insert処理
 	/// <summary>
 	/// Insert処理
 	/// </summary>
@@ -27,7 +60,7 @@
 		using (var db = new SQLiteDataContext())
 		{
 			var item = db.DbSet_{mendoc:name}.Single(x => {mendoc:primarykeys});
-			item = update_item;
+			item.Copy(update_item);
 
 			db.SaveChanges();
 		}

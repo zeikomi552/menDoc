@@ -19,6 +19,7 @@ namespace menDoc.Models.ERDiagram
 		string ProtoPropertyTempletePath = @".\Common\Templete\CSharpCode\EntityFramework\ProtoMessagePropertyCode.mdtmpl";
 		string ClassMethodTempletePath = @".\Common\Templete\CSharpCode\EntityFramework\ClassMethod.mdtmpl";
 		string ClassMethodPKTempletePath = @".\Common\Templete\CSharpCode\EntityFramework\ClassMethodPK.mdtmpl";
+		string CopyParametersPath = @".\Common\Templete\CSharpCode\EntityFramework\CopyParameters.mdtmpl";
 
 		#region テーブル名[Name]プロパティ
 		/// <summary>
@@ -179,7 +180,7 @@ namespace menDoc.Models.ERDiagram
 		public string CreateClassCode()
 		{
 			// EntityFramework用コードを渡す
-			return CreateCode(TempletePath, PropertyCode, ClassMethodTempletePath, ClassMethodPKTempletePath);
+			return CreateCode(TempletePath, PropertyCode, ClassMethodTempletePath, ClassMethodPKTempletePath, CopyParametersPath);
 		}
 		#endregion
 		#region 変数用コードの作成処理
@@ -225,7 +226,7 @@ namespace menDoc.Models.ERDiagram
         {
 			// インターフェース用クラスコードのパスを渡す
 			return CreateCode(InterfaceClassTempletePath, InterfacePropertyTempletePath, 
-				string.Empty, string.Empty);
+				string.Empty, string.Empty, string.Empty);
 		}
 		#endregion
 		#region .proto用クラスコードの作成
@@ -316,7 +317,7 @@ namespace menDoc.Models.ERDiagram
 		/// </summary>
 		/// <param name="path"></param>
 		/// <returns></returns>
-		private string CreateCode(string class_path, string property_path, string method_path, string pk_path)
+		private string CreateCode(string class_path, string property_path, string method_path, string pk_path, string constoructor_params)
 		{
 			// UTF-8
 			StreamReader sr = new StreamReader(class_path, Encoding.UTF8);
@@ -339,7 +340,7 @@ namespace menDoc.Models.ERDiagram
 			string parameters = ParameterCode(property_path);
 
 			// 関数を作成する
-			string methods = CreateClassMethod(method_path, pk_path);
+			string methods = CreateClassMethod(method_path, pk_path, constoructor_params);
 
 			// 変数のセット
 			class_tmpl = class_tmpl.Replace("{mendoc:parameters}", parameters);
@@ -350,11 +351,38 @@ namespace menDoc.Models.ERDiagram
 		}
 		#endregion
 
-		private string CreateClassMethod(string class_method_path, string pk_tmpl_path)
+		private string CreateCopyParameters()
+		{
+			StreamReader sr = new StreamReader(CopyParametersPath, Encoding.UTF8);
+
+			string templete = sr.ReadToEnd();
+
+			StringBuilder parameters_code = new StringBuilder();
+
+			// カラム分回す
+			foreach (var col in this.ParameterItems)
+			{
+
+				string parameter = templete;
+				parameter = parameter.Replace("{mendoc:name}", col.Name);    // 変数名部の置換
+
+				parameters_code.AppendLine(parameter);
+
+			}
+
+			return parameters_code.ToString();
+		}
+
+		/// <summary>
+		/// 関数用コードの作成処理
+		/// </summary>
+		/// <param name="class_method_path">クラスに含まれる関数</param>
+		/// <param name="pk_tmpl_path">主キーパス</param>
+		/// <returns>ソースコード</returns>
+		private string CreateClassMethod(string class_method_path, string pk_tmpl_path, string constructor_param_path)
         {
 			if (string.IsNullOrEmpty(class_method_path))
 				return string.Empty;
-
 
 			// UTF-8
 			StreamReader sr = new StreamReader(class_method_path, Encoding.UTF8);
@@ -394,6 +422,13 @@ namespace menDoc.Models.ERDiagram
 			}
 
 			method_tmpl = method_tmpl.Replace("{mendoc:primarykeys}", pk.ToString());
+
+			if (string.IsNullOrEmpty(constructor_param_path))
+				return method_tmpl;
+
+			string constructor_params = CreateCopyParameters();
+			method_tmpl = method_tmpl.Replace("{mendoc:copyparameters}", constructor_params);
+
 
 			return method_tmpl;
         }
