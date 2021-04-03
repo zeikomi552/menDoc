@@ -17,6 +17,8 @@ namespace menDoc.Models.ERDiagram
 		string InterfacePropertyTempletePath = @".\Common\Templete\CSharpCode\EntityFramework\InterfacePropertyCode.mdtmpl";
 		string ProtoClassTempletePath = @".\Common\Templete\CSharpCode\EntityFramework\ProtoMessageClassCode.mdtmpl";
 		string ProtoPropertyTempletePath = @".\Common\Templete\CSharpCode\EntityFramework\ProtoMessagePropertyCode.mdtmpl";
+		string ClassMethodTempletePath = @".\Common\Templete\CSharpCode\EntityFramework\ClassMethod.mdtmpl";
+		string ClassMethodPKTempletePath = @".\Common\Templete\CSharpCode\EntityFramework\ClassMethodPK.mdtmpl";
 
 		#region テーブル名[Name]プロパティ
 		/// <summary>
@@ -177,7 +179,7 @@ namespace menDoc.Models.ERDiagram
 		public string CreateClassCode()
 		{
 			// EntityFramework用コードを渡す
-			return CreateCode(TempletePath, PropertyCode);
+			return CreateCode(TempletePath, PropertyCode, ClassMethodTempletePath, ClassMethodPKTempletePath);
 		}
 		#endregion
 		#region 変数用コードの作成処理
@@ -205,8 +207,6 @@ namespace menDoc.Models.ERDiagram
 				parameter = parameter.Replace("{mendoc:description}", col.Description); // description部の置換
 				parameter = parameter.Replace("{mendoc:type}", Utilities.ConvertTypeDBtoCSharp(Utilities.DBtype.MSSQLServer, col.NotNull, col.Type));    // type部の置換
 				parameter = parameter.Replace("{mendoc:no}", (index++).ToString());    // no部の置換
-
-
 				parameter = parameter.Replace("{mendoc:initparam}", Utilities.CSharpTypeInitCode(Utilities.DBtype.MSSQLServer, col.NotNull, col.Type));    // type部の置換
 
 				parameters_code.AppendLine(parameter);
@@ -224,7 +224,8 @@ namespace menDoc.Models.ERDiagram
 		public string CreateInterfaceClassCode()
         {
 			// インターフェース用クラスコードのパスを渡す
-			return CreateCode(InterfaceClassTempletePath, InterfacePropertyTempletePath);
+			return CreateCode(InterfaceClassTempletePath, InterfacePropertyTempletePath, 
+				string.Empty, string.Empty);
 		}
 		#endregion
 		#region .proto用クラスコードの作成
@@ -315,7 +316,7 @@ namespace menDoc.Models.ERDiagram
 		/// </summary>
 		/// <param name="path"></param>
 		/// <returns></returns>
-		private string CreateCode(string class_path, string property_path)
+		private string CreateCode(string class_path, string property_path, string method_path, string pk_path)
 		{
 			// UTF-8
 			StreamReader sr = new StreamReader(class_path, Encoding.UTF8);
@@ -337,12 +338,64 @@ namespace menDoc.Models.ERDiagram
 
 			string parameters = ParameterCode(property_path);
 
+			// 関数を作成する
+			string methods = CreateClassMethod(method_path, pk_path);
+
 			// 変数のセット
 			class_tmpl = class_tmpl.Replace("{mendoc:parameters}", parameters);
+			class_tmpl = class_tmpl.Replace("{mendoc:methods}", methods);
 
 			// コードを戻す
 			return class_tmpl;
 		}
 		#endregion
+
+		private string CreateClassMethod(string class_method_path, string pk_tmpl_path)
+        {
+			if (string.IsNullOrEmpty(class_method_path))
+				return string.Empty;
+
+
+			// UTF-8
+			StreamReader sr = new StreamReader(class_method_path, Encoding.UTF8);
+			// テンプレートファイル読み出し
+			string method_tmpl = sr.ReadToEnd();
+
+
+			// name部の置換
+			method_tmpl = method_tmpl.Replace("{mendoc:name}", this.Name);
+			// description部の置換
+			method_tmpl = method_tmpl.Replace("{mendoc:description}", this.Name);
+
+			// 主キーが必要となる関連のテンプレートファイル
+			if (string.IsNullOrEmpty(pk_tmpl_path))
+				return string.Empty;
+
+			// UTF-8
+			StreamReader sr_pk = new StreamReader(pk_tmpl_path, Encoding.UTF8);
+			// テンプレートファイル読み出し
+			string pk_tmpl = sr_pk.ReadToEnd();
+
+			StringBuilder pk = new StringBuilder();
+			bool pk_find = false;
+			foreach (var tmp in this.ParameterItems)
+			{
+				if(tmp.PrimaryKey)
+                {
+					if (!pk_find)
+					{
+						pk.Append(pk_tmpl.Replace("{mendoc:name}", tmp.Name));
+					}
+					else
+					{
+						pk.Append(" && " + pk_tmpl.Replace("{mendoc:name}", tmp.Name));
+					}
+				}
+			}
+
+			method_tmpl = method_tmpl.Replace("{mendoc:primarykeys}", pk.ToString());
+
+			return method_tmpl;
+        }
 	}
 }

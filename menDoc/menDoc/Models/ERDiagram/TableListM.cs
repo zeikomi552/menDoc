@@ -244,7 +244,7 @@ namespace menDoc.Models.ERDiagram
 						pk_find = true;
 					}
 				}
-				parameter = parameter.Replace("{mendoc:parameters}", pk.ToString());
+				parameter = parameter.Replace("{mendoc:primarykeys}", pk.ToString());
 				parameters_code.AppendLine(parameter);
 			}
 
@@ -308,8 +308,6 @@ namespace menDoc.Models.ERDiagram
 			}
 		}
 		#endregion
-
-
 
 		#region マークダウン用コード
 		#region ER図用マークダウン

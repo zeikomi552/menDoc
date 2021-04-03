@@ -6,8 +6,13 @@
 [Table("{mendoc:name}")]
 public class {mendoc:name}Base : INotifyPropertyChanged 
 {
-
+	#region パラメータ
 {mendoc:parameters}
+	#endregion
+
+	#region 関数
+{mendoc:methods}
+	#endregion
 
 	#region INotifyPropertyChanged 
 	public event PropertyChangedEventHandler PropertyChanged; 

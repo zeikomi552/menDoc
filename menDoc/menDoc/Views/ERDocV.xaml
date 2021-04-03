@@ -54,7 +54,7 @@
                 </TabControl.Resources>
                 <TabItem Header="Markdown">
                     <GroupBox Header="Markdown">
-                        <TextBox Margin="5" Text="{Binding TableList.Markdown, Mode=OneWay}"/>
+                        <TextBox VerticalScrollBarVisibility="Auto" Margin="5" Text="{Binding TableList.Markdown, Mode=OneWay}"/>
                     </GroupBox>
                 </TabItem>
                 <TabItem Header="C#">
@@ -72,17 +72,17 @@
                         </TabControl.Resources>
                         <TabItem Header="Interface">
                             <GroupBox Header="Interface">
-                                <TextBox Margin="5" Text="{Binding TableList.InterfaceCode, Mode=OneWay}"/>
+                                <TextBox VerticalScrollBarVisibility="Auto" Margin="5" Text="{Binding TableList.InterfaceCode, Mode=OneWay}"/>
                             </GroupBox>
                         </TabItem>
                         <TabItem Header="EntityCode(C#)">
                             <GroupBox Header="C#">
-                                <TextBox Margin="5" Text="{Binding TableList.EntityCode, Mode=OneWay}"/>
+                                <TextBox VerticalScrollBarVisibility="Auto" Margin="5" Text="{Binding TableList.EntityCode, Mode=OneWay}"/>
                             </GroupBox>
                         </TabItem>
                         <TabItem Header="DbContext(C#)">
                             <GroupBox Header="C#">
-                                <TextBox Margin="5" Text="{Binding TableList.DbContext, Mode=OneWay}"/>
+                                <TextBox VerticalScrollBarVisibility="Auto" Margin="5" Text="{Binding TableList.DbContext, Mode=OneWay}"/>
                             </GroupBox>
                         </TabItem>
                     </TabControl>
@@ -91,7 +91,7 @@
 
                 <TabItem Header="gRPC">
                     <GroupBox Header=".proto">
-                        <TextBox Margin="5" Text="{Binding TableList.ProtoCode, Mode=OneWay}"/>
+                        <TextBox VerticalScrollBarVisibility="Auto" Margin="5" Text="{Binding TableList.ProtoCode, Mode=OneWay}"/>
                     </GroupBox>
                 </TabItem>
             </TabControl>
