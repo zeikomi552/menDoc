@@ -32,6 +32,7 @@ namespace menDoc.ViewModels
 			}
 		}
 		#endregion
+
 		#region [ClassNames]プロパティ
 		/// <summary>
 		/// [ClassNames]プロパティ用変数

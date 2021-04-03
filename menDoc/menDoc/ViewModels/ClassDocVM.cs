@@ -310,9 +310,13 @@ namespace menDoc.ViewModels
 				ShowMessage.ShowErrorOK(e.Message, "Error");
 			}
 		}
-        #endregion
+		#endregion
 
-        public void SetRelation()
+		#region クラスの関係を追加する処理
+		/// <summary>
+		/// クラスの関係を追加する処理
+		/// </summary>
+		public void SetRelation()
         {
 			try
 			{
@@ -350,5 +354,6 @@ namespace menDoc.ViewModels
 			}
 
 		}
+		#endregion
 	}
 }

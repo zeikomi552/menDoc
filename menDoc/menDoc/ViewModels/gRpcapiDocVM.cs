@@ -239,6 +239,7 @@ namespace menDoc.ViewModels
 			}
 		}
 		#endregion
+
 		#region 初期化処理
 		/// <summary>
 		/// 初期化処理

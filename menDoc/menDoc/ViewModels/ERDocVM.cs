@@ -33,6 +33,7 @@ namespace menDoc.ViewModels
 			}
 		}
 		#endregion
+
 		#region 初期化処理
 		/// <summary>
 		/// 初期化処理
@@ -43,6 +44,7 @@ namespace menDoc.ViewModels
 
 		}
 		#endregion
+
 		#region 画面を閉じる処理
 		/// <summary>
 		/// 画面を閉じる処理
@@ -52,28 +54,13 @@ namespace menDoc.ViewModels
 
 		}
 		#endregion
+
 		#region Class図の方へ値を入力する
 		/// <summary>
 		/// Class図の方へ値を入力する
 		/// </summary>
 		public void SetClass()
         {
-			try
-			{
-				if (ShowMessage.ShowQuestionYesNo("クラスへ登録します。よろしいですか？", "確認") == System.Windows.MessageBoxResult.Yes)
-				{
-					// nullチェック
-					if (this.TableList.TableItems.SelectedItem != null)
-					{
-						// 選択箇所をクラスに変換してセットする
-						GlobalValue.ClassList.SetTable(this.TableList.TableItems.SelectedItem);
-					}
-				}
-			}
-			catch(Exception e)
-            {
-				ShowMessage.ShowErrorOK(e.Message, "Error");
-			}
 		}
 		#endregion
 
@@ -111,6 +98,7 @@ namespace menDoc.ViewModels
 			this.TableList.RefleshCode();
 		}
 		#endregion
+
 		#region 読み込み処理
 		/// <summary>
 		/// 読み込み処理
@@ -142,6 +130,7 @@ namespace menDoc.ViewModels
 			}
 		}
 		#endregion
+
 		#region 保存処理
 		/// <summary>
 		/// 保存処理
@@ -263,6 +252,7 @@ namespace menDoc.ViewModels
 			}
 		}
 		#endregion
+
 		#region 関係リスト上へ移動
 		/// <summary>
 		/// 関係リスト上へ移動
