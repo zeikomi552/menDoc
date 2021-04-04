@@ -65,19 +65,25 @@
                     </StackPanel>
                 </TabItem>
                 <TabItem Header=".cs">
-                    <StackPanel>
-                        <GroupBox Header=".cs Server Code">
-                            <StackPanel>
-                                <TextBox VerticalScrollBarVisibility="Auto" Margin="5" IsReadOnly="True" Text="{Binding Service.CsServer, Mode=OneWay}"/>
-                            </StackPanel>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <GroupBox Grid.Row="0" Header=".cs Server Code">
+                            <TextBox VerticalScrollBarVisibility="Auto" Margin="5" IsReadOnly="True" Text="{Binding Service.CsServer, Mode=OneWay}"/>
+
                         </GroupBox>
-                        <GroupBox Header=".cs Client Code">
-                            <StackPanel>
-                                <TextBox VerticalScrollBarVisibility="Auto" Margin="5" IsReadOnly="True" Text="{Binding Service.CsClient, Mode=OneWay}"/>
-                            </StackPanel>
+                        <GroupBox Grid.Row="1" Header="Recieve">
+                            <TextBox VerticalScrollBarVisibility="Auto" Margin="5" IsReadOnly="True" Text="{Binding Service.RecieveCode, Mode=OneWay}"/>
                         </GroupBox>
-                    </StackPanel>
+                        <GroupBox Grid.Row="2" Header=".cs Client Code">
+                            <TextBox VerticalScrollBarVisibility="Auto" Margin="5" IsReadOnly="True" Text="{Binding Service.CsClient, Mode=OneWay}"/>
+                        </GroupBox>
+                    </Grid>
                 </TabItem>
+                
             </TabControl>
             <Grid Margin="3" Grid.Column="1">
                 <Grid.RowDefinitions>

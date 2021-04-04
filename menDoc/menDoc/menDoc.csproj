@@ -56,6 +56,12 @@
     <None Update="Common\Templete\CSharpCode\EntityFramework\ProtoMessagePropertyCode.mdtmpl">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="Common\Templete\CSharpCode\gRPC\RequestMethod.mdtmpl">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Common\Templete\CSharpCode\gRPC\ServiceClass.mdtmpl">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>

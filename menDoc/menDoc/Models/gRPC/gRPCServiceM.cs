@@ -5,6 +5,7 @@ using MVVMCore.BaseClass;
 using MVVMCore.Common.Utilities;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -45,9 +46,9 @@ namespace menDoc.Models
 		/// </summary>
 		[System.Xml.Serialization.XmlIgnore]
 		public string CsprojServer
-        {
-            get
-            {
+		{
+			get
+			{
 				return CreateCSProjClient(ProjType.Server);
 
 			}
@@ -60,9 +61,9 @@ namespace menDoc.Models
 		/// </summary>
 		[System.Xml.Serialization.XmlIgnore]
 		public string CsprojClient
-        {
-            get
-            {
+		{
+			get
+			{
 				return CreateCSProjClient(ProjType.Client);
 			}
 		}
@@ -88,13 +89,57 @@ namespace menDoc.Models
 		/// </summary>
 		[System.Xml.Serialization.XmlIgnore]
 		public string CsServer
-        {
-            get
-            {
+		{
+			get
+			{
 				return CreateCSCodeServer();
-            }
-        }
+			}
+		}
 		#endregion
+
+		[System.Xml.Serialization.XmlIgnore]
+		public string RecieveCode
+		{
+			get
+			{
+				return CreateRecieveCode();
+			}
+		}
+		string RecieveClassTempletePath = @".\Common\Templete\CSharpCode\gRPC\ServiceClass.mdtmpl";
+		string RecieveMethodTempletePath = @".\Common\Templete\CSharpCode\gRPC\RequestMethod.mdtmpl";
+
+		public string CreateRecieveCode()
+		{
+			// UTF-8
+			StreamReader class_sr = new StreamReader(RecieveClassTempletePath, Encoding.UTF8);
+
+			// テンプレートファイル読み出し
+			string class_text = class_sr.ReadToEnd();
+
+
+
+			// UTF-8
+			StreamReader method_sr = new StreamReader(RecieveMethodTempletePath, Encoding.UTF8);
+
+			// テンプレートファイル読み出し
+			string method_text = method_sr.ReadToEnd();
+
+			StringBuilder code = new StringBuilder();
+
+			foreach (var api in this.APIs.Items)
+			{
+				string text_tmp = method_text;
+
+				text_tmp = text_tmp.Replace("{mendoc:name}", api.Name);
+
+				code.AppendLine(text_tmp);
+			}
+
+			class_text = class_text.Replace("{mendoc:name}", this.ServiceName);
+			class_text = class_text.Replace("{mendoc:methods}", code.ToString());
+
+			return class_text.ToString();
+		}
 
 		#region .cs クライアント用コード
 		/// <summary>

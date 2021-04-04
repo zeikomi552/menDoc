@@ -59,10 +59,13 @@
 	{
 		using (var db = new SQLiteDataContext())
 		{
-			var item = db.DbSet_{mendoc:name}.Single(x => {mendoc:primarykeys});
-			item.Copy(update_item);
+			var item = db.DbSet_{mendoc:name}.SingleOrDefault(x => {mendoc:primarykeys});
 
-			db.SaveChanges();
+			if(item != null)
+			{
+				item.Copy(update_item);
+				db.SaveChanges();
+			}
 		}
 	}
 	#endregion
@@ -76,9 +79,12 @@
 	{
 		using (var db = new SQLiteDataContext())
 		{
-			var item = db.DbSet_{mendoc:name}.Single(x => {mendoc:primarykeys});
-			db.DbSet_{mendoc:name}.Remove(item);
-			db.SaveChanges();
+			var item = db.DbSet_{mendoc:name}.SingleOrDefault(x => {mendoc:primarykeys});
+			if(item != null)
+			{
+				db.DbSet_{mendoc:name}.Remove(item);
+				db.SaveChanges();
+			}
 		}
 	}
 	#endregion

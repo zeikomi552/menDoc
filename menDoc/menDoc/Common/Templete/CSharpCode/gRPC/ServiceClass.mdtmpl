@@ -1,0 +1,38 @@
+﻿public class {mendoc:name}Service : {mendoc:name}.{mendoc:name}Base
+{
+        public string HostName { get; set; } = "127.0.0.1";
+
+        /// <summary>
+        /// ポート番号
+        /// </summary>
+        public int Port { get; set; } = 552;
+
+        /// <summary>
+        /// コンストラクタ
+        /// </summary>
+        /// <param name="hostname">ホスト名</param>
+        /// <param name="port">ポート番号</param>
+        public {mendoc:name}Service(string hostname, int port)
+        {
+            // ホスト名のセット
+            this.HostName = hostname;
+
+            // ポート番号のセット
+            this.Port = port;
+        }
+
+        public void Listen()
+        {
+			Server server = new Server
+			{
+				Services = { {mendoc:name}.BindService(this) },
+				Ports = { new ServerPort(this.HostName, this.Port, ServerCredentials.Insecure) }
+			};
+			
+
+			server.Start();
+        }
+
+
+{mendoc:methods}
+}

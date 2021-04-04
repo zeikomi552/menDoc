@@ -1,0 +1,17 @@
+﻿        #region [{mendoc:name}]APIリクエスト受付処理
+        /// <summary>
+        /// [{mendoc:name}]APIリクエスト受付処理
+        /// APIの要求を受け付けた時に走る処理
+        /// </summary>
+        /// <param name="request">リクエスト</param>
+        /// <param name="context">コンテキスト</param>
+        /// <returns>リプライ</returns>
+        public override Task<{mendoc:name}Reply> {mendoc:name}({mendoc:name}Request request, ServerCallContext context)
+        {
+            var message = new {mendoc:name}Reply();
+
+            // ここに処理を書く
+
+            return Task.FromResult(message);
+        }
+        #endregion
