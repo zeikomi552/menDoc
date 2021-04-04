@@ -11,6 +11,15 @@
             var message = new {mendoc:name}Reply();
 
             // ここに処理を書く
+            gRPCArgsRcv ev = new gRPCArgsRcv();
+            ev.Request = request;
+            ev.Replay = message;
+
+
+            if (Recieve{mendoc:name}Event != null)
+            {
+                Recieve{mendoc:name}Event(this, ev);
+            }
 
             return Task.FromResult(message);
         }

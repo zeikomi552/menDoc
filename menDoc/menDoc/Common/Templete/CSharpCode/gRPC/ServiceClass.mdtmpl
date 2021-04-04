@@ -1,5 +1,15 @@
-﻿public class {mendoc:name}Service : {mendoc:name}.{mendoc:name}Base
+﻿public class gRPCArgsRcv : EventArgs
 {
+    public object Request { get; set; }
+    public object Replay { get; set; }
+}
+
+
+public class {mendoc:name}Service : {mendoc:name}.{mendoc:name}Base
+{
+
+{mendoc:events}
+
         public string HostName { get; set; } = "127.0.0.1";
 
         /// <summary>

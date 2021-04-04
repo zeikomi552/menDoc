@@ -107,6 +107,7 @@ namespace menDoc.Models
 		}
 		string RecieveClassTempletePath = @".\Common\Templete\CSharpCode\gRPC\ServiceClass.mdtmpl";
 		string RecieveMethodTempletePath = @".\Common\Templete\CSharpCode\gRPC\RequestMethod.mdtmpl";
+		string RecieveEventHandlerTempletePath = @".\Common\Templete\CSharpCode\gRPC\RecieveEventHandler.mdtmpl";
 
 		public string CreateRecieveCode()
 		{
@@ -116,13 +117,12 @@ namespace menDoc.Models
 			// テンプレートファイル読み出し
 			string class_text = class_sr.ReadToEnd();
 
-
-
 			// UTF-8
 			StreamReader method_sr = new StreamReader(RecieveMethodTempletePath, Encoding.UTF8);
 
 			// テンプレートファイル読み出し
 			string method_text = method_sr.ReadToEnd();
+
 
 			StringBuilder code = new StringBuilder();
 
@@ -134,6 +134,26 @@ namespace menDoc.Models
 
 				code.AppendLine(text_tmp);
 			}
+
+
+			// UTF-8
+			StreamReader event_sr = new StreamReader(RecieveEventHandlerTempletePath, Encoding.UTF8);
+
+			// テンプレートファイル読み出し
+			string event_text = event_sr.ReadToEnd();
+
+			StringBuilder event_code = new StringBuilder();
+
+			foreach (var api in this.APIs.Items)
+			{
+				string text_tmp = event_text;
+
+				text_tmp = text_tmp.Replace("{mendoc:name}", api.Name);
+
+				event_code.AppendLine(text_tmp);
+			}
+
+			class_text = class_text.Replace("{mendoc:events}", event_code.ToString());
 
 			class_text = class_text.Replace("{mendoc:name}", this.ServiceName);
 			class_text = class_text.Replace("{mendoc:methods}", code.ToString());
