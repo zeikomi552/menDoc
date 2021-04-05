@@ -12,6 +12,11 @@ namespace menDoc.Models.ClassDiagram
 {
 	public class ClassListM : ModelBase
 	{
+		#region foreach用 Enumerator
+		/// <summary>
+		/// foreach用 Enumerator
+		/// </summary>
+		/// <returns></returns>
 		public IEnumerator<ClassM> GetEnumerator()
 		{
 			foreach (var item in this.ClassItems)
@@ -19,6 +24,7 @@ namespace menDoc.Models.ClassDiagram
 				yield return item;  // ここでパーツを返す
 			}
 		}
+		#endregion
 
 		#region テーブルからクラスを作成してセットする
 		/// <summary>
