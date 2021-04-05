@@ -336,7 +336,15 @@ namespace menDoc.Models
 				index = 1;
 				foreach (var reply in api.Replytems)
 				{
-					code.AppendLine(string.Format("\t{0} {1} = {2};", reply.TypeName, reply.ValueName, index));
+					// repeatの判別
+					if (reply.SingleRepeat == SingleRepeatEnum.Single)
+					{
+						code.AppendLine(string.Format("\t{0} {1} = {2};", reply.TypeName, reply.ValueName, index));
+					}
+					else
+					{
+						code.AppendLine(string.Format("\trepeated {0} {1} = {2};", reply.TypeName, reply.ValueName, index));
+					}
 					index++;
 				}
 				code.AppendLine("}");
