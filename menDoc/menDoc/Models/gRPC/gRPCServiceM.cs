@@ -97,6 +97,10 @@ namespace menDoc.Models
 		}
 		#endregion
 
+		#region .cs Recieveコード
+		/// <summary>
+		/// .cs Recieveコード
+		/// </summary>
 		[System.Xml.Serialization.XmlIgnore]
 		public string RecieveCode
 		{
@@ -105,10 +109,18 @@ namespace menDoc.Models
 				return CreateRecieveCode();
 			}
 		}
-		string RecieveClassTempletePath = @".\Common\Templete\CSharpCode\gRPC\ServiceClass.mdtmpl";
+        #endregion
+
+
+        string RecieveClassTempletePath = @".\Common\Templete\CSharpCode\gRPC\ServiceClass.mdtmpl";
 		string RecieveMethodTempletePath = @".\Common\Templete\CSharpCode\gRPC\RequestMethod.mdtmpl";
 		string RecieveEventHandlerTempletePath = @".\Common\Templete\CSharpCode\gRPC\RecieveEventHandler.mdtmpl";
 
+		#region 受信コードの生成
+		/// <summary>
+		/// 受信コードの生成
+		/// </summary>
+		/// <returns></returns>
 		public string CreateRecieveCode()
 		{
 			// UTF-8
@@ -126,12 +138,16 @@ namespace menDoc.Models
 
 			StringBuilder code = new StringBuilder();
 
+			// API分関数を作成する
 			foreach (var api in this.APIs.Items)
 			{
+				// テンプレートの保持
 				string text_tmp = method_text;
 
+				// 名前の置き換え
 				text_tmp = text_tmp.Replace("{mendoc:name}", api.Name);
 
+				// 作成したコードの追加
 				code.AppendLine(text_tmp);
 			}
 
@@ -144,22 +160,31 @@ namespace menDoc.Models
 
 			StringBuilder event_code = new StringBuilder();
 
+			// API分関数を作成する
 			foreach (var api in this.APIs.Items)
 			{
+				// イベントコードのテンプレートを保持
 				string text_tmp = event_text;
 
+				// コードの生成
 				text_tmp = text_tmp.Replace("{mendoc:name}", api.Name);
 
+				// 作成したコードの追加
 				event_code.AppendLine(text_tmp);
 			}
 
+			// イベントの登録
 			class_text = class_text.Replace("{mendoc:events}", event_code.ToString());
 
+			// サービス名の登録
 			class_text = class_text.Replace("{mendoc:name}", this.ServiceName);
+
+			// 関数名の登録
 			class_text = class_text.Replace("{mendoc:methods}", code.ToString());
 
 			return class_text.ToString();
 		}
+		#endregion
 
 		#region .cs クライアント用コード
 		/// <summary>
