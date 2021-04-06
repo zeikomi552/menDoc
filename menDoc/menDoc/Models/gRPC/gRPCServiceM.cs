@@ -188,6 +188,7 @@ namespace menDoc.Models
 			NotifyPropertyChanged("CsprojBoth");
 			NotifyPropertyChanged("CsServer");
 			NotifyPropertyChanged("CsClient");
+			NotifyPropertyChanged("RecieveCode");
 		}
 		#endregion
 
