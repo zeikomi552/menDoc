@@ -1,7 +1,10 @@
-﻿public class gRPCArgsRcv : EventArgs
+﻿/// <summary>
+/// gRPC受信時に発生させるイベント
+/// </summary>
+public class gRPCArgsRcv : EventArgs
 {
-    public object Request { get; set; }
-    public object Replay { get; set; }
+    public object Request { get; set; } // リクエスト
+    public object Replay { get; set; }  // リプライ
 }
 
 
@@ -10,6 +13,9 @@ public class {mendoc:name}Service : {mendoc:name}.{mendoc:name}Base
 
 {mendoc:events}
 
+        /// <summary>
+        /// ホスト名
+        /// </summary>
         public string HostName { get; set; } = "127.0.0.1";
 
         /// <summary>
@@ -31,6 +37,9 @@ public class {mendoc:name}Service : {mendoc:name}.{mendoc:name}Base
             this.Port = port;
         }
 
+        /// <summary>
+        /// 受信受付
+        /// </summary>
         public void Listen()
         {
 			Server server = new Server
@@ -39,7 +48,7 @@ public class {mendoc:name}Service : {mendoc:name}.{mendoc:name}Base
 				Ports = { new ServerPort(this.HostName, this.Port, ServerCredentials.Insecure) }
 			};
 			
-
+            // スタート
 			server.Start();
         }
 

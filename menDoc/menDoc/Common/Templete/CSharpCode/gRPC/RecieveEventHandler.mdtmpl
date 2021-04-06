@@ -1,1 +1,2 @@
-﻿        public event EventHandler Recieve{mendoc:name}Event;
+﻿        // {mendoc:name}の受信イベントの作成
+        public event EventHandler Recieve{mendoc:name}Event;
