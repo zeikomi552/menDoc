@@ -553,6 +553,9 @@ namespace menDoc.Models
 			}
 			// APIリストにセット
 			this.APIs.Items.Add(api);
+
+			// 各コードの更新
+			RefleshCode();
 		}
 		#endregion
 	}
