@@ -7,6 +7,22 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Common\Themes\Icons\multiplicity-onemulti-left.png" />
+    <None Remove="Common\Themes\Icons\multiplicity-onemulti-right.png" />
+    <None Remove="Common\Themes\Icons\multiplicity-oneone-left.png" />
+    <None Remove="Common\Themes\Icons\multiplicity-oneone-right.png" />
+    <None Remove="Common\Themes\Icons\multiplicity-zeromulti-left.png" />
+    <None Remove="Common\Themes\Icons\multiplicity-zeromulti-right.png" />
+    <None Remove="Common\Themes\Icons\multiplicity-zeroone-left.png" />
+    <None Remove="Common\Themes\Icons\multiplicity-zeroone-right.png" />
+    <None Remove="Common\Themes\Icons\onemulti-left.png" />
+    <None Remove="Common\Themes\Icons\oneone-left.png" />
+    <None Remove="Common\Themes\Icons\zeromulti-left.png" />
+    <None Remove="Common\Themes\Icons\zeroone-left.png" />
+    <None Remove="Common\Themes\Icons\zeroone.png" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="MahApps.Metro" Version="2.4.4" />
     <PackageReference Include="MaterialDesignThemes" Version="4.0.0" />
     <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.31" />
@@ -14,6 +30,33 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\MVVMCore\MVVMCore\MVVMCore.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Common\Themes\Icons\multiplicity-onemulti-left.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Common\Themes\Icons\multiplicity-onemulti-right.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Common\Themes\Icons\multiplicity-oneone-left.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Common\Themes\Icons\multiplicity-oneone-right.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Common\Themes\Icons\multiplicity-zeromulti-left.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Common\Themes\Icons\multiplicity-zeromulti-right.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Common\Themes\Icons\multiplicity-zeroone-left.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Common\Themes\Icons\multiplicity-zeroone-right.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
 
   <ItemGroup>

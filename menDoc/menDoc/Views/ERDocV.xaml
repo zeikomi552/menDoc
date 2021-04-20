@@ -1,16 +1,18 @@
-﻿<UserControl x:Class="menDoc.Views.ERDocV"
+﻿<UserControl
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:menDoc.Views"
-             mc:Ignorable="d" 
+             xmlns:local="clr-namespace:menDoc.Views" 
              xmlns:enum="clr-namespace:menDoc.Common.Enums"
              xmlns:ViewModels="clr-namespace:menDoc.ViewModels"
              xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
              xmlns:sys="clr-namespace:System;assembly=mscorlib"
+             xmlns:Converters="clr-namespace:menDoc.Common.Converters" x:Class="menDoc.Views.ERDocV"
+             mc:Ignorable="d"
              d:DesignHeight="450" d:DesignWidth="800">
     <UserControl.Resources>
+        <Converters:MultiplicityToImagePathConverter x:Key="MultiplicityToImagePathConverter"/>
         <ViewModels:ERDocVM x:Key="vm"/>
         <ObjectDataProvider MethodName="GetValues" ObjectType="{x:Type sys:Enum}" x:Key="AlignmentValues">
             <ObjectDataProvider.MethodParameters>
@@ -29,6 +31,7 @@
         </ObjectDataProvider>
 
     </UserControl.Resources>
+
     <Grid DataContext="{Binding Mode=OneWay, Source={StaticResource vm}}">
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
@@ -88,12 +91,6 @@
                     </TabControl>
 
                 </TabItem>
-
-                <TabItem Header="gRPC">
-                    <GroupBox Header=".proto">
-                        <TextBox VerticalScrollBarVisibility="Auto" Margin="5" Text="{Binding TableList.ProtoCode, Mode=OneWay}"/>
-                    </GroupBox>
-                </TabItem>
             </TabControl>
             <Grid Margin="3" Grid.Column="1">
                 <Grid.RowDefinitions>
@@ -110,19 +107,19 @@
                         </Grid.ColumnDefinitions>
                         <DataGrid AutoGenerateColumns="False"
                         ItemsSource="{Binding TableList.TableItems.Items}" SelectedItem="{Binding TableList.TableItems.SelectedItem}">
-                        <DataGrid.Resources>
-                            <Style BasedOn="{StaticResource MaterialDesignDataGridCell}" TargetType="DataGridCell">
-                                <Setter Property="ContextMenu">
-                                    <Setter.Value>
-                                        <!--右クリックで表示されるメニュー-->
-                                        <ContextMenu>
-                                            <MenuItem Header="クラスに追加" >
-                                                <b:Interaction.Triggers>
-                                                    <b:EventTrigger EventName="Click">
-                                                        <b:CallMethodAction TargetObject="{Binding Source={StaticResource vm}}" MethodName="SetClass"/>
-                                                    </b:EventTrigger>
-                                                </b:Interaction.Triggers>
-                                            </MenuItem>
+                            <DataGrid.Resources>
+                                <Style BasedOn="{StaticResource MaterialDesignDataGridCell}" TargetType="{x:Type DataGridCell}">
+                                    <Setter Property="ContextMenu">
+                                        <Setter.Value>
+                                            <!--右クリックで表示されるメニュー-->
+                                            <ContextMenu>
+                                                <MenuItem Header="クラスに追加" >
+                                                    <b:Interaction.Triggers>
+                                                        <b:EventTrigger EventName="Click">
+                                                            <b:CallMethodAction TargetObject="{Binding Source={StaticResource vm}}" MethodName="SetClass"/>
+                                                        </b:EventTrigger>
+                                                    </b:Interaction.Triggers>
+                                                </MenuItem>
                                                 <MenuItem Header="gRPCに追加" >
                                                     <b:Interaction.Triggers>
                                                         <b:EventTrigger EventName="Click">
@@ -131,22 +128,22 @@
                                                     </b:Interaction.Triggers>
                                                 </MenuItem>
                                             </ContextMenu>
-                                    </Setter.Value>
-                                </Setter>
-                            </Style>
-                        </DataGrid.Resources>
-                        <b:Interaction.Triggers>
-                            <b:EventTrigger EventName="SelectionChanged">
-                                <b:CallMethodAction TargetObject="{Binding Mode=OneWay, Source={StaticResource vm}}" MethodName="RefleshCode"/>
-                            </b:EventTrigger>
-                        </b:Interaction.Triggers>
-                        <DataGrid.Columns>
-                            <DataGridTextColumn Header="Name" Binding="{Binding Name}"/>
-                            <DataGridTextColumn Header="Description" Binding="{Binding Description}"/>
-                            <DataGridTextColumn Header="Create Date" Binding="{Binding CreateDate, StringFormat=yyyy/MM/dd}"/>
-                            <DataGridTextColumn Header="Create User" Binding="{Binding CreateUser}"/>
-                        </DataGrid.Columns>
-                    </DataGrid>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Style>
+                            </DataGrid.Resources>
+                            <b:Interaction.Triggers>
+                                <b:EventTrigger EventName="SelectionChanged">
+                                    <b:CallMethodAction TargetObject="{Binding Mode=OneWay, Source={StaticResource vm}}" MethodName="RefleshCode"/>
+                                </b:EventTrigger>
+                            </b:Interaction.Triggers>
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="Name" Binding="{Binding Name}"/>
+                                <DataGridTextColumn Header="Description" Binding="{Binding Description}"/>
+                                <DataGridTextColumn Header="Create Date" Binding="{Binding CreateDate, StringFormat=yyyy/MM/dd}"/>
+                                <DataGridTextColumn Header="Create User" Binding="{Binding CreateUser}"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
                         <Grid Grid.Column="1">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="*"/>
@@ -231,21 +228,45 @@
                         <DataGrid  AutoGenerateColumns="False" 
                               ItemsSource="{Binding TableList.TableItems.SelectedItem.TableRelationList.Items}"
                               SelectedItem="{Binding TableList.TableItems.SelectedItem.TableRelationList.SelectedItem}">
-                        <b:Interaction.Triggers>
-                            <b:EventTrigger EventName="SelectionChanged">
-                                <b:CallMethodAction TargetObject="{Binding Mode=OneWay, Source={StaticResource vm}}" MethodName="RefleshCode"/>
-                            </b:EventTrigger>
-                        </b:Interaction.Triggers>
-                        <DataGrid.Columns>
-                            <DataGridTextColumn Header="TargetTable" Binding="{Binding TagetTable}"/>
-                            <DataGridComboBoxColumn Header="Multiplicity" SelectedItemBinding="{Binding OwnMultiplicity}" 
-                                                    ItemsSource="{Binding Mode=OneWay, Source={StaticResource MultiplicityValues}}"/>
-                            <DataGridComboBoxColumn Header="TargetMultiplicity" SelectedItemBinding="{Binding TargetMultiplicity}" 
-                                                    ItemsSource="{Binding Mode=OneWay, Source={StaticResource MultiplicityValues}}"/>
-                            
-                            <DataGridTextColumn Header="Description" Binding="{Binding Description}"/>
-                        </DataGrid.Columns>
-                    </DataGrid>
+                            <b:Interaction.Triggers>
+                                <b:EventTrigger EventName="SelectionChanged">
+                                    <b:CallMethodAction TargetObject="{Binding Mode=OneWay, Source={StaticResource vm}}" MethodName="RefleshCode"/>
+                                </b:EventTrigger>
+                            </b:Interaction.Triggers>
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="TargetTable" Binding="{Binding TagetTable}"/>
+                                <DataGridTemplateColumn IsReadOnly="True" Header="Multiplicity">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <ComboBox ItemsSource="{Binding Mode=OneWay, Source={StaticResource MultiplicityValues}}"
+                                                      SelectedItem="{Binding OwnMultiplicity, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                                                <ComboBox.ItemTemplate>
+                                                    <DataTemplate>
+                                                        <Image Source="{Binding Converter={StaticResource MultiplicityToImagePathConverter}, ConverterParameter=left}"/>
+                                                    </DataTemplate>
+                                                </ComboBox.ItemTemplate>
+                                            </ComboBox>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                                <DataGridTemplateColumn IsReadOnly="True" Header="TargetMultiplicity">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <ComboBox ItemsSource="{Binding Mode=OneWay, Source={StaticResource MultiplicityValues}}"
+                                                      SelectedItem="{Binding TargetMultiplicity, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                                                <ComboBox.ItemTemplate>
+                                                    <DataTemplate>
+                                                        <Image Source="{Binding Converter={StaticResource MultiplicityToImagePathConverter}, ConverterParameter=right}"/>
+                                                    </DataTemplate>
+                                                </ComboBox.ItemTemplate>
+                                            </ComboBox>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+
+                                <DataGridTextColumn Header="Description" Binding="{Binding Description}"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
                         <Grid Grid.Column="1">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="*"/>

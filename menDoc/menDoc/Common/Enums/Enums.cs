@@ -110,8 +110,7 @@ namespace menDoc.Common.Enums
 		ZeroOne,    /* 0..1 */
 		ZeroMulti,  /* 0..* */
 		OneOne,     /* 1..1 */
-		OneMulti,   /* 1..*	*/
-		Multi       /* *..*	*/
+		OneMulti   /* 1..*	*/
 	}
 	#endregion
 
