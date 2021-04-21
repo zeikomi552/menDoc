@@ -68,6 +68,42 @@ namespace menDoc.Common.Utilities
         }
         #endregion
 
+        #region コンフィグフォルダパス
+        /// <summary>
+        /// コンフィグファイルパス
+        /// </summary>
+        public static string ConfDirPath
+        {
+            get
+            {
+                return ExeCurrentDir + @"\" + "config";
+            }
+        }
+        #endregion
+
+        #region コンフィグファイルパス
+        /// <summary>
+        /// コンフィグファイルパス
+        /// </summary>
+        public static string ConfFilePath
+        {
+            get
+            {
+                return ConfDirPath + @"\" + "menDoc.conf";
+            }
+        }
+        #endregion
+
+        #region コンフィグフォルダパス
+        /// <summary>
+        /// Configフォルダパス
+        /// </summary>
+        public static void CreateConfDir()
+        {
+            CheckAndCreate(ConfDirPath);
+        }
+        #endregion
+
         #region フォルダの存在確認
         /// <summary>
         /// フォルダの存在確認
@@ -865,7 +901,5 @@ namespace menDoc.Common.Utilities
             return code.ToString();
         }
         #endregion
-
-
     }
 }

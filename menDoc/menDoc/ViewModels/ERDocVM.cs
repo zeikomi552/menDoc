@@ -37,13 +37,49 @@ namespace menDoc.ViewModels
 		}
 		#endregion
 
+		#region ブラウザのパス[DefaultBrowzerPath]プロパティ
+		/// <summary>
+		/// ブラウザのパス[DefaultBrowzerPath]プロパティ用変数
+		/// </summary>
+		string _DefaultBrowzerPath = string.Empty;
+		/// <summary>
+		/// ブラウザのパス[DefaultBrowzerPath]プロパティ
+		/// </summary>
+		public string DefaultBrowzerPath
+		{
+			get
+			{
+				return _DefaultBrowzerPath;
+			}
+			set
+			{
+				if (!_DefaultBrowzerPath.Equals(value))
+				{
+					_DefaultBrowzerPath = value;
+					NotifyPropertyChanged("DefaultBrowzerPath");
+				}
+			}
+		}
+		#endregion
+
+
 		#region 初期化処理
 		/// <summary>
 		/// 初期化処理
 		/// </summary>
 		public override void Init()
 		{
+			try
+			{
+				var conf = ConfigManager.LoadConf();
 
+				this.DefaultBrowzerPath = conf.DefaultBrowzerPath;
+
+			}
+			catch (Exception e)
+			{
+				ShowMessage.ShowErrorOK(e.Message, "Error");
+			}
 
 		}
 		#endregion
@@ -59,19 +95,23 @@ namespace menDoc.ViewModels
 		#endregion
 
 
-
+		#region プレビュー処理
+		/// <summary>
+		/// プレビュー処理
+		/// </summary>
 		public void Preview()
         {
 			try
 			{
 				string path = this.TableList.SaveTemporary();
-				System.Diagnostics.Process.Start(@"C:\Program Files (x86)\Google\Chrome\Application\chrome.exe", path);
+				System.Diagnostics.Process.Start(this.DefaultBrowzerPath, path);
 			}
 			catch (Exception e)
 			{
 				ShowMessage.ShowErrorOK(e.Message, "Error");
 			}
 		}
+		#endregion
 
 		#region Class図の方へ値を入力する
 		/// <summary>
