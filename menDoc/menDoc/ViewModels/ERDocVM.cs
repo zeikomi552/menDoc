@@ -1,11 +1,14 @@
 ﻿using menDoc.Common;
+using menDoc.Common.Utilities;
 using menDoc.Models.ERDiagram;
 using Microsoft.Win32;
 using MVVMCore.BaseClass;
 using MVVMCore.Common.Utilities;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -54,6 +57,21 @@ namespace menDoc.ViewModels
 
 		}
 		#endregion
+
+
+
+		public void Preview()
+        {
+			try
+			{
+				string path = this.TableList.SaveTemporary();
+				System.Diagnostics.Process.Start(@"C:\Program Files (x86)\Google\Chrome\Application\chrome.exe", path);
+			}
+			catch (Exception e)
+			{
+				ShowMessage.ShowErrorOK(e.Message, "Error");
+			}
+		}
 
 		#region Class図の方へ値を入力する
 		/// <summary>

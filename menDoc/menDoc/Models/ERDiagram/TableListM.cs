@@ -1,10 +1,13 @@
-﻿using menDoc.Common.Utilities;
+﻿
+using Markdig;
+using menDoc.Common.Utilities;
 using MVVMCore.BaseClass;
 using MVVMCore.Common.Utilities;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -49,6 +52,73 @@ namespace menDoc.Models.ERDiagram
 			}
 		}
 		#endregion
+
+		public string Html
+		{
+			get
+			{
+				var pipeline = new MarkdownPipelineBuilder().UseAdvancedExtensions().Build();
+				return Markdig.Markdown.ToHtml(this.Markdown, pipeline);
+			}
+		}
+
+
+		public string ExeCurrentDir
+        {
+            get
+            {
+				Assembly myAssembly = Assembly.GetExecutingAssembly();
+				string path = myAssembly.Location;
+				DirectoryInfo di = new DirectoryInfo(path);
+				// 親のディレクトリを取得する
+				DirectoryInfo diParent = di.Parent;
+				return diParent.FullName;
+
+			}
+		}
+
+		public string JSDir
+		{
+			get
+			{
+				return this.ExeCurrentDir + @"\Common\js";
+			}
+		}
+	
+
+		public Uri TmpURI
+		{
+			get
+			{
+				return new Uri(this.ExeCurrentDir + @"\preview.html");
+			}
+		}
+	
+
+		string OutputHtmlTmpletePath = @".\Common\Templete\HtmlCode\outputhtml.mdtmpl";
+
+		public string SaveTemporary()
+		{
+			try
+			{
+				// UTF-8
+				StreamReader html_sr = new StreamReader(OutputHtmlTmpletePath, Encoding.UTF8);
+
+				// テンプレートファイル読み出し
+				string html_txt = html_sr.ReadToEnd();
+
+				html_txt = html_txt.Replace("{menDoc:jsdir}", this.JSDir);
+				html_txt = html_txt.Replace("{menDoc:htmlbody}", this.Html);
+				File.WriteAllText(@"preview.html", html_txt);
+
+				return this.ExeCurrentDir + @"\preview.html";
+			}
+			catch (Exception e)
+			{
+				ShowMessage.ShowErrorOK(e.Message, "Error");
+				return string.Empty;
+			}
+		}
 
 		#region EntityFramework用コード
 		/// <summary>
@@ -137,10 +207,13 @@ namespace menDoc.Models.ERDiagram
 		public void RefleshCode()
 		{
 			NotifyPropertyChanged("Markdown");
+			NotifyPropertyChanged("Html");
 			NotifyPropertyChanged("EntityCode");
 			NotifyPropertyChanged("InterfaceCode");
 			NotifyPropertyChanged("ProtoCode");
 			NotifyPropertyChanged("DbContext");
+			SaveTemporary();
+			NotifyPropertyChanged("TmpURI");
 		}
 		#endregion
 

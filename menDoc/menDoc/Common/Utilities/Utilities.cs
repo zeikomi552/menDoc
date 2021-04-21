@@ -1,5 +1,6 @@
 ﻿using menDoc.Common.Enums;
 using menDoc.Models.ClassDiagram;
+using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -776,5 +777,7 @@ namespace menDoc.Common.Utilities
             return code.ToString();
         }
         #endregion
+
+
     }
 }

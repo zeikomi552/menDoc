@@ -6,6 +6,8 @@
              xmlns:local="clr-namespace:menDoc.Views" 
              xmlns:enum="clr-namespace:menDoc.Common.Enums"
              xmlns:ViewModels="clr-namespace:menDoc.ViewModels"
+            xmlns:markdig="clr-namespace:Markdig.Wpf;assembly=Markdig.Wpf"
+    xmlns:wv2="clr-namespace:Microsoft.Web.WebView2.Wpf;assembly=Microsoft.Web.WebView2.Wpf"
              xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
              xmlns:sys="clr-namespace:System;assembly=mscorlib"
              xmlns:Converters="clr-namespace:menDoc.Common.Converters" x:Class="menDoc.Views.ERDocV"
@@ -58,6 +60,13 @@
                 <TabItem Header="Markdown">
                     <GroupBox Header="Markdown">
                         <TextBox VerticalScrollBarVisibility="Auto" Margin="5" Text="{Binding TableList.Markdown, Mode=OneWay}"/>
+                    </GroupBox>
+                </TabItem>
+                <TabItem Header="Markdown Preview">
+                    <GroupBox Header="Markdown Preview">
+                        <!--<markdig:MarkdownViewer Margin="5" Markdown="{Binding TableList.Markdown, Mode=OneWay}"/>-->
+                        <wv2:WebView2 Name="webView" Source="{Binding TableList.TmpURI, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
+                        <!--<TextBox VerticalScrollBarVisibility="Auto" Margin="5" Text="{Binding TableList.Html, Mode=OneWay}"/>-->
                     </GroupBox>
                 </TabItem>
                 <TabItem Header="C#">
@@ -296,6 +305,13 @@
         </Grid>
         <Grid Grid.Row="1">
             <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
+                <Button Margin="5" Width="100" Content="Preview">
+                    <b:Interaction.Triggers>
+                        <b:EventTrigger EventName="Click">
+                            <b:CallMethodAction TargetObject="{Binding}" MethodName="Preview"/>
+                        </b:EventTrigger>
+                    </b:Interaction.Triggers>
+                </Button>
                 <Button Margin="5" Width="100" Content="Save">
                     <b:Interaction.Triggers>
                         <b:EventTrigger EventName="Click">
