@@ -3,7 +3,9 @@ using menDoc.Models.ClassDiagram;
 using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -11,6 +13,85 @@ namespace menDoc.Common.Utilities
 {
     public class Utilities
     {
+        #region 実行ファイルのカレントディレクトリを返却する
+        /// <summary>
+        /// 実行ファイルのカレントディレクトリを返却する
+        /// </summary>
+        public static string ExeCurrentDir
+        {
+            get
+            {
+                Assembly myAssembly = Assembly.GetExecutingAssembly();
+                string path = myAssembly.Location;
+                DirectoryInfo di = new DirectoryInfo(path);
+                // 親のディレクトリを取得する
+                DirectoryInfo diParent = di.Parent;
+                return diParent.FullName;
+            }
+        }
+        #endregion
+
+        #region JSファイルの保存先
+        /// <summary>
+        /// JSファイルの保存先
+        /// </summary>
+        public static string JSDir
+        {
+            get
+            {
+                return ExeCurrentDir + @"\Common\js";
+            }
+        }
+        #endregion
+
+        #region テンポラリフォルダの作成
+        /// <summary>
+        /// テンポラリフォルダの作成
+        /// </summary>
+        public static string TempDir
+        {
+            get
+            {
+                return ExeCurrentDir + @"\Temporary";
+            }
+        }
+        #endregion
+
+        #region 一時フォルダの作成
+        /// <summary>
+        /// 一時フォルダの作成
+        /// </summary>
+        public static void CreateTemporaryDir()
+        {
+            // フォルダの存在を確認しない場合は作成する
+            CheckAndCreate(ExeCurrentDir + @"\Temporary");
+        }
+        #endregion
+
+        #region フォルダの存在確認
+        /// <summary>
+        /// フォルダの存在確認
+        /// 存在しない場合は作成する
+        /// </summary>
+        /// <param name="directory_path">フォルダパス</param>
+        public static void CheckAndCreate(string directory_path)
+        {
+            // フォルダの存在確認
+            if (!Directory.Exists(directory_path))
+            {
+                DirectoryInfo di = new DirectoryInfo(directory_path);
+                // 親のディレクトリを取得する
+                DirectoryInfo diParent = di.Parent;
+
+                // 1つ上の階層をチェックする
+                CheckAndCreate(diParent.FullName);
+
+                // フォルダの作成
+                Directory.CreateDirectory(directory_path);
+            }
+        }
+        #endregion
+
         #region Markdownのエスケープ文字
         /// <summary>
         /// Markdownのエスケープ文字
@@ -302,6 +383,7 @@ namespace menDoc.Common.Utilities
             }
         }
         #endregion
+
         #region DBの型を.protoの型に変換する
         /// <summary>
         /// DBの型を.protoの型に変換する
@@ -692,6 +774,7 @@ namespace menDoc.Common.Utilities
             return code.ToString();
         }
         #endregion
+
         #region マークダウンの説明のボディ部
         /// <summary>
         /// マークダウンの説明のボディ部
@@ -713,6 +796,11 @@ namespace menDoc.Common.Utilities
         #endregion
 
         #region Markdown クラス詳細
+        /// <summary>
+        /// クラス詳細
+        /// </summary>
+        /// <param name="list">クラス要素</param>
+        /// <returns>マークダウン</returns>
         public static string GetClassDetails(ClassListM list)
         {
             StringBuilder code = new StringBuilder();

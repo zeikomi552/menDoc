@@ -15,6 +15,33 @@ namespace menDoc.Models.ERDiagram
 {
 	public class TableListM : ModelBase
 	{
+		#region HTMLファイルのテンプレートファイル
+		/// <summary>
+		/// HTMLファイルのテンプレートファイル
+		/// </summary>
+		string OutputHtmlTmpletePath = @".\Common\Templete\HtmlCode\outputhtml.mdtmpl";
+		#endregion
+
+		#region 一時ファイル名
+		/// <summary>
+		/// 一時ファイル名
+		/// </summary>
+		public const string TmploraryFileName = "ERTmp.html";
+		#endregion
+
+		#region 一時ファイルのパス
+		/// <summary>
+		/// 一時ファイルのパス
+		/// </summary>
+		public string TmploraryFilePath
+		{
+			get
+			{
+				return Utilities.TempDir + @"\" + TmploraryFileName;
+			}
+		}
+		#endregion
+
 		#region テーブルリスト[TableItems]プロパティ
 		/// <summary>
 		/// テーブルリスト[TableItems]プロパティ用変数
@@ -53,6 +80,10 @@ namespace menDoc.Models.ERDiagram
 		}
 		#endregion
 
+		#region HTML
+		/// <summary>
+		/// HTML
+		/// </summary>
 		public string Html
 		{
 			get
@@ -61,42 +92,28 @@ namespace menDoc.Models.ERDiagram
 				return Markdig.Markdown.ToHtml(this.Markdown, pipeline);
 			}
 		}
+		#endregion
 
-
-		public string ExeCurrentDir
-        {
-            get
-            {
-				Assembly myAssembly = Assembly.GetExecutingAssembly();
-				string path = myAssembly.Location;
-				DirectoryInfo di = new DirectoryInfo(path);
-				// 親のディレクトリを取得する
-				DirectoryInfo diParent = di.Parent;
-				return diParent.FullName;
-
-			}
-		}
-
-		public string JSDir
-		{
-			get
-			{
-				return this.ExeCurrentDir + @"\Common\js";
-			}
-		}
-	
-
+		#region 一時ファイルのURI
+		/// <summary>
+		/// 一時ファイルのURI
+		/// </summary>
 		public Uri TmpURI
 		{
 			get
 			{
-				return new Uri(this.ExeCurrentDir + @"\preview.html");
+				return new Uri(this.TmploraryFilePath);
 			}
 		}
-	
+		#endregion
 
-		string OutputHtmlTmpletePath = @".\Common\Templete\HtmlCode\outputhtml.mdtmpl";
 
+
+		#region テンポラリデータの保存処理
+		/// <summary>
+		/// テンポラリデータの保存処理
+		/// </summary>
+		/// <returns>保存処理</returns>
 		public string SaveTemporary()
 		{
 			try
@@ -107,11 +124,14 @@ namespace menDoc.Models.ERDiagram
 				// テンプレートファイル読み出し
 				string html_txt = html_sr.ReadToEnd();
 
-				html_txt = html_txt.Replace("{menDoc:jsdir}", this.JSDir);
+				html_txt = html_txt.Replace("{menDoc:jsdir}", Utilities.JSDir);
 				html_txt = html_txt.Replace("{menDoc:htmlbody}", this.Html);
-				File.WriteAllText(@"preview.html", html_txt);
+				File.WriteAllText(this.TmploraryFilePath, html_txt);
 
-				return this.ExeCurrentDir + @"\preview.html";
+				// 一時フォルダの作成
+				Utilities.CreateTemporaryDir();
+
+				return this.TmploraryFilePath;
 			}
 			catch (Exception e)
 			{
@@ -119,6 +139,7 @@ namespace menDoc.Models.ERDiagram
 				return string.Empty;
 			}
 		}
+		#endregion
 
 		#region EntityFramework用コード
 		/// <summary>
@@ -430,9 +451,13 @@ namespace menDoc.Models.ERDiagram
 			code.AppendLine("```");
 			return code.ToString();
 		}
-        #endregion
+		#endregion
 
 		#region テーブル一覧用マークダウンの作成
+		/// <summary>
+		/// テーブル一覧用マークダウンの作成
+		/// </summary>
+		/// <returns>マークダウン</returns>
 		public string CreateTableListMarkdown()
 		{
 			StringBuilder code = new StringBuilder();
