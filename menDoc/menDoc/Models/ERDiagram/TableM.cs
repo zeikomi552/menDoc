@@ -91,6 +91,10 @@ namespace menDoc.Models.ERDiagram
 								return true;
 							}
 						}
+						else
+						{
+							return true;
+						}
 					}
 				}
 				else if (prop.Name.Equals("TableRelationList"))
@@ -111,6 +115,10 @@ namespace menDoc.Models.ERDiagram
 								return true;
 							}
 						}
+                        else
+                        {
+							return true;
+                        }
 					}
 				}
 				else

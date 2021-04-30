@@ -252,7 +252,16 @@
                                 </b:EventTrigger>
                             </b:Interaction.Triggers>
                             <DataGrid.Columns>
-                                <DataGridTextColumn Header="TargetTable" Binding="{Binding TagetTable}"/>
+                                <!--<DataGridTextColumn Header="TargetTable" Binding="{Binding TagetTable}"/>-->
+                                <DataGridTemplateColumn IsReadOnly="True" Header="TargetTable">
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <ComboBox ItemsSource="{Binding TableList.TableItems.Items, Source={StaticResource vm}}"
+                                                      DisplayMemberPath="Name" SelectedValuePath="Name"
+                                                      SelectedValue="{Binding TagetTable, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
                                 <DataGridTemplateColumn IsReadOnly="True" Header="Multiplicity">
                                     <DataGridTemplateColumn.CellTemplate>
                                         <DataTemplate>

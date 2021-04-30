@@ -83,12 +83,19 @@ namespace menDoc.Models.ERDiagram
 		}
 		#endregion
 
+		#region 変更の確認処理
+		/// <summary>
+		/// 変更の確認処理
+		/// </summary>
+		/// <returns>true:変更された false:変更されていない</returns>
 		public bool ChangeCheck()
 		{
+			// テーブル要素分変化点を確認する
 			for (int index = 0; index < this.TableItems.Items.Count; index++)
 			{
 				var elem = this.TableItems.ElementAt(index);
 
+				// バックアップと比較
 				if (this.TableItemBackup.Items.Count > index)
 				{
 					var elem2 = this.TableItemBackup.ElementAt(index);
@@ -106,12 +113,13 @@ namespace menDoc.Models.ERDiagram
 			return false;
 
 		}
+		#endregion
 
 
 		#region マークダウン
-			/// <summary>
-			/// マークダウン
-			/// </summary>
+		/// <summary>
+		/// マークダウン
+		/// </summary>
 		public string Markdown
 		{
 			get
