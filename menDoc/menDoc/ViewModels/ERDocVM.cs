@@ -1,6 +1,8 @@
 ﻿using menDoc.Common;
 using menDoc.Common.Utilities;
 using menDoc.Models.ERDiagram;
+using menDoc.Views;
+using Microsoft.Web.WebView2.Wpf;
 using Microsoft.Win32;
 using MVVMCore.BaseClass;
 using MVVMCore.Common.Utilities;
@@ -11,6 +13,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Controls;
 
 namespace menDoc.ViewModels
 {
@@ -31,6 +34,7 @@ namespace menDoc.ViewModels
 				if (GlobalValue.TableList == null || !GlobalValue.TableList.Equals(value))
 				{
 					GlobalValue.TableList = value;
+					GlobalValue.TableList.Backup();
 					NotifyPropertyChanged("TableList");
 				}
 			}
@@ -72,17 +76,32 @@ namespace menDoc.ViewModels
 			try
 			{
 				var conf = ConfigManager.LoadConf();
-
 				this.DefaultBrowzerPath = conf.DefaultBrowzerPath;
 
 			}
-			catch (Exception e)
+			catch (Exception ex)
 			{
-				ShowMessage.ShowErrorOK(e.Message, "Error");
+				ShowMessage.ShowErrorOK(ex.Message, "Error");
 			}
-
 		}
 		#endregion
+
+		WebView2 _Webview2 = null;
+
+		public void InitWebView(object sender, EventArgs e)
+		{
+			InitializeAsync(sender, e);
+		}
+
+
+		async void InitializeAsync(object sender, EventArgs e)
+		{
+			var main_wnd = Utilities.GetWindow<ERDocV>(sender);
+			await ((ERDocV)main_wnd).webView.EnsureCoreWebView2Async(null);
+
+			this._Webview2 = ((ERDocV)main_wnd).webView;
+
+		}
 
 		#region 画面を閉じる処理
 		/// <summary>
@@ -94,6 +113,17 @@ namespace menDoc.ViewModels
 		}
 		#endregion
 
+
+		public void RefreshPreview(object sender, EventArgs e)
+		{
+            // 値が変化している場合のみ更新
+            if (this.TableList.ChangeCheck())
+            {
+				this.TableList.RefleshCode();
+				this._Webview2.Reload();
+				this.TableList.Backup();
+            }
+        }
 
 		#region プレビュー処理
 		/// <summary>
@@ -169,7 +199,7 @@ namespace menDoc.ViewModels
 		/// </summary>
 		public void RefleshCode()
 		{
-			this.TableList.RefleshCode();
+			//this.TableList.RefleshCode();
 		}
 		#endregion
 
@@ -192,9 +222,6 @@ namespace menDoc.ViewModels
 				{
 					// 保存ファイルから読み込み
 					this.TableList = XMLUtil.Deserialize<TableListM>(dialog.FileName);
-
-					// 成功メッセージ
-					//ShowMessage.ShowNoticeOK("Load Success!!", "Information");
 				}
 
 			}

@@ -39,6 +39,8 @@
         <b:Interaction.Triggers>
             <b:EventTrigger EventName="Loaded">
                 <b:CallMethodAction TargetObject="{Binding}" MethodName="Init"/>
+                <b:CallMethodAction TargetObject="{Binding}" MethodName="InitWebView"/>
+                <b:CallMethodAction TargetObject="{Binding Mode=OneWay, Source={StaticResource vm}}" MethodName="RefreshPreview"/>
             </b:EventTrigger>
         </b:Interaction.Triggers>
         <Grid.RowDefinitions>
@@ -63,16 +65,14 @@
                         </Setter>
                     </Style>
                 </TabControl.Resources>
+                <TabItem Header="Markdown Preview">
+                    <GroupBox Header="Markdown Preview">
+                        <wv2:WebView2 Name="webView" Source="{Binding TableList.TmpURI, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
+                    </GroupBox>
+                </TabItem>
                 <TabItem Header="Markdown">
                     <GroupBox Header="Markdown">
                         <TextBox VerticalScrollBarVisibility="Auto" Margin="5" Text="{Binding TableList.Markdown, Mode=OneWay}"/>
-                    </GroupBox>
-                </TabItem>
-                <TabItem Header="Markdown Preview">
-                    <GroupBox Header="Markdown Preview">
-                        <!--<markdig:MarkdownViewer Margin="5" Markdown="{Binding TableList.Markdown, Mode=OneWay}"/>-->
-                        <wv2:WebView2 Name="webView" Source="{Binding TableList.TmpURI, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
-                        <!--<TextBox VerticalScrollBarVisibility="Auto" Margin="5" Text="{Binding TableList.Html, Mode=OneWay}"/>-->
                     </GroupBox>
                 </TabItem>
                 <TabItem Header="C#">
@@ -121,7 +121,7 @@
                             <ColumnDefinition Width="30"/>
                         </Grid.ColumnDefinitions>
                         <DataGrid AutoGenerateColumns="False"
-                        ItemsSource="{Binding TableList.TableItems.Items}" SelectedItem="{Binding TableList.TableItems.SelectedItem}">
+                            ItemsSource="{Binding TableList.TableItems.Items}" SelectedItem="{Binding TableList.TableItems.SelectedItem}">
                             <DataGrid.Resources>
                                 <Style BasedOn="{StaticResource MaterialDesignDataGridCell}" TargetType="{x:Type DataGridCell}">
                                     <Setter Property="ContextMenu">
@@ -149,7 +149,7 @@
                             </DataGrid.Resources>
                             <b:Interaction.Triggers>
                                 <b:EventTrigger EventName="SelectionChanged">
-                                    <b:CallMethodAction TargetObject="{Binding Mode=OneWay, Source={StaticResource vm}}" MethodName="RefleshCode"/>
+                                    <b:CallMethodAction TargetObject="{Binding Mode=OneWay, Source={StaticResource vm}}" MethodName="RefreshPreview"/>
                                 </b:EventTrigger>
                             </b:Interaction.Triggers>
                             <DataGrid.Columns>
@@ -195,7 +195,7 @@
                                 SelectedItem="{Binding TableList.TableItems.SelectedItem.ParameterItems.SelectedItem}">
                             <b:Interaction.Triggers>
                                 <b:EventTrigger EventName="SelectionChanged">
-                                    <b:CallMethodAction TargetObject="{Binding Mode=OneWay, Source={StaticResource vm}}" MethodName="RefleshCode"/>
+                                    <b:CallMethodAction TargetObject="{Binding Mode=OneWay, Source={StaticResource vm}}" MethodName="RefreshPreview"/>
                                 </b:EventTrigger>
                             </b:Interaction.Triggers>
 
@@ -245,7 +245,7 @@
                               SelectedItem="{Binding TableList.TableItems.SelectedItem.TableRelationList.SelectedItem}">
                             <b:Interaction.Triggers>
                                 <b:EventTrigger EventName="SelectionChanged">
-                                    <b:CallMethodAction TargetObject="{Binding Mode=OneWay, Source={StaticResource vm}}" MethodName="RefleshCode"/>
+                                    <b:CallMethodAction TargetObject="{Binding Mode=OneWay, Source={StaticResource vm}}" MethodName="RefreshPreview"/>
                                 </b:EventTrigger>
                             </b:Interaction.Triggers>
                             <DataGrid.Columns>
@@ -329,6 +329,7 @@
                     <b:Interaction.Triggers>
                         <b:EventTrigger EventName="Click">
                             <b:CallMethodAction TargetObject="{Binding}" MethodName="Load"/>
+                            <b:CallMethodAction TargetObject="{Binding Mode=OneWay, Source={StaticResource vm}}" MethodName="RefreshPreview"/>
                         </b:EventTrigger>
                     </b:Interaction.Triggers>
                 </Button>

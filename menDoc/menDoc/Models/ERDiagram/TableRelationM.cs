@@ -3,6 +3,7 @@ using MVVMCore.BaseClass;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -10,6 +11,43 @@ namespace menDoc.Models.ERDiagram
 {
     public class TableRelationM : ModelBase
     {
+		#region シャローコピー
+		/// <summary>
+		/// シャローコピー
+		/// </summary>
+		/// <returns></returns>
+		public TableRelationM ShallowCopy()
+		{
+			return (TableRelationM)MemberwiseClone();
+		}
+		#endregion
+
+		#region 比較対象と比べて値が変化しているかを確認する
+		/// <summary>
+		/// 比較対象と比べて値が変化しているかを確認する
+		/// </summary>
+		/// <param name="obj">比較対象</param>
+		/// <returns>true:変化している false:一致</returns>
+		public bool ChangeCheck(TableRelationM obj)
+		{
+			Type t = typeof(TableRelationM);
+			PropertyInfo[] propInfos = t.GetProperties(BindingFlags.Public | BindingFlags.Instance);
+
+			foreach (var prop in propInfos)
+			{
+				var property = typeof(TableRelationM).GetProperty(prop.Name);
+				var val = property?.GetValue(this);     // プロパティ名から値の取り出し
+				var val2 = property?.GetValue(obj);     // プロパティ名から値の取り出し
+
+				if (!val.Equals(val2))
+				{
+					return true;
+				}
+			}
+			return false;
+		}
+		#endregion
+
 		#region 接続先のテーブル[TagetTable]プロパティ
 		/// <summary>
 		/// 接続先のテーブル[TagetTable]プロパティ用変数

@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -9,11 +10,52 @@ namespace menDoc.Models.ERDiagram
 {
     public class TableParameterM : ModelBase
     {
-		#region 主キー[PrimaryKey]プロパティ
+		#region シャローコピー
 		/// <summary>
-		/// 主キー[PrimaryKey]プロパティ用変数
+		/// シャローコピー
 		/// </summary>
-		bool _PrimaryKey = false;
+		/// <returns></returns>
+		public TableParameterM ShallowCopy()
+		{
+			return (TableParameterM)MemberwiseClone();
+		}
+		#endregion
+
+		#region 比較対象と比べて値が変化しているかを確認する
+		/// <summary>
+		/// 比較対象と比べて値が変化しているかを確認する
+		/// </summary>
+		/// <param name="obj">比較対象</param>
+		/// <returns>true:変化している false:一致</returns>
+		public bool ChangeCheck(TableParameterM obj)
+		{
+			Type t = typeof(TableParameterM);
+			PropertyInfo[] propInfos = t.GetProperties(BindingFlags.Public | BindingFlags.Instance);
+
+			foreach (var prop in propInfos)
+			{
+				var property = typeof(TableParameterM).GetProperty(prop.Name);
+				var val = property?.GetValue(this);     // プロパティ名から値の取り出し
+				var val2 = property?.GetValue(obj);     // プロパティ名から値の取り出し
+
+				if (val == null && val2 == null)
+				{
+					;
+				}
+				else if (!val.Equals(val2))
+				{
+					return true;
+				}
+			}
+			return false;
+		}
+        #endregion
+
+        #region 主キー[PrimaryKey]プロパティ
+        /// <summary>
+        /// 主キー[PrimaryKey]プロパティ用変数
+        /// </summary>
+        bool _PrimaryKey = false;
 		/// <summary>
 		/// 主キー[PrimaryKey]プロパティ
 		/// </summary>

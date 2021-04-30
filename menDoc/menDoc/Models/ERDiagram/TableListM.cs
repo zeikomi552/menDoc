@@ -10,34 +10,33 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using static menDoc.Common.TempletePath;
 
 namespace menDoc.Models.ERDiagram
 {
 	public class TableListM : ModelBase
 	{
-		#region HTMLファイルのテンプレートファイル
+		#region テーブル要素のバックアップ[TableItemBackup]プロパティ
 		/// <summary>
-		/// HTMLファイルのテンプレートファイル
+		/// テーブル要素のバックアップ[TableItemBackup]プロパティ用変数
 		/// </summary>
-		string OutputHtmlTmpletePath = @".\Common\Templete\HtmlCode\outputhtml.mdtmpl";
-		#endregion
-
-		#region 一時ファイル名
+		ModelList<TableM> _TableItemBackup = new ModelList<TableM>();
 		/// <summary>
-		/// 一時ファイル名
+		/// テーブル要素のバックアップ[TableItemBackup]プロパティ
 		/// </summary>
-		public const string TmploraryFileName = "ERTmp.html";
-		#endregion
-
-		#region 一時ファイルのパス
-		/// <summary>
-		/// 一時ファイルのパス
-		/// </summary>
-		public string TmploraryFilePath
+		public ModelList<TableM> TableItemBackup
 		{
 			get
 			{
-				return Utilities.TempDir + @"\" + TmploraryFileName;
+				return _TableItemBackup;
+			}
+			set
+			{
+				if (_TableItemBackup == null || !_TableItemBackup.Equals(value))
+				{
+					_TableItemBackup = value;
+					NotifyPropertyChanged("TableItemBackup");
+				}
 			}
 		}
 		#endregion
@@ -67,10 +66,52 @@ namespace menDoc.Models.ERDiagram
 		}
 		#endregion
 
-		#region マークダウン
+		#region バックアップ処理
 		/// <summary>
-		/// マークダウン
+		/// バックアップ処理
 		/// </summary>
+		public void Backup()
+		{
+			ModelList<TableM> bak = new ModelList<TableM>();
+
+			foreach (var tmp in this.TableItems)
+			{
+				bak.Items.Add(tmp.DeepCopy());
+			}
+
+			this.TableItemBackup = bak;
+		}
+		#endregion
+
+		public bool ChangeCheck()
+		{
+			for (int index = 0; index < this.TableItems.Items.Count; index++)
+			{
+				var elem = this.TableItems.ElementAt(index);
+
+				if (this.TableItemBackup.Items.Count > index)
+				{
+					var elem2 = this.TableItemBackup.ElementAt(index);
+
+					if (elem.ChangeCheck(elem2))
+					{
+						return true;
+					}
+				}
+				else
+				{
+					return true;
+				}
+			}
+			return false;
+
+		}
+
+
+		#region マークダウン
+			/// <summary>
+			/// マークダウン
+			/// </summary>
 		public string Markdown
 		{
 			get
@@ -102,12 +143,10 @@ namespace menDoc.Models.ERDiagram
 		{
 			get
 			{
-				return new Uri(this.TmploraryFilePath);
+				return new Uri(ERDiagramPath.TmploraryFilePath);
 			}
 		}
 		#endregion
-
-
 
 		#region テンポラリデータの保存処理
 		/// <summary>
@@ -119,19 +158,19 @@ namespace menDoc.Models.ERDiagram
 			try
 			{
 				// UTF-8
-				StreamReader html_sr = new StreamReader(OutputHtmlTmpletePath, Encoding.UTF8);
+				StreamReader html_sr = new StreamReader(ERDiagramPath.OutputHtmlTmpletePath, Encoding.UTF8);
 
 				// テンプレートファイル読み出し
 				string html_txt = html_sr.ReadToEnd();
 
 				html_txt = html_txt.Replace("{menDoc:jsdir}", Utilities.JSDir);
 				html_txt = html_txt.Replace("{menDoc:htmlbody}", this.Html);
-				File.WriteAllText(this.TmploraryFilePath, html_txt);
+				File.WriteAllText(ERDiagramPath.TmploraryFilePath, html_txt);
 
 				// 一時フォルダの作成
 				Utilities.CreateTemporaryDir();
 
-				return this.TmploraryFilePath;
+				return ERDiagramPath.TmploraryFilePath;
 			}
 			catch (Exception e)
 			{
@@ -220,7 +259,6 @@ namespace menDoc.Models.ERDiagram
 		}
 		#endregion
 
-
 		#region コードの更新
 		/// <summary>
 		/// コードの更新
@@ -238,11 +276,6 @@ namespace menDoc.Models.ERDiagram
 		}
 		#endregion
 
-		string DbContextTempletePath = @".\Common\Templete\CSharpCode\EntityFramework\DbContext.mdtmpl";
-		string DbContextDbSetTempletePath = @".\Common\Templete\CSharpCode\EntityFramework\DbContextDbSet.mdtmpl";
-		string DbContextDbEntityTempletePath = @".\Common\Templete\CSharpCode\EntityFramework\DbContextEntity.mdtmpl";
-		string DbContextEntityPrimaryKeyTempletePath = @".\Common\Templete\CSharpCode\EntityFramework\DbContextEntityPrimaryKey.mdtmpl";
-
 		#region DbContext用C#コードの作成関数
 		/// <summary>
 		/// DbContext用C#コードの作成関数
@@ -251,7 +284,7 @@ namespace menDoc.Models.ERDiagram
 		public string DbContextCode()
 		{
 			// UTF-8
-			StreamReader sr = new StreamReader(DbContextTempletePath, Encoding.UTF8);
+			StreamReader sr = new StreamReader(ERDiagramPath.DbContextTempletePath, Encoding.UTF8);
 
 			// テンプレートファイル読み出し
 			string dbcontext = sr.ReadToEnd();
@@ -275,7 +308,7 @@ namespace menDoc.Models.ERDiagram
 		/// <returns>DbSet用C#コード</returns>
 		private string CreateDbSetCode()
 		{
-			StreamReader sr = new StreamReader(DbContextDbSetTempletePath, Encoding.UTF8);
+			StreamReader sr = new StreamReader(ERDiagramPath.DbContextDbSetTempletePath, Encoding.UTF8);
 			string templete = sr.ReadToEnd();
 
 			StringBuilder parameters_code = new StringBuilder();
@@ -300,11 +333,11 @@ namespace menDoc.Models.ERDiagram
 		private string CreateEntityCode()
 		{
 			// DbSet部用テンプレートファイルの読み込み
-			StreamReader sr = new StreamReader(DbContextDbEntityTempletePath, Encoding.UTF8);
+			StreamReader sr = new StreamReader(ERDiagramPath.DbContextDbEntityTempletePath, Encoding.UTF8);
 			string templete = sr.ReadToEnd();
 
 			// Entity部用のテンプレートファイルの読み込み
-			StreamReader pk_sr = new StreamReader(DbContextEntityPrimaryKeyTempletePath, Encoding.UTF8);
+			StreamReader pk_sr = new StreamReader(ERDiagramPath.DbContextEntityPrimaryKeyTempletePath, Encoding.UTF8);
 			string pk_templete = pk_sr.ReadToEnd();
 
 			// コード保持用

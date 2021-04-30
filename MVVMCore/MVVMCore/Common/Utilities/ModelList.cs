@@ -9,7 +9,11 @@ using System.Threading.Tasks;
 
 namespace MVVMCore.Common.Utilities
 {
-	public class ModelList<T> : INotifyPropertyChanged
+	interface IModeList
+	{ 
+	}
+
+	public class ModelList<T> : INotifyPropertyChanged, IModeList
 	{
 		public IEnumerator<T> GetEnumerator()
 		{

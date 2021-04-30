@@ -5,12 +5,14 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace menDoc.Models.ERDiagram
 {
-    public class TableM : ModelBase
+	[Serializable]
+	public class TableM : ModelBase
 	{
 		string TempletePath = @".\Common\Templete\CSharpCode\EntityFramework\ClassCode.mdtmpl";
 		string InterfaceClassTempletePath = @".\Common\Templete\CSharpCode\EntityFramework\InterfaceClassCode.mdtmpl";
@@ -20,6 +22,109 @@ namespace menDoc.Models.ERDiagram
 		string ClassMethodTempletePath = @".\Common\Templete\CSharpCode\EntityFramework\ClassMethod.mdtmpl";
 		string ClassMethodPKTempletePath = @".\Common\Templete\CSharpCode\EntityFramework\ClassMethodPK.mdtmpl";
 		string CopyParametersPath = @".\Common\Templete\CSharpCode\EntityFramework\CopyParameters.mdtmpl";
+
+		#region シャローコピー
+		/// <summary>
+		/// シャローコピー
+		/// </summary>
+		/// <returns></returns>
+		public TableM ShallowCopy()
+		{
+			return (TableM)MemberwiseClone();
+		}
+		#endregion
+
+		public TableM DeepCopy()
+		{
+			var tmp = ShallowCopy();
+
+			var r_list = new ModelList<TableRelationM>();
+			foreach(var r in _TableRelationList)
+			{
+				r_list.Items.Add(r.ShallowCopy());
+			}
+			tmp.TableRelationList = r_list;
+
+			var p_items = new ModelList<TableParameterM>();
+			foreach (var p in _ParameterItems)
+			{
+				p_items.Items.Add(p.ShallowCopy());
+			}
+			tmp.ParameterItems = p_items;
+
+			return tmp;
+		}
+
+		#region 比較対象と比べて値が変化しているかを確認する
+		/// <summary>
+		/// 比較対象と比べて値が変化しているかを確認する
+		/// </summary>
+		/// <param name="obj">比較対象</param>
+		/// <returns>true:変化している false:一致</returns>
+		public bool ChangeCheck(TableM obj)
+		{
+			Type t = typeof(TableM);
+			PropertyInfo[] propInfos = t.GetProperties(BindingFlags.Public | BindingFlags.Instance);
+
+			foreach (var prop in propInfos)
+			{
+				var property = typeof(TableM).GetProperty(prop.Name);
+
+				var val = property?.GetValue(this);     // プロパティ名から値の取り出し
+				var val2 = property?.GetValue(obj);     // プロパティ名から値の取り出し
+
+				if (prop.Name.Equals("ParameterItems"))
+				{
+					var val_tmp = val as ModelList<TableParameterM>;
+					var val2_tmp = val2 as ModelList<TableParameterM>;
+
+					for (int index = 0; index < val_tmp.Items.Count; index++)
+					{
+						var tmp = val_tmp.ElementAt(index);
+
+						if (val2_tmp.Items.Count > index)
+						{
+							var tmp2 = val2_tmp.ElementAt(index);
+
+							if (tmp.ChangeCheck(tmp2))
+							{
+								return true;
+							}
+						}
+					}
+				}
+				else if (prop.Name.Equals("TableRelationList"))
+				{
+					var val_tmp = val as ModelList<TableRelationM>;
+					var val2_tmp = val2 as ModelList<TableRelationM>;
+
+					for (int index = 0; index < val_tmp.Items.Count; index++)
+					{
+						var tmp = val_tmp.ElementAt(index);
+
+						if (val2_tmp.Items.Count > index)
+						{
+							var tmp2 = val2_tmp.ElementAt(index);
+
+							if (tmp.ChangeCheck(tmp2))
+							{
+								return true;
+							}
+						}
+					}
+				}
+				else
+                {
+
+					if (!val.Equals(val2))
+					{
+						return true;
+					}
+				}
+			}
+			return false;
+		}
+		#endregion
 
 		#region テーブル名[Name]プロパティ
 		/// <summary>
@@ -165,7 +270,6 @@ namespace menDoc.Models.ERDiagram
 			}
 		}
 		#endregion
-
         #region プロパティ用テンプレートコード
         /// <summary>
         /// プロパティ用テンプレートコード
@@ -351,6 +455,7 @@ namespace menDoc.Models.ERDiagram
 		}
 		#endregion
 
+		
 		private string CreateCopyParameters()
 		{
 			StreamReader sr = new StreamReader(CopyParametersPath, Encoding.UTF8);
