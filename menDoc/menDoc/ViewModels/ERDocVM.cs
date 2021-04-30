@@ -236,7 +236,11 @@ namespace menDoc.ViewModels
 				{
 					// 保存ファイルから読み込み
 					this.TableList = XMLUtil.Deserialize<TableListM>(dialog.FileName);
+
+					// 一時ファイルの保存
 					string path = this.TableList.SaveTemporary();
+
+					// プレビューのリロード
 					this._Webview2.Reload();
 				}
 
