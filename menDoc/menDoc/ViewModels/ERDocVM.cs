@@ -81,6 +81,7 @@ namespace menDoc.ViewModels
 		{
 			try
 			{
+				string path = this.TableList.SaveTemporary();
 				var conf = ConfigManager.LoadConf();
 				this.DefaultBrowzerPath = conf.DefaultBrowzerPath;
 
@@ -235,6 +236,8 @@ namespace menDoc.ViewModels
 				{
 					// 保存ファイルから読み込み
 					this.TableList = XMLUtil.Deserialize<TableListM>(dialog.FileName);
+					string path = this.TableList.SaveTemporary();
+					this._Webview2.Reload();
 				}
 
 			}
