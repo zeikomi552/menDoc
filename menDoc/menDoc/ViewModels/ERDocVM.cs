@@ -19,6 +19,13 @@ namespace menDoc.ViewModels
 {
     public class ERDocVM : ViewModelBase
 	{
+		#region WebView2オブジェクト
+		/// <summary>
+		/// WebView2オブジェクト
+		/// </summary>
+		WebView2 _Webview2 = null;
+		#endregion
+
 		#region テーブルリスト[TableList]プロパティ
 		/// <summary>
 		/// テーブルリスト[TableList]プロパティ
@@ -66,7 +73,6 @@ namespace menDoc.ViewModels
 		}
 		#endregion
 
-
 		#region 初期化処理
 		/// <summary>
 		/// 初期化処理
@@ -86,14 +92,24 @@ namespace menDoc.ViewModels
 		}
 		#endregion
 
-		WebView2 _Webview2 = null;
-
+		#region 初期化待ち処理
+		/// <summary>
+		/// 初期化待ち処理
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		public void InitWebView(object sender, EventArgs e)
 		{
 			InitializeAsync(sender, e);
 		}
+		#endregion
 
-
+		#region WebView2初期化待ち処理
+		/// <summary>
+		/// WebView2初期化待ち処理
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		async void InitializeAsync(object sender, EventArgs e)
 		{
 			var main_wnd = Utilities.GetWindow<ERDocV>(sender);
@@ -102,6 +118,7 @@ namespace menDoc.ViewModels
 			this._Webview2 = ((ERDocV)main_wnd).webView;
 
 		}
+		#endregion
 
 		#region 画面を閉じる処理
 		/// <summary>
@@ -113,7 +130,12 @@ namespace menDoc.ViewModels
 		}
 		#endregion
 
-
+		#region Previewの更新処理
+		/// <summary>
+		/// Previewの更新処理
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		public void RefreshPreview(object sender, EventArgs e)
 		{
             // 値が変化している場合のみ更新
@@ -124,6 +146,7 @@ namespace menDoc.ViewModels
 				this.TableList.Backup();
             }
         }
+		#endregion
 
 		#region プレビュー処理
 		/// <summary>
