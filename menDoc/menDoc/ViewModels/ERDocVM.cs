@@ -216,16 +216,6 @@ namespace menDoc.ViewModels
 		}
 		#endregion
 
-		#region コードの更新
-		/// <summary>
-		/// コードの更新
-		/// </summary>
-		public void RefleshCode()
-		{
-			//this.TableList.RefleshCode();
-		}
-		#endregion
-
 		#region 読み込み処理
 		/// <summary>
 		/// 読み込み処理
