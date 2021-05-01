@@ -11,17 +11,6 @@ namespace menDoc.Models.ERDiagram
 {
     public class TableRelationM : ModelBase
     {
-		#region シャローコピー
-		/// <summary>
-		/// シャローコピー
-		/// </summary>
-		/// <returns></returns>
-		public TableRelationM ShallowCopy()
-		{
-			return (TableRelationM)MemberwiseClone();
-		}
-		#endregion
-
 		#region 比較対象と比べて値が変化しているかを確認する
 		/// <summary>
 		/// 比較対象と比べて値が変化しているかを確認する

@@ -23,37 +23,32 @@ namespace menDoc.Models.ERDiagram
 		string ClassMethodPKTempletePath = @".\Common\Templete\CSharpCode\EntityFramework\ClassMethodPK.mdtmpl";
 		string CopyParametersPath = @".\Common\Templete\CSharpCode\EntityFramework\CopyParameters.mdtmpl";
 
-		#region シャローコピー
+		#region ディープコピー
 		/// <summary>
-		/// シャローコピー
+		/// ディープコピー
 		/// </summary>
-		/// <returns></returns>
-		public TableM ShallowCopy()
-		{
-			return (TableM)MemberwiseClone();
-		}
-		#endregion
-
+		/// <returns>コピー結果</returns>
 		public TableM DeepCopy()
 		{
-			var tmp = ShallowCopy();
+			var tmp = ShallowCopy<TableM>();
 
 			var r_list = new ModelList<TableRelationM>();
 			foreach(var r in _TableRelationList)
 			{
-				r_list.Items.Add(r.ShallowCopy());
+				r_list.Items.Add(r.ShallowCopy<TableRelationM>());
 			}
 			tmp.TableRelationList = r_list;
 
 			var p_items = new ModelList<TableParameterM>();
 			foreach (var p in _ParameterItems)
 			{
-				p_items.Items.Add(p.ShallowCopy());
+				p_items.Items.Add(p.ShallowCopy<TableParameterM>());
 			}
 			tmp.ParameterItems = p_items;
 
 			return tmp;
 		}
+		#endregion
 
 		#region 比較対象と比べて値が変化しているかを確認する
 		/// <summary>

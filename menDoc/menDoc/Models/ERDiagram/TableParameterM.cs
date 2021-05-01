@@ -10,17 +10,6 @@ namespace menDoc.Models.ERDiagram
 {
     public class TableParameterM : ModelBase
     {
-		#region シャローコピー
-		/// <summary>
-		/// シャローコピー
-		/// </summary>
-		/// <returns></returns>
-		public TableParameterM ShallowCopy()
-		{
-			return (TableParameterM)MemberwiseClone();
-		}
-		#endregion
-
 		#region 比較対象と比べて値が変化しているかを確認する
 		/// <summary>
 		/// 比較対象と比べて値が変化しているかを確認する

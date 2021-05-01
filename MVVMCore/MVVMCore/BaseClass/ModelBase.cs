@@ -9,6 +9,17 @@ namespace MVVMCore.BaseClass
 {
     public class ModelBase : INotifyPropertyChanged
     {
+		#region シャローコピー
+		/// <summary>
+		/// シャローコピー
+		/// </summary>
+		/// <returns></returns>
+		public T ShallowCopy<T>()
+		{
+			return (T)MemberwiseClone();
+		}
+		#endregion
+
 		#region INotifyPropertyChanged 
 		public event PropertyChangedEventHandler PropertyChanged;
 
