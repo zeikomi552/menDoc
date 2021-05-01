@@ -42,26 +42,6 @@ namespace menDoc.ViewModels
 		}
 		#endregion
 
-		#region 初期化待ち処理
-		/// <summary>
-		/// 初期化待ち処理
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		public void InitWebView(object sender, EventArgs e)
-		{
-			try
-            {
-				var main_wnd = Utilities.GetWindow<ERDocV>(sender);
-				SetWebViewObject(((ERDocV)main_wnd).webView);
-			}
-			catch (Exception ex)
-			{
-				ShowMessage.ShowErrorOK(ex.Message, "Error");
-			}
-		}
-		#endregion
-
 		#region Previewの更新処理
 		/// <summary>
 		/// Previewの更新処理
@@ -91,12 +71,12 @@ namespace menDoc.ViewModels
 		/// <summary>
 		/// プレビュー処理
 		/// </summary>
-		public void Preview()
+		public override void Preview()
         {
 			try
 			{
 				string path = this.TableList.SaveTemporary();
-				System.Diagnostics.Process.Start(this.DefaultBrowzerPath, path);
+				base.Preview();
 			}
 			catch (Exception e)
 			{

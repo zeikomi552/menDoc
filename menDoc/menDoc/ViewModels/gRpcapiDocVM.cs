@@ -36,26 +36,6 @@ namespace menDoc.ViewModels
 		}
 		#endregion
 
-		#region 初期化待ち処理
-		/// <summary>
-		/// 初期化待ち処理
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		public void InitWebView(object sender, EventArgs e)
-		{
-			try
-			{
-				var main_wnd = Utilities.GetWindow<gRpcapiDocV>(sender);
-				SetWebViewObject(((gRpcapiDocV)main_wnd).webView);
-			}
-			catch (Exception ex)
-			{
-				ShowMessage.ShowErrorOK(ex.Message, "Error");
-			}
-		}
-		#endregion
-
 		#region 読み込み処理
 		/// <summary>
 		/// 読み込み処理

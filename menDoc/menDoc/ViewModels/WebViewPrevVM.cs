@@ -38,6 +38,31 @@ namespace menDoc.ViewModels
 		}
 		#endregion
 
+		#region 一時Htmlファイルパス[TempHtmlPath]プロパティ
+		/// <summary>
+		/// 一時Htmlファイルパス[TempHtmlPath]プロパティ用変数
+		/// </summary>
+		string _TempHtmlPath = string.Empty;
+		/// <summary>
+		/// 一時Htmlファイルパス[TempHtmlPath]プロパティ
+		/// </summary>
+		public string TempHtmlPath
+		{
+			get
+			{
+				return _TempHtmlPath;
+			}
+			set
+			{
+				if (!_TempHtmlPath.Equals(value))
+				{
+					_TempHtmlPath = value;
+					NotifyPropertyChanged("TempHtmlPath");
+				}
+			}
+		}
+		#endregion
+
 
 		#region ブラウザのパス[DefaultBrowzerPath]プロパティ
 		/// <summary>
@@ -64,6 +89,22 @@ namespace menDoc.ViewModels
 		}
 		#endregion
 
+		#region プレビュー処理
+		/// <summary>
+		/// プレビュー処理
+		/// </summary>
+		public virtual void Preview()
+		{
+			try
+			{
+				System.Diagnostics.Process.Start(this.DefaultBrowzerPath, this.TempHtmlPath);
+			}
+			catch (Exception e)
+			{
+				ShowMessage.ShowErrorOK(e.Message, "Error");
+			}
+		}
+		#endregion
 		#region 初期化処理
 		/// <summary>
 		/// 初期化処理
@@ -82,16 +123,40 @@ namespace menDoc.ViewModels
 		}
 		#endregion
 
+		#region WebView用のオブジェクトのセット処理
 		/// <summary>
-		/// WebViewの初期化を待つ
+		/// WebView用のオブジェクトのセット処理
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		public void SetWebViewObject(object sender, EventArgs e)
+		{
+			var wv = sender as WebView2;
+
+			// nullチェック
+			if (wv != null)
+			{
+				// オブジェクトの保持
+				SetWebviewObject(wv);
+			}
+		}
+		#endregion
+
+		#region WebViewObjectのセット
+		/// <summary>
+		/// WebViewObjectのセット
 		/// </summary>
 		/// <param name="webview"></param>
-		async public void SetWebViewObject(WebView2 webview)
+		async public void SetWebviewObject(WebView2 webview)
         {
-			await webview.EnsureCoreWebView2Async(null);
+			if (_WebviewObject == null && webview != null)
+			{
+				await webview.EnsureCoreWebView2Async(null);
 
-			this.WebviewObject = webview;
+				this.WebviewObject = webview;
+			}
 		}
+		#endregion
 
 		#region リロード処理
 		/// <summary>

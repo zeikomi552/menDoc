@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static menDoc.Common.TempletePath;
 
 namespace menDoc.ViewModels
 {
@@ -36,25 +37,15 @@ namespace menDoc.ViewModels
 		}
 		#endregion
 
-
-		#region 初期化待ち処理
+		#region 初期化処理
 		/// <summary>
-		/// 初期化待ち処理
+		/// 初期化処理
 		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		public void InitWebView(object sender, EventArgs e)
-		{
-			try
-			{
-				var main_wnd = Utilities.GetWindow<ClassDocV>(sender);
-				SetWebViewObject(((ClassDocV)main_wnd).webView);
-			}
-			catch (Exception ex)
-			{
-				ShowMessage.ShowErrorOK(ex.Message, "Error");
-			}
-		}
+		public override void Init()
+        {
+			this.TempHtmlPath = ERDiagramPath.TmploraryFilePath;
+			base.Init();
+        }
 		#endregion
 
 		#region コードの更新
@@ -86,9 +77,6 @@ namespace menDoc.ViewModels
 				{
 					// 保存ファイルから読み込み
 					this.ClassList = XMLUtil.Deserialize<ClassListM>(dialog.FileName);
-
-					// 成功メッセージ
-					//ShowMessage.ShowNoticeOK("Load Success!!", "Information");
 				}
 
 			}
