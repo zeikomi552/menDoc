@@ -8,20 +8,14 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using static menDoc.Common.TempletePath;
 
 namespace menDoc.Models.ERDiagram
 {
 	[Serializable]
 	public class TableM : ModelBase
 	{
-		string TempletePath = @".\Common\Templete\CSharpCode\EntityFramework\ClassCode.mdtmpl";
-		string InterfaceClassTempletePath = @".\Common\Templete\CSharpCode\EntityFramework\InterfaceClassCode.mdtmpl";
-		string InterfacePropertyTempletePath = @".\Common\Templete\CSharpCode\EntityFramework\InterfacePropertyCode.mdtmpl";
-		string ProtoClassTempletePath = @".\Common\Templete\CSharpCode\EntityFramework\ProtoMessageClassCode.mdtmpl";
-		string ProtoPropertyTempletePath = @".\Common\Templete\CSharpCode\EntityFramework\ProtoMessagePropertyCode.mdtmpl";
-		string ClassMethodTempletePath = @".\Common\Templete\CSharpCode\EntityFramework\ClassMethod.mdtmpl";
-		string ClassMethodPKTempletePath = @".\Common\Templete\CSharpCode\EntityFramework\ClassMethodPK.mdtmpl";
-		string CopyParametersPath = @".\Common\Templete\CSharpCode\EntityFramework\CopyParameters.mdtmpl";
+
 
 		#region ディープコピー
 		/// <summary>
@@ -287,7 +281,7 @@ namespace menDoc.Models.ERDiagram
 		public string CreateClassCode()
 		{
 			// EntityFramework用コードを渡す
-			return CreateCode(TempletePath, PropertyCode, ClassMethodTempletePath, ClassMethodPKTempletePath, CopyParametersPath);
+			return CreateCode(ERDiagramPath.TempletePath, PropertyCode, ERDiagramPath.ClassMethodTempletePath, ERDiagramPath.ClassMethodPKTempletePath, ERDiagramPath.CopyParametersPath);
 		}
 		#endregion
 		#region 変数用コードの作成処理
@@ -332,7 +326,7 @@ namespace menDoc.Models.ERDiagram
 		public string CreateInterfaceClassCode()
         {
 			// インターフェース用クラスコードのパスを渡す
-			return CreateCode(InterfaceClassTempletePath, InterfacePropertyTempletePath, 
+			return CreateCode(ERDiagramPath.InterfaceClassTempletePath, ERDiagramPath.InterfacePropertyTempletePath, 
 				string.Empty, string.Empty, string.Empty);
 		}
 		#endregion
@@ -344,7 +338,7 @@ namespace menDoc.Models.ERDiagram
 		public string CreateProtoMessageCode()
 		{
 			// インターフェース用クラスコードのパスを渡す
-			return CreateProtoCode(ProtoClassTempletePath, ProtoPropertyTempletePath);
+			return CreateProtoCode(ERDiagramPath.ProtoClassTempletePath, ERDiagramPath.ProtoPropertyTempletePath);
 		}
 		#endregion
 		#region テンプレートを使用したコードの作成
@@ -461,7 +455,7 @@ namespace menDoc.Models.ERDiagram
 		
 		private string CreateCopyParameters()
 		{
-			StreamReader sr = new StreamReader(CopyParametersPath, Encoding.UTF8);
+			StreamReader sr = new StreamReader(ERDiagramPath.CopyParametersPath, Encoding.UTF8);
 
 			string templete = sr.ReadToEnd();
 

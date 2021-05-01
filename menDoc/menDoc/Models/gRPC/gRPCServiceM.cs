@@ -114,9 +114,6 @@ namespace menDoc.Models
         #endregion
 
 
-        string RecieveClassTempletePath = @".\Common\Templete\CSharpCode\gRPC\ServiceClass.mdtmpl";
-		string RecieveMethodTempletePath = @".\Common\Templete\CSharpCode\gRPC\RequestMethod.mdtmpl";
-		string RecieveEventHandlerTempletePath = @".\Common\Templete\CSharpCode\gRPC\RecieveEventHandler.mdtmpl";
 
 		#region 受信コードの生成
 		/// <summary>
@@ -126,13 +123,13 @@ namespace menDoc.Models
 		public string CreateRecieveCode()
 		{
 			// UTF-8
-			StreamReader class_sr = new StreamReader(RecieveClassTempletePath, Encoding.UTF8);
+			StreamReader class_sr = new StreamReader(gRPCPath.RecieveClassTempletePath, Encoding.UTF8);
 
 			// テンプレートファイル読み出し
 			string class_text = class_sr.ReadToEnd();
 
 			// UTF-8
-			StreamReader method_sr = new StreamReader(RecieveMethodTempletePath, Encoding.UTF8);
+			StreamReader method_sr = new StreamReader(gRPCPath.RecieveMethodTempletePath, Encoding.UTF8);
 
 			// テンプレートファイル読み出し
 			string method_text = method_sr.ReadToEnd();
@@ -153,9 +150,8 @@ namespace menDoc.Models
 				code.AppendLine(text_tmp);
 			}
 
-
 			// UTF-8
-			StreamReader event_sr = new StreamReader(RecieveEventHandlerTempletePath, Encoding.UTF8);
+			StreamReader event_sr = new StreamReader(gRPCPath.RecieveEventHandlerTempletePath, Encoding.UTF8);
 
 			// テンプレートファイル読み出し
 			string event_text = event_sr.ReadToEnd();
