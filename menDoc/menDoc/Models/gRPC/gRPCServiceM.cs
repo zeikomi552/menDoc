@@ -1,4 +1,5 @@
-﻿using menDoc.Common.Enums;
+﻿using Markdig;
+using menDoc.Common.Enums;
 using menDoc.Common.Utilities;
 using menDoc.Models.ERDiagram;
 using MVVMCore.BaseClass;
@@ -9,6 +10,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static menDoc.Common.TempletePath;
 
 namespace menDoc.Models
 {
@@ -82,6 +84,8 @@ namespace menDoc.Models
 			}
 		}
 		#endregion
+
+
 
 		#region .cs サーバー用コード
 		/// <summary>
@@ -377,6 +381,33 @@ namespace menDoc.Models
 			}
 
 			return code.ToString();
+		}
+		#endregion
+
+		#region HTML
+		/// <summary>
+		/// HTML
+		/// </summary>
+		public string Html
+		{
+			get
+			{
+				var pipeline = new MarkdownPipelineBuilder().UseAdvancedExtensions().Build();
+				return Markdig.Markdown.ToHtml(this.Markdown, pipeline);
+			}
+		}
+		#endregion
+
+		#region 一時ファイルのURI
+		/// <summary>
+		/// 一時ファイルのURI
+		/// </summary>
+		public Uri TmpURI
+		{
+			get
+			{
+				return new Uri(gRPCPath.TmploraryFilePath);
+			}
 		}
 		#endregion
 

@@ -6,6 +6,7 @@
              xmlns:local="clr-namespace:menDoc.Views"
              xmlns:enum="clr-namespace:menDoc.Common.Enums"
              xmlns:sys="clr-namespace:System;assembly=mscorlib"
+             xmlns:wv2="clr-namespace:Microsoft.Web.WebView2.Wpf;assembly=Microsoft.Web.WebView2.Wpf"
              xmlns:ViewModels="clr-namespace:menDoc.ViewModels" xmlns:b="http://schemas.microsoft.com/xaml/behaviors" x:Class="menDoc.Views.gRpcapiDocV"
              mc:Ignorable="d" 
              d:DesignHeight="800" d:DesignWidth="1200">
@@ -29,61 +30,84 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
-            <TabControl TabStripPlacement="Left">
-                <TabControl.Resources>
-                    <Style BasedOn="{StaticResource MahApps.Styles.TabItem}" TargetType="{x:Type TabItem}">
-                        <Setter Property="LayoutTransform">
-                            <Setter.Value>
-                                <TransformGroup>
-                                    <RotateTransform Angle="90"/>
-                                </TransformGroup>
-                            </Setter.Value>
-                        </Setter>
-                    </Style>
-                </TabControl.Resources>
+            <TabControl>
                 <TabItem Header="Markdown">
-                    <GroupBox Header="Markdown">
-                        <TextBox VerticalScrollBarVisibility="Auto" Margin="5" Text="{Binding Service.Markdown, Mode=OneWay}"/>
-                    </GroupBox>
+                    <TabControl  TabStripPlacement="Left">
+                        <TabControl.Resources>
+                            <Style BasedOn="{StaticResource MahApps.Styles.TabItem}" TargetType="{x:Type TabItem}">
+                                <Setter Property="LayoutTransform">
+                                    <Setter.Value>
+                                        <TransformGroup>
+                                            <RotateTransform Angle="90"/>
+                                        </TransformGroup>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </TabControl.Resources>
+                        <TabItem Header="Preview">
+                            <GroupBox Header="Markdown Preview">
+                                <wv2:WebView2 Name="webView" Source="{Binding ClassList.TmpURI, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
+                            </GroupBox>
+                        </TabItem>
+                        <TabItem Header="Code">
+                            <GroupBox Header="Markdown">
+                                <TextBox VerticalScrollBarVisibility="Auto" Margin="5" Text="{Binding Service.Markdown, Mode=OneWay}"/>
+                            </GroupBox>
+                        </TabItem>
+                    </TabControl>
                 </TabItem>
-                <TabItem Header=".proto">
-                    <GroupBox Header="Proto File">
-                        <TextBox VerticalScrollBarVisibility="Auto" Margin="5" IsReadOnly="True" Text="{Binding Service.ProtoCode, Mode=OneWay}"/>
-                    </GroupBox>
-                </TabItem>
-                <TabItem Header=".csproj">
-                    <StackPanel>
-                        <GroupBox Header=".csproj(Server)">
-                            <TextBox VerticalScrollBarVisibility="Auto" Margin="5" IsReadOnly="True" Text="{Binding Service.CsprojServer, Mode=OneWay}"/>
-                        </GroupBox>
-                        <GroupBox Header=".csproj(Client)">
-                            <TextBox VerticalScrollBarVisibility="Auto" Margin="5" IsReadOnly="True" Text="{Binding Service.CsprojClient, Mode=OneWay}"/>
-                        </GroupBox>
-                        <GroupBox Header=".csproj(Both用)">
-                            <TextBox VerticalScrollBarVisibility="Auto" Margin="5" IsReadOnly="True" Text="{Binding Service.CsprojBoth, Mode=OneWay}"/>
-                        </GroupBox>
-                    </StackPanel>
-                </TabItem>
-                <TabItem Header=".cs">
-                    <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="*"/>
-                            <RowDefinition Height="*"/>
-                            <RowDefinition Height="*"/>
-                        </Grid.RowDefinitions>
-                        <GroupBox Grid.Row="0" Header=".cs Server Code">
-                            <TextBox VerticalScrollBarVisibility="Auto" Margin="5" IsReadOnly="True" Text="{Binding Service.CsServer, Mode=OneWay}"/>
+                <TabItem Header="C#">
+                    <TabControl  TabStripPlacement="Left">
+                        <TabControl.Resources>
+                            <Style BasedOn="{StaticResource MahApps.Styles.TabItem}" TargetType="{x:Type TabItem}">
+                                <Setter Property="LayoutTransform">
+                                    <Setter.Value>
+                                        <TransformGroup>
+                                            <RotateTransform Angle="90"/>
+                                        </TransformGroup>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </TabControl.Resources>
+                        <TabItem Header=".proto">
+                            <GroupBox Header="Proto File">
+                                <TextBox VerticalScrollBarVisibility="Auto" Margin="5" IsReadOnly="True" Text="{Binding Service.ProtoCode, Mode=OneWay}"/>
+                            </GroupBox>
+                        </TabItem>
+                        <TabItem Header=".csproj">
+                            <StackPanel>
+                                <GroupBox Header=".csproj(Server)">
+                                    <TextBox VerticalScrollBarVisibility="Auto" Margin="5" IsReadOnly="True" Text="{Binding Service.CsprojServer, Mode=OneWay}"/>
+                                </GroupBox>
+                                <GroupBox Header=".csproj(Client)">
+                                    <TextBox VerticalScrollBarVisibility="Auto" Margin="5" IsReadOnly="True" Text="{Binding Service.CsprojClient, Mode=OneWay}"/>
+                                </GroupBox>
+                                <GroupBox Header=".csproj(Both用)">
+                                    <TextBox VerticalScrollBarVisibility="Auto" Margin="5" IsReadOnly="True" Text="{Binding Service.CsprojBoth, Mode=OneWay}"/>
+                                </GroupBox>
+                            </StackPanel>
+                        </TabItem>
+                        <TabItem Header=".cs">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="*"/>
+                                </Grid.RowDefinitions>
+                                <GroupBox Grid.Row="0" Header=".cs Server Code">
+                                    <TextBox VerticalScrollBarVisibility="Auto" Margin="5" IsReadOnly="True" Text="{Binding Service.CsServer, Mode=OneWay}"/>
 
-                        </GroupBox>
-                        <GroupBox Grid.Row="1" Header="Recieve">
-                            <TextBox VerticalScrollBarVisibility="Auto" Margin="5" IsReadOnly="True" Text="{Binding Service.RecieveCode, Mode=OneWay}"/>
-                        </GroupBox>
-                        <GroupBox Grid.Row="2" Header=".cs Client Code">
-                            <TextBox VerticalScrollBarVisibility="Auto" Margin="5" IsReadOnly="True" Text="{Binding Service.CsClient, Mode=OneWay}"/>
-                        </GroupBox>
-                    </Grid>
+                                </GroupBox>
+                                <GroupBox Grid.Row="1" Header="Recieve">
+                                    <TextBox VerticalScrollBarVisibility="Auto" Margin="5" IsReadOnly="True" Text="{Binding Service.RecieveCode, Mode=OneWay}"/>
+                                </GroupBox>
+                                <GroupBox Grid.Row="2" Header=".cs Client Code">
+                                    <TextBox VerticalScrollBarVisibility="Auto" Margin="5" IsReadOnly="True" Text="{Binding Service.CsClient, Mode=OneWay}"/>
+                                </GroupBox>
+                            </Grid>
+                        </TabItem>
+                    </TabControl>
                 </TabItem>
-                
             </TabControl>
             <Grid Margin="3" Grid.Column="1">
                 <Grid.RowDefinitions>
