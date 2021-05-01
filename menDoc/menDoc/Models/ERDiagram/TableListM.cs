@@ -16,31 +16,6 @@ namespace menDoc.Models.ERDiagram
 {
 	public class TableListM : ModelBase
 	{
-		#region テーブル要素のバックアップ[TableItemBackup]プロパティ
-		/// <summary>
-		/// テーブル要素のバックアップ[TableItemBackup]プロパティ用変数
-		/// </summary>
-		ModelList<TableM> _TableItemBackup = new ModelList<TableM>();
-		/// <summary>
-		/// テーブル要素のバックアップ[TableItemBackup]プロパティ
-		/// </summary>
-		public ModelList<TableM> TableItemBackup
-		{
-			get
-			{
-				return _TableItemBackup;
-			}
-			set
-			{
-				if (_TableItemBackup == null || !_TableItemBackup.Equals(value))
-				{
-					_TableItemBackup = value;
-					NotifyPropertyChanged("TableItemBackup");
-				}
-			}
-		}
-		#endregion
-
 		#region テーブルリスト[TableItems]プロパティ
 		/// <summary>
 		/// テーブルリスト[TableItems]プロパティ用変数
@@ -65,56 +40,6 @@ namespace menDoc.Models.ERDiagram
 			}
 		}
 		#endregion
-
-		#region バックアップ処理
-		/// <summary>
-		/// バックアップ処理
-		/// </summary>
-		public void Backup()
-		{
-			ModelList<TableM> bak = new ModelList<TableM>();
-
-			foreach (var tmp in this.TableItems)
-			{
-				bak.Items.Add(tmp.DeepCopy());
-			}
-
-			this.TableItemBackup = bak;
-		}
-		#endregion
-
-		#region 変更の確認処理
-		/// <summary>
-		/// 変更の確認処理
-		/// </summary>
-		/// <returns>true:変更された false:変更されていない</returns>
-		public bool ChangeCheck()
-		{
-			// テーブル要素分変化点を確認する
-			for (int index = 0; index < this.TableItems.Items.Count; index++)
-			{
-				var elem = this.TableItems.ElementAt(index);
-
-				// バックアップと比較
-				if (this.TableItemBackup.Items.Count > index)
-				{
-					var elem2 = this.TableItemBackup.ElementAt(index);
-
-					if (elem.ChangeCheck(elem2))
-					{
-						return true;
-					}
-				}
-				else
-				{
-					return true;
-				}
-			}
-			return false;
-
-		}
-		#endregion
-
 
 		#region マークダウン
 		/// <summary>
@@ -279,7 +204,6 @@ namespace menDoc.Models.ERDiagram
 			NotifyPropertyChanged("InterfaceCode");
 			NotifyPropertyChanged("ProtoCode");
 			NotifyPropertyChanged("DbContext");
-			SaveTemporary();
 			NotifyPropertyChanged("TmpURI");
 		}
 		#endregion

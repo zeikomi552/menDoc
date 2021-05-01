@@ -49,7 +49,6 @@ namespace menDoc.ViewModels
 				if (GlobalValue.TableList == null || !GlobalValue.TableList.Equals(value))
 				{
 					GlobalValue.TableList = value;
-					GlobalValue.TableList.Backup();
 					NotifyPropertyChanged("TableList");
 				}
 			}
@@ -66,7 +65,6 @@ namespace menDoc.ViewModels
 			{
 				base.Init();	// 親の初期化処理を使用する
 				this.TableList.SaveTemporary();	// 一時ファイルの保存
-				this.TableList.Backup();		// バックアップデータの作成
 			}
 			catch (Exception ex)
 			{
