@@ -196,7 +196,7 @@ namespace menDoc.Models.ERDiagram
 		/// <summary>
 		/// コードの更新
 		/// </summary>
-		public void RefleshCode()
+		public void RefreshCode()
 		{
 			NotifyPropertyChanged("Markdown");
 			NotifyPropertyChanged("Html");

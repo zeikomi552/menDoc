@@ -91,6 +91,41 @@ namespace menDoc.ViewModels
 		}
 		#endregion
 
+		#region ソースコードのリフレッシュ
+		/// <summary>
+		/// ソースコードのリフレッシュ
+		/// </summary>
+		public void RefreshCode()
+		{
+			try
+			{
+				this.TableList.RefreshCode();
+			}
+			catch (Exception ex)
+			{
+				ShowMessage.ShowErrorOK(ex.Message, "Error");
+			}
+		}
+		#endregion
+
+		#region プレビューおよびコードのリフレッシュ
+		/// <summary>
+		/// プレビューおよびコードのリフレッシュ
+		/// </summary>
+		public void Refresh()
+		{
+			try
+			{
+				RefreshPreview();
+				RefreshCode();
+			}
+			catch (Exception ex)
+			{
+				ShowMessage.ShowErrorOK(ex.Message, "Error");
+			}
+		}
+		#endregion
+
 		#region Class図の方へ値を入力する
 		/// <summary>
 		/// Class図の方へ値を入力する
@@ -164,8 +199,8 @@ namespace menDoc.ViewModels
 					// 一時ファイルの保存
 					string path = this.TableList.SaveTemporary();
 
-					// プレビューのリロード
-					this.WebviewObject.Reload();
+					// リフレッシュ
+					Refresh();
 				}
 
 			}

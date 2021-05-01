@@ -160,6 +160,9 @@
                                 <b:EventTrigger EventName="SourceUpdated">
                                     <b:CallMethodAction TargetObject="{Binding Mode=OneWay, Source={StaticResource vm}}" MethodName="RefreshPreview"/>
                                 </b:EventTrigger>
+                                <b:EventTrigger EventName="SelectionChanged">
+                                    <b:CallMethodAction TargetObject="{Binding Mode=OneWay, Source={StaticResource vm}}" MethodName="RefreshCode"/>
+                                </b:EventTrigger>
                             </b:Interaction.Triggers>
                             <DataGrid.Columns>
                                 <DataGridTextColumn Header="Name" Binding="{Binding Name, NotifyOnSourceUpdated=True, UpdateSourceTrigger=LostFocus}"/>
