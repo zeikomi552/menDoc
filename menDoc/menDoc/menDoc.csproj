@@ -124,7 +124,7 @@
     <None Update="Common\Templete\HtmlCode\ClassDiagramHtml.mdtmpl">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Common\Templete\HtmlCode\outputhtml.mdtmpl">
+    <None Update="Common\Templete\HtmlCode\ERDiagramHtml.mdtmpl">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>

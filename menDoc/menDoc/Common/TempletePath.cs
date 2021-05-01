@@ -33,7 +33,7 @@ namespace menDoc.Common
 			}
 			#endregion
 
-			public const string OutputHtmlTmpletePath = @".\Common\Templete\HtmlCode\outputhtml.mdtmpl";
+			public const string OutputHtmlTmpletePath = @".\Common\Templete\HtmlCode\ERDiagramHtml.mdtmpl";
 			public const string DbContextTempletePath = @".\Common\Templete\CSharpCode\EntityFramework\DbContext.mdtmpl";
 			public const string DbContextDbSetTempletePath = @".\Common\Templete\CSharpCode\EntityFramework\DbContextDbSet.mdtmpl";
 			public const string DbContextDbEntityTempletePath = @".\Common\Templete\CSharpCode\EntityFramework\DbContextEntity.mdtmpl";
