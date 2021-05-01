@@ -244,7 +244,7 @@
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="30"/>
                         </Grid.ColumnDefinitions>
-                        <DataGrid  AutoGenerateColumns="False" 
+                        <DataGrid AutoGenerateColumns="False" 
                               ItemsSource="{Binding TableList.TableItems.SelectedItem.TableRelationList.Items}"
                               SelectedItem="{Binding TableList.TableItems.SelectedItem.TableRelationList.SelectedItem,
                               Converter={StaticResource ignoreNewItemPlaceHolderConverter}}">
@@ -254,7 +254,9 @@
                                 </b:EventTrigger>
                             </b:Interaction.Triggers>
                             <DataGrid.Columns>
-                                <DataGridTemplateColumn IsReadOnly="True" Header="TargetTable">
+
+                                <DataGridTextColumn Header="TargetTable" Binding="{Binding TagetTable}"/>
+                                <!--<DataGridTemplateColumn IsReadOnly="True" Header="TargetTable">
                                     <DataGridTemplateColumn.CellTemplate>
                                         <DataTemplate>
                                             <DataTemplate.Triggers>
@@ -262,14 +264,14 @@
                                                     <Setter Property="Visibility" Value="Collapsed"/>
                                                 </DataTrigger>
                                             </DataTemplate.Triggers>
-                                            <ComboBox ItemsSource="{Binding TableList.TableItems.Items, Source={StaticResource vm}}"
+                                            <ComboBox IsReadOnly="True" ItemsSource="{Binding TableList.TableItems.Items, Source={StaticResource vm}, TargetNullValue={x:Null}}"
                                                       DisplayMemberPath="Name"
                                                       SelectedValuePath="Name"
-                                                      SelectedValue="{Binding TagetTable, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                                                      SelectedValue="{Binding TagetTable, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}">
                                             </ComboBox>
                                         </DataTemplate>
                                     </DataGridTemplateColumn.CellTemplate>
-                                </DataGridTemplateColumn>
+                                </DataGridTemplateColumn>-->
 
                                 <DataGridTextColumn Header="Description" Binding="{Binding Description}"/>
                                 

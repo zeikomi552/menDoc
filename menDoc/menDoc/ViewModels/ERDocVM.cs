@@ -141,14 +141,21 @@ namespace menDoc.ViewModels
 		/// <param name="e"></param>
 		public void RefreshPreview(object sender, EventArgs e)
 		{
-			this.TableList.RefleshCode();
-			// 値が変化している場合のみ更新
-			if (this.TableList.ChangeCheck())
-            {
-				this._Webview2.Reload();
-				this.TableList.Backup();
-            }
-        }
+			try
+			{
+				this.TableList.RefleshCode();
+				// 値が変化している場合のみ更新
+				if (this.TableList.ChangeCheck())
+				{
+					this._Webview2.Reload();
+					this.TableList.Backup();
+				}
+			}
+			catch (Exception ex)
+			{
+				ShowMessage.ShowErrorOK(ex.Message, "Error");
+			}
+		}
 		#endregion
 
 		#region プレビュー処理
