@@ -5,6 +5,7 @@ using MVVMCore.BaseClass;
 using MVVMCore.Common.Utilities;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -102,6 +103,11 @@ namespace menDoc.ViewModels
 		{
 			try
 			{
+				if (!Directory.Exists(menDoc.Common.Utilities.Utilities.TempDir))
+				{
+					Directory.CreateDirectory(menDoc.Common.Utilities.Utilities.TempDir);
+				}
+
 				var conf = ConfigManager.LoadConf();
 				this.DefaultBrowzerPath = conf.DefaultBrowzerPath;
 			}

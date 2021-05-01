@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -28,7 +29,7 @@ namespace menDoc.Common
 			{
 				get
 				{
-					return menDoc.Common.Utilities.Utilities.TempDir + @"\" + TmploraryFileName;
+                    return menDoc.Common.Utilities.Utilities.TempDir + @"\" + TmploraryFileName;
 				}
 			}
 			#endregion
