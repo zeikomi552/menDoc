@@ -147,11 +147,12 @@ namespace menDoc.ViewModels
 		}
 		#endregion
 
+
 		#region リロード処理
 		/// <summary>
 		/// リロード処理
 		/// </summary>
-		public void WebViewReload()
+		public virtual void WebViewReload()
 		{
 			if (this.WebviewObject != null)
             {

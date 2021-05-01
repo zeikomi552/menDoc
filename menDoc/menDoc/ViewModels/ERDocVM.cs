@@ -60,9 +60,7 @@ namespace menDoc.ViewModels
 		/// <summary>
 		/// Previewの更新処理
 		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		public void RefreshPreview(object sender, EventArgs e)
+		public void RefreshPreview()
 		{
 			try
 			{
@@ -77,24 +75,6 @@ namespace menDoc.ViewModels
 			catch (Exception ex)
 			{
 				ShowMessage.ShowErrorOK(ex.Message, "Error");
-			}
-		}
-		#endregion
-
-		#region プレビュー処理
-		/// <summary>
-		/// プレビュー処理
-		/// </summary>
-		public override void Preview()
-        {
-			try
-			{
-				string path = this.TableList.SaveTemporary();
-				base.Preview();
-			}
-			catch (Exception e)
-			{
-				ShowMessage.ShowErrorOK(e.Message, "Error");
 			}
 		}
 		#endregion
