@@ -50,18 +50,6 @@ namespace menDoc.ViewModels
 		}
 		#endregion
 
-		public void GridDoubleClick(object sender, EventArgs e)
-		{
-			var tmp = this.TableList.TableItems.SelectedItem;
-			if (tmp != null)
-			{
-				if (tmp.TableRelationList.SelectedItem == null)
-				{
-					tmp.TableRelationList.Items.Add(new TableRelationM());
-				}
-			}
-		}
-
 		#region ブラウザのパス[DefaultBrowzerPath]プロパティ
 		/// <summary>
 		/// ブラウザのパス[DefaultBrowzerPath]プロパティ用変数
@@ -153,10 +141,10 @@ namespace menDoc.ViewModels
 		/// <param name="e"></param>
 		public void RefreshPreview(object sender, EventArgs e)
 		{
-            // 値が変化している場合のみ更新
-            if (this.TableList.ChangeCheck())
+			this.TableList.RefleshCode();
+			// 値が変化している場合のみ更新
+			if (this.TableList.ChangeCheck())
             {
-				this.TableList.RefleshCode();
 				this._Webview2.Reload();
 				this.TableList.Backup();
             }
