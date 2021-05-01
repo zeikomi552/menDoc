@@ -16,6 +16,19 @@ namespace menDoc.ViewModels
 {
 	public class ClassDocVM : WebViewPrevVM
 	{
+		#region 一時Htmlファイルパス[TempHtmlPath]プロパティ
+		/// <summary>
+		/// 一時Htmlファイルパス[TempHtmlPath]プロパティ
+		/// </summary>
+		public override string TempHtmlPath
+		{
+			get
+			{
+				return ClassDiagramPath.TmploraryFilePath;
+			}
+		}
+		#endregion
+
 		#region クラスのリスト[ClassList]プロパティ
 		/// <summary>
 		/// クラスのリスト[ClassList]プロパティ
@@ -43,7 +56,6 @@ namespace menDoc.ViewModels
 		/// </summary>
 		public override void Init()
         {
-			this.TempHtmlPath = ERDiagramPath.TmploraryFilePath;
 			base.Init();
         }
 		#endregion

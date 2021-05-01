@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static menDoc.Common.TempletePath;
 
 namespace menDoc.ViewModels
 {
@@ -32,6 +33,19 @@ namespace menDoc.ViewModels
 					GlobalValue.Service = value;
 					NotifyPropertyChanged("Service");
 				}
+			}
+		}
+		#endregion
+
+		#region 一時Htmlファイルパス[TempHtmlPath]プロパティ
+		/// <summary>
+		/// 一時Htmlファイルパス[TempHtmlPath]プロパティ
+		/// </summary>
+		public override string TempHtmlPath
+		{
+			get
+			{
+				return gRPCPath.TmploraryFilePath;
 			}
 		}
 		#endregion

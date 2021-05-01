@@ -40,25 +40,13 @@ namespace menDoc.ViewModels
 
 		#region 一時Htmlファイルパス[TempHtmlPath]プロパティ
 		/// <summary>
-		/// 一時Htmlファイルパス[TempHtmlPath]プロパティ用変数
-		/// </summary>
-		string _TempHtmlPath = string.Empty;
-		/// <summary>
 		/// 一時Htmlファイルパス[TempHtmlPath]プロパティ
 		/// </summary>
-		public string TempHtmlPath
+		public virtual string TempHtmlPath
 		{
 			get
 			{
-				return _TempHtmlPath;
-			}
-			set
-			{
-				if (!_TempHtmlPath.Equals(value))
-				{
-					_TempHtmlPath = value;
-					NotifyPropertyChanged("TempHtmlPath");
-				}
+				return string.Empty;
 			}
 		}
 		#endregion
@@ -97,6 +85,7 @@ namespace menDoc.ViewModels
 		{
 			try
 			{
+				// プレビューの表示処理（ブラウザを使用する）
 				System.Diagnostics.Process.Start(this.DefaultBrowzerPath, this.TempHtmlPath);
 			}
 			catch (Exception e)

@@ -15,11 +15,25 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using static menDoc.Common.TempletePath;
 
 namespace menDoc.ViewModels
 {
     public class ERDocVM : WebViewPrevVM
 	{
+		#region 一時Htmlファイルパス[TempHtmlPath]プロパティ
+		/// <summary>
+		/// 一時Htmlファイルパス[TempHtmlPath]プロパティ
+		/// </summary>
+		public override string TempHtmlPath
+		{
+			get
+			{
+				return ERDiagramPath.TmploraryFilePath;
+			}
+		}
+		#endregion
+
 		#region テーブルリスト[TableList]プロパティ
 		/// <summary>
 		/// テーブルリスト[TableList]プロパティ
