@@ -121,6 +121,9 @@
     <None Update="Common\Templete\CSharpCode\gRPC\ServiceClass.mdtmpl">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="Common\Templete\HtmlCode\ClassDiagramHtml.mdtmpl">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="Common\Templete\HtmlCode\outputhtml.mdtmpl">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

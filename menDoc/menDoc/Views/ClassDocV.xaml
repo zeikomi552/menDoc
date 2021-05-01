@@ -8,6 +8,7 @@
              xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
              xmlns:sys="clr-namespace:System;assembly=mscorlib"
              xmlns:local="clr-namespace:menDoc.Views"
+             xmlns:wv2="clr-namespace:Microsoft.Web.WebView2.Wpf;assembly=Microsoft.Web.WebView2.Wpf"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <UserControl.Resources>
@@ -48,9 +49,29 @@
                     </Style>
                 </TabControl.Resources>
                 <TabItem Header="Markdown">
-                    <GroupBox Header="Markdown">
-                        <TextBox Margin="5" Text="{Binding ClassList.Markdown, Mode=OneWay}"/>
-                    </GroupBox>
+                    <TabControl TabStripPlacement="Left">
+                        <TabControl.Resources>
+                            <Style BasedOn="{StaticResource MahApps.Styles.TabItem}" TargetType="{x:Type TabItem}">
+                                <Setter Property="LayoutTransform">
+                                    <Setter.Value>
+                                        <TransformGroup>
+                                            <RotateTransform Angle="90"/>
+                                        </TransformGroup>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </TabControl.Resources>
+                        <TabItem Header="Preview">
+                            <GroupBox Header="Markdown Preview">
+                                <wv2:WebView2 Name="webView" Source="{Binding ClassList.TmpURI, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
+                            </GroupBox>
+                        </TabItem>
+                        <TabItem Header="Code">
+                            <GroupBox Header="Markdown">
+                                <TextBox VerticalScrollBarVisibility="Auto" Margin="5" Text="{Binding ClassList.Markdown, Mode=OneWay}"/>
+                            </GroupBox>
+                        </TabItem>
+                    </TabControl>
                 </TabItem>
             </TabControl>
             <GridSplitter Width="2" HorizontalAlignment="Right" VerticalAlignment="Stretch" />

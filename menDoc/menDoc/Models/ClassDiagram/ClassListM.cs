@@ -1,12 +1,15 @@
-﻿using menDoc.Common.Utilities;
+﻿using Markdig;
+using menDoc.Common.Utilities;
 using menDoc.Models.ERDiagram;
 using MVVMCore.BaseClass;
 using MVVMCore.Common.Utilities;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static menDoc.Common.TempletePath;
 
 namespace menDoc.Models.ClassDiagram
 {
@@ -106,6 +109,33 @@ namespace menDoc.Models.ClassDiagram
 		}
 		#endregion
 
+		#region HTML
+		/// <summary>
+		/// HTML
+		/// </summary>
+		public string Html
+		{
+			get
+			{
+				var pipeline = new MarkdownPipelineBuilder().UseAdvancedExtensions().Build();
+				return Markdig.Markdown.ToHtml(this.Markdown, pipeline);
+			}
+		}
+		#endregion
+
+		#region 一時ファイルのURI
+		/// <summary>
+		/// 一時ファイルのURI
+		/// </summary>
+		public Uri TmpURI
+		{
+			get
+			{
+				return new Uri(ClassDiagramPath.TmploraryFilePath);
+			}
+		}
+		#endregion
+
 		#region マークダウンの作成
 		/// <summary>
 		/// マークダウンの作成
@@ -166,6 +196,41 @@ namespace menDoc.Models.ClassDiagram
 		public void RefleshCode()
 		{
 			NotifyPropertyChanged("Markdown");
+			SaveTemporary();
+
+			NotifyPropertyChanged("TmpURI");
+		}
+		#endregion
+
+		#region テンポラリデータの保存処理
+		/// <summary>
+		/// テンポラリデータの保存処理
+		/// </summary>
+		/// <returns>保存処理</returns>
+		public string SaveTemporary()
+		{
+			try
+			{
+				// UTF-8
+				StreamReader html_sr = new StreamReader(ClassDiagramPath.OutputHtmlTmpletePath, Encoding.UTF8);
+
+				// テンプレートファイル読み出し
+				string html_txt = html_sr.ReadToEnd();
+
+				html_txt = html_txt.Replace("{menDoc:jsdir}", Utilities.JSDir);
+				html_txt = html_txt.Replace("{menDoc:htmlbody}", this.Html);
+				File.WriteAllText(ClassDiagramPath.TmploraryFilePath, html_txt);
+
+				// 一時フォルダの作成
+				Utilities.CreateTemporaryDir();
+
+				return ClassDiagramPath.TmploraryFilePath;
+			}
+			catch (Exception e)
+			{
+				ShowMessage.ShowErrorOK(e.Message, "Error");
+				return string.Empty;
+			}
 		}
 		#endregion
 	}
