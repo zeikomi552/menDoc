@@ -69,13 +69,21 @@ namespace menDoc.ViewModels
 		}
 		#endregion
 
-		#region コードの更新
+		#region Previewの更新処理
 		/// <summary>
-		/// コードの更新
+		/// Previewの更新処理
 		/// </summary>
-		public void RefleshCode()
+		public void RefreshPreview()
 		{
-			this.ClassList.RefleshCode();
+			try
+			{
+				this.ClassList.SaveTemporary(); // 一時ファイルの保存
+				this.WebviewObject.Reload();
+			}
+			catch (Exception ex)
+			{
+				ShowMessage.ShowErrorOK(ex.Message, "Error");
+			}
 		}
 		#endregion
 
@@ -98,6 +106,7 @@ namespace menDoc.ViewModels
 				{
 					// 保存ファイルから読み込み
 					this.ClassList = XMLUtil.Deserialize<ClassListM>(dialog.FileName);
+					RefreshPreview();
 				}
 
 			}

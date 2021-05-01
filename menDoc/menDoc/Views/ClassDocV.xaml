@@ -112,15 +112,15 @@
                                 </Style>
                             </DataGrid.Resources>
                             <b:Interaction.Triggers>
-                                <b:EventTrigger EventName="SelectionChanged">
-                                    <b:CallMethodAction TargetObject="{Binding Mode=OneWay, Source={StaticResource vm}}" MethodName="RefleshCode"/>
+                                <b:EventTrigger EventName="SourceUpdated">
+                                    <b:CallMethodAction TargetObject="{Binding Mode=OneWay, Source={StaticResource vm}}" MethodName="RefreshPreview"/>
                                 </b:EventTrigger>
                             </b:Interaction.Triggers>
                             <DataGrid.Columns>
-                                <DataGridTextColumn Header="Name" Binding="{Binding Name}"/>
-                                <DataGridTextColumn Header="Description" Binding="{Binding Description}"/>
-                                <DataGridTextColumn Header="Create Date" Binding="{Binding CreateDate, StringFormat=yyyy/MM/dd}"/>
-                                <DataGridTextColumn Header="Create User" Binding="{Binding CreateUser}"/>
+                                <DataGridTextColumn Header="Name" Binding="{Binding Name, NotifyOnSourceUpdated=True, UpdateSourceTrigger=LostFocus}"/>
+                                <DataGridTextColumn Header="Description" Binding="{Binding Description, NotifyOnSourceUpdated=True, UpdateSourceTrigger=LostFocus}"/>
+                                <DataGridTextColumn Header="Create Date" Binding="{Binding CreateDate, StringFormat=yyyy/MM/dd, NotifyOnSourceUpdated=True, UpdateSourceTrigger=LostFocus}"/>
+                                <DataGridTextColumn Header="Create User" Binding="{Binding CreateUser, NotifyOnSourceUpdated=True, UpdateSourceTrigger=LostFocus}"/>
                             </DataGrid.Columns>
                         </DataGrid>
                         <Grid Grid.Column="1">
@@ -158,18 +158,18 @@
                         <DataGrid AutoGenerateColumns="False" ItemsSource="{Binding ClassList.ClassItems.SelectedItem.ParameterItems.Items}"
                                   SelectedItem="{Binding ClassList.ClassItems.SelectedItem.ParameterItems.SelectedItem}">
                             <b:Interaction.Triggers>
-                                <b:EventTrigger EventName="SelectionChanged">
-                                    <b:CallMethodAction TargetObject="{Binding Mode=OneWay, Source={StaticResource vm}}" MethodName="RefleshCode"/>
+                                <b:EventTrigger EventName="SourceUpdated">
+                                    <b:CallMethodAction TargetObject="{Binding Mode=OneWay, Source={StaticResource vm}}" MethodName="RefreshPreview"/>
                                 </b:EventTrigger>
                             </b:Interaction.Triggers>
 
                             <DataGrid.Columns>
                                 <DataGridComboBoxColumn Header="Access"
-                                                    SelectedItemBinding="{Binding Accessor}" 
+                                                    SelectedItemBinding="{Binding Accessor, NotifyOnSourceUpdated=True, UpdateSourceTrigger=LostFocus}" 
                                                     ItemsSource="{Binding Mode=OneWay, Source={StaticResource AlignmentValues}}"/>
-                                <DataGridTextColumn Header="Type" Binding="{Binding TypeName}"/>
-                                <DataGridTextColumn Header="Name" Binding="{Binding ValueName}"/>
-                                <DataGridTextColumn Header="Description" Binding="{Binding Description}"/>
+                                <DataGridTextColumn Header="Type" Binding="{Binding TypeName, NotifyOnSourceUpdated=True, UpdateSourceTrigger=LostFocus}"/>
+                                <DataGridTextColumn Header="Name" Binding="{Binding ValueName, NotifyOnSourceUpdated=True, UpdateSourceTrigger=LostFocus}"/>
+                                <DataGridTextColumn Header="Description" Binding="{Binding Description, NotifyOnSourceUpdated=True, UpdateSourceTrigger=LostFocus}"/>
                             </DataGrid.Columns>
                         </DataGrid>
                         <Grid Grid.Column="1">
@@ -207,18 +207,18 @@
                         <DataGrid AutoGenerateColumns="False" ItemsSource="{Binding ClassList.ClassItems.SelectedItem.MethodItems.Items}"
                                   SelectedItem="{Binding ClassList.ClassItems.SelectedItem.MethodItems.SelectedItem}">
                             <b:Interaction.Triggers>
-                                <b:EventTrigger EventName="SelectionChanged">
-                                    <b:CallMethodAction TargetObject="{Binding Mode=OneWay, Source={StaticResource vm}}" MethodName="RefleshCode"/>
+                                <b:EventTrigger EventName="SourceUpdated">
+                                    <b:CallMethodAction TargetObject="{Binding Mode=OneWay, Source={StaticResource vm}}" MethodName="RefreshPreview"/>
                                 </b:EventTrigger>
                             </b:Interaction.Triggers>
 
                             <DataGrid.Columns>
                                 <DataGridComboBoxColumn Header="Access"
-                                                    SelectedItemBinding="{Binding Accessor}" 
+                                                    SelectedItemBinding="{Binding Accessor, NotifyOnSourceUpdated=True, UpdateSourceTrigger=LostFocus}" 
                                                     ItemsSource="{Binding Mode=OneWay, Source={StaticResource AlignmentValues}}"/>
-                                <DataGridTextColumn Header="Type" Binding="{Binding ReturnValue}"/>
-                                <DataGridTextColumn Header="Name" Binding="{Binding MethodName}"/>
-                                <DataGridTextColumn Header="Description" Binding="{Binding Description}"/>
+                                <DataGridTextColumn Header="Type" Binding="{Binding ReturnValue, NotifyOnSourceUpdated=True, UpdateSourceTrigger=LostFocus}"/>
+                                <DataGridTextColumn Header="Name" Binding="{Binding MethodName, NotifyOnSourceUpdated=True, UpdateSourceTrigger=LostFocus}"/>
+                                <DataGridTextColumn Header="Description" Binding="{Binding Description, NotifyOnSourceUpdated=True, UpdateSourceTrigger=LostFocus}"/>
                             </DataGrid.Columns>
                         </DataGrid>
                         <Grid Grid.Column="1">
@@ -256,15 +256,15 @@
                         <DataGrid  AutoGenerateColumns="False" ItemsSource="{Binding ClassList.ClassItems.SelectedItem.RelationItems.Items}"
                                    SelectedItem="{Binding  ClassList.ClassItems.SelectedItem.RelationItems.SelectedItem}">
                             <b:Interaction.Triggers>
-                                <b:EventTrigger EventName="SelectionChanged">
-                                    <b:CallMethodAction TargetObject="{Binding Mode=OneWay, Source={StaticResource vm}}" MethodName="RefleshCode"/>
+                                <b:EventTrigger EventName="SourceUpdated">
+                                    <b:CallMethodAction TargetObject="{Binding Mode=OneWay, Source={StaticResource vm}}" MethodName="RefreshPreview"/>
                                 </b:EventTrigger>
                             </b:Interaction.Triggers>
                             <DataGrid.Columns>
-                                <DataGridTextColumn Header="TargetClass" Binding="{Binding TargetClass}"/>
-                                <DataGridComboBoxColumn Header="Connection" SelectedItemBinding="{Binding Relation}" 
+                                <DataGridTextColumn Header="TargetClass" Binding="{Binding TargetClass, NotifyOnSourceUpdated=True, UpdateSourceTrigger=LostFocus}"/>
+                                <DataGridComboBoxColumn Header="Connection" SelectedItemBinding="{Binding Relation, NotifyOnSourceUpdated=True, UpdateSourceTrigger=LostFocus}" 
                                                     ItemsSource="{Binding Mode=OneWay, Source={StaticResource RelationValues}}"/>
-                                <DataGridTextColumn Header="Description" Binding="{Binding Description}"/>
+                                <DataGridTextColumn Header="Description" Binding="{Binding Description, NotifyOnSourceUpdated=True, UpdateSourceTrigger=LostFocus}"/>
                             </DataGrid.Columns>
                         </DataGrid>
                         <Grid Grid.Column="1">

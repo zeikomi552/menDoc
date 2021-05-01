@@ -69,6 +69,24 @@ namespace menDoc.ViewModels
 		}
 		#endregion
 
+		#region Previewの更新処理
+		/// <summary>
+		/// Previewの更新処理
+		/// </summary>
+		public void RefreshPreview()
+		{
+			try
+			{
+				this.Service.SaveTemporary(); // 一時ファイルの保存
+				this.WebviewObject.Reload();
+			}
+			catch (Exception ex)
+			{
+				ShowMessage.ShowErrorOK(ex.Message, "Error");
+			}
+		}
+		#endregion
+
 		#region 読み込み処理
 		/// <summary>
 		/// 読み込み処理
@@ -88,6 +106,9 @@ namespace menDoc.ViewModels
 				{
 					// 保存ファイルから読み込み
 					this.Service = XMLUtil.Deserialize<gRPCServiceM>(dialog.FileName);
+
+					// プレビューの更新
+					RefreshPreview();
 				}
 			}
 			catch (Exception e)
