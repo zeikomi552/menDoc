@@ -6,8 +6,9 @@
              xmlns:local="clr-namespace:menDoc.Views" 
              xmlns:enum="clr-namespace:menDoc.Common.Enums"
              xmlns:ViewModels="clr-namespace:menDoc.ViewModels"
-            xmlns:markdig="clr-namespace:Markdig.Wpf;assembly=Markdig.Wpf"
-    xmlns:wv2="clr-namespace:Microsoft.Web.WebView2.Wpf;assembly=Microsoft.Web.WebView2.Wpf"
+             xmlns:markdig="clr-namespace:Markdig.Wpf;assembly=Markdig.Wpf"
+             xmlns:wv2="clr-namespace:Microsoft.Web.WebView2.Wpf;assembly=Microsoft.Web.WebView2.Wpf"
+             xmlns:hlp="clr-namespace:menDoc.Common.Helpers"
              xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
              xmlns:sys="clr-namespace:System;assembly=mscorlib"
              xmlns:Converters="clr-namespace:menDoc.Common.Converters" x:Class="menDoc.Views.ERDocV"
@@ -15,6 +16,7 @@
              d:DesignHeight="450" d:DesignWidth="800">
     <UserControl.Resources>
         <Converters:MultiplicityToImagePathConverter x:Key="MultiplicityToImagePathConverter"/>
+        <Converters:IgnoreNewItemPlaceholderConverter x:Key="ignoreNewItemPlaceHolderConverter"/>
         <ViewModels:ERDocVM x:Key="vm"/>
         <ObjectDataProvider MethodName="GetValues" ObjectType="{x:Type sys:Enum}" x:Key="AlignmentValues">
             <ObjectDataProvider.MethodParameters>
@@ -31,7 +33,6 @@
                 <x:Type TypeName="enum:Multiplicity" />
             </ObjectDataProvider.MethodParameters>
         </ObjectDataProvider>
-
     </UserControl.Resources>
 
 
@@ -245,29 +246,46 @@
                         </Grid.ColumnDefinitions>
                         <DataGrid  AutoGenerateColumns="False" 
                               ItemsSource="{Binding TableList.TableItems.SelectedItem.TableRelationList.Items}"
-                              SelectedItem="{Binding TableList.TableItems.SelectedItem.TableRelationList.SelectedItem}">
+                              SelectedItem="{Binding TableList.TableItems.SelectedItem.TableRelationList.SelectedItem,
+                              Converter={StaticResource ignoreNewItemPlaceHolderConverter}}">
                             <b:Interaction.Triggers>
                                 <b:EventTrigger EventName="SelectionChanged">
                                     <b:CallMethodAction TargetObject="{Binding Mode=OneWay, Source={StaticResource vm}}" MethodName="RefreshPreview"/>
                                 </b:EventTrigger>
                             </b:Interaction.Triggers>
                             <DataGrid.Columns>
-                                <!--<DataGridTextColumn Header="TargetTable" Binding="{Binding TagetTable}"/>-->
                                 <DataGridTemplateColumn IsReadOnly="True" Header="TargetTable">
                                     <DataGridTemplateColumn.CellTemplate>
                                         <DataTemplate>
+                                            <DataTemplate.Triggers>
+                                                <DataTrigger Binding="{Binding}" Value="{x:Static hlp:NewItemHolderHelper.NewItemPlaceholder}">
+                                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                                </DataTrigger>
+                                            </DataTemplate.Triggers>
                                             <ComboBox ItemsSource="{Binding TableList.TableItems.Items, Source={StaticResource vm}}"
-                                                      DisplayMemberPath="Name" SelectedValuePath="Name"
-                                                      SelectedValue="{Binding TagetTable, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                                      DisplayMemberPath="Name"
+                                                      SelectedValuePath="Name"
+                                                      SelectedValue="{Binding TagetTable, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                                            </ComboBox>
                                         </DataTemplate>
                                     </DataGridTemplateColumn.CellTemplate>
                                 </DataGridTemplateColumn>
+
+                                <DataGridTextColumn Header="Description" Binding="{Binding Description}"/>
+                                
+                                
                                 <DataGridTemplateColumn IsReadOnly="True" Header="Multiplicity">
                                     <DataGridTemplateColumn.CellTemplate>
+                                        
                                         <DataTemplate>
+                                            <DataTemplate.Triggers>
+                                                <DataTrigger Binding="{Binding}" Value="{x:Static hlp:NewItemHolderHelper.NewItemPlaceholder}">
+                                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                                </DataTrigger>
+                                            </DataTemplate.Triggers>
                                             <ComboBox ItemsSource="{Binding Mode=OneWay, Source={StaticResource MultiplicityValues}}"
                                                       SelectedItem="{Binding OwnMultiplicity, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
-                                                <ComboBox.ItemTemplate>
+                                                   <ComboBox.ItemTemplate>
                                                     <DataTemplate>
                                                         <Image Source="{Binding Converter={StaticResource MultiplicityToImagePathConverter}, ConverterParameter=left}"/>
                                                     </DataTemplate>
@@ -276,9 +294,15 @@
                                         </DataTemplate>
                                     </DataGridTemplateColumn.CellTemplate>
                                 </DataGridTemplateColumn>
+                                
                                 <DataGridTemplateColumn IsReadOnly="True" Header="TargetMultiplicity">
                                     <DataGridTemplateColumn.CellTemplate>
                                         <DataTemplate>
+                                            <DataTemplate.Triggers>
+                                                <DataTrigger Binding="{Binding}" Value="{x:Static hlp:NewItemHolderHelper.NewItemPlaceholder}">
+                                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                                </DataTrigger>
+                                            </DataTemplate.Triggers>
                                             <ComboBox ItemsSource="{Binding Mode=OneWay, Source={StaticResource MultiplicityValues}}"
                                                       SelectedItem="{Binding TargetMultiplicity, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                                                 <ComboBox.ItemTemplate>
@@ -291,7 +315,6 @@
                                     </DataGridTemplateColumn.CellTemplate>
                                 </DataGridTemplateColumn>
 
-                                <DataGridTextColumn Header="Description" Binding="{Binding Description}"/>
                             </DataGrid.Columns>
                         </DataGrid>
                         <Grid Grid.Column="1">

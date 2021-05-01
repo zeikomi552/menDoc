@@ -13,12 +13,14 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Controls;
 
 namespace menDoc.ViewModels
 {
     public class ERDocVM : ViewModelBase
 	{
+
 		#region WebView2オブジェクト
 		/// <summary>
 		/// WebView2オブジェクト
@@ -47,6 +49,18 @@ namespace menDoc.ViewModels
 			}
 		}
 		#endregion
+
+		public void GridDoubleClick(object sender, EventArgs e)
+		{
+			var tmp = this.TableList.TableItems.SelectedItem;
+			if (tmp != null)
+			{
+				if (tmp.TableRelationList.SelectedItem == null)
+				{
+					tmp.TableRelationList.Items.Add(new TableRelationM());
+				}
+			}
+		}
 
 		#region ブラウザのパス[DefaultBrowzerPath]プロパティ
 		/// <summary>
