@@ -64,9 +64,6 @@ namespace menDoc.Common
 			}
 			#endregion
 			public const string OutputHtmlTmpletePath = @".\Common\Templete\HtmlCode\ClassDiagramHtml.mdtmpl";
-
 		}
-
-
 	}
 }

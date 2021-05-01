@@ -36,18 +36,8 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
-            <TabControl TabStripPlacement="Left">
-                <TabControl.Resources>
-                    <Style BasedOn="{StaticResource MahApps.Styles.TabItem}" TargetType="{x:Type TabItem}">
-                        <Setter Property="LayoutTransform">
-                            <Setter.Value>
-                                <TransformGroup>
-                                    <RotateTransform Angle="90"/>
-                                </TransformGroup>
-                            </Setter.Value>
-                        </Setter>
-                    </Style>
-                </TabControl.Resources>
+            <TabControl>
+
                 <TabItem Header="Markdown">
                     <TabControl TabStripPlacement="Left">
                         <TabControl.Resources>
