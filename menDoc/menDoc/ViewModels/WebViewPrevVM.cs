@@ -138,12 +138,9 @@ namespace menDoc.ViewModels
 		/// <param name="webview"></param>
 		async public void SetWebviewObject(WebView2 webview)
         {
-			if (_WebviewObject == null && webview != null)
-			{
-				await webview.EnsureCoreWebView2Async(null);
+			await webview.EnsureCoreWebView2Async(null);
 
-				this.WebviewObject = webview;
-			}
+			this.WebviewObject = webview;
 		}
 		#endregion
 

@@ -56,6 +56,25 @@ namespace menDoc.ViewModels
 		}
 		#endregion
 
+		#region 初期化処理
+		/// <summary>
+		/// 初期化処理
+		/// </summary>
+		public override void Init()
+		{
+			try
+			{
+				base.Init();	// 親の初期化処理を使用する
+				this.TableList.SaveTemporary();	// 一時ファイルの保存
+				this.TableList.Backup();		// バックアップデータの作成
+			}
+			catch (Exception ex)
+			{
+				ShowMessage.ShowErrorOK(ex.Message, "Error");
+			}
+		}
+		#endregion
+
 		#region Previewの更新処理
 		/// <summary>
 		/// Previewの更新処理
