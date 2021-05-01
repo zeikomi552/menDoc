@@ -127,7 +127,7 @@
     <None Update="Common\Templete\HtmlCode\ERDiagramHtml.mdtmpl">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Common\Templete\HtmlCode\gRPCHtml.mdtml">
+    <None Update="Common\Templete\HtmlCode\gRPCHtml.mdtmpl">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>

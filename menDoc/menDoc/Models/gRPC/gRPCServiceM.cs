@@ -85,8 +85,6 @@ namespace menDoc.Models
 		}
 		#endregion
 
-
-
 		#region .cs サーバー用コード
 		/// <summary>
 		/// .cs サーバー用コード
@@ -218,6 +216,8 @@ namespace menDoc.Models
 			NotifyPropertyChanged("CsServer");
 			NotifyPropertyChanged("CsClient");
 			NotifyPropertyChanged("RecieveCode");
+			SaveTemporary();
+			NotifyPropertyChanged("Html");
 		}
 		#endregion
 
@@ -427,6 +427,7 @@ namespace menDoc.Models
 
 			code.AppendLine("## APIリスト");
 			code.AppendLine("APIの一覧を以下に記載する。");
+			code.AppendLine();
 			code.AppendLine("|No.|API名|説明|");
 			code.AppendLine("|---|---|---|");
 
@@ -589,5 +590,38 @@ namespace menDoc.Models
 			RefleshCode();
 		}
 		#endregion
+
+		#region テンポラリデータの保存処理
+		/// <summary>
+		/// テンポラリデータの保存処理
+		/// </summary>
+		/// <returns>保存処理</returns>
+		public string SaveTemporary()
+		{
+			try
+			{
+				// UTF-8
+				StreamReader html_sr = new StreamReader(gRPCPath.OutputHtmlTmpletePath, Encoding.UTF8);
+
+				// テンプレートファイル読み出し
+				string html_txt = html_sr.ReadToEnd();
+
+				html_txt = html_txt.Replace("{menDoc:jsdir}", Utilities.JSDir);
+				html_txt = html_txt.Replace("{menDoc:htmlbody}", this.Html);
+				File.WriteAllText(gRPCPath.TmploraryFilePath, html_txt);
+
+				// 一時フォルダの作成
+				Utilities.CreateTemporaryDir();
+
+				return gRPCPath.TmploraryFilePath;
+			}
+			catch (Exception e)
+			{
+				ShowMessage.ShowErrorOK(e.Message, "Error");
+				return string.Empty;
+			}
+		}
+		#endregion
+
 	}
 }

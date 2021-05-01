@@ -46,7 +46,7 @@
                         </TabControl.Resources>
                         <TabItem Header="Preview">
                             <GroupBox Header="Markdown Preview">
-                                <wv2:WebView2 Name="webView" Source="{Binding ClassList.TmpURI, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                <wv2:WebView2 Name="webView" Source="{Binding Service.TmpURI, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
                             </GroupBox>
                         </TabItem>
                         <TabItem Header="Code">
