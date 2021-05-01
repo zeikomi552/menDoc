@@ -1,5 +1,7 @@
 ﻿using menDoc.Common;
+using menDoc.Common.Utilities;
 using menDoc.Models;
+using menDoc.Views;
 using Microsoft.Win32;
 using MVVMCore.BaseClass;
 using MVVMCore.Common.Utilities;
@@ -11,8 +13,8 @@ using System.Threading.Tasks;
 
 namespace menDoc.ViewModels
 {
-    public class gRpcapiDocVM : ViewModelBase
-    {
+    public class gRpcapiDocVM : WebViewPrevVM
+	{
 		#region サービス[Service]プロパティ
 		/// <summary>
 		/// サービス[Service]プロパティ
@@ -30,6 +32,26 @@ namespace menDoc.ViewModels
 					GlobalValue.Service = value;
 					NotifyPropertyChanged("Service");
 				}
+			}
+		}
+		#endregion
+
+		#region 初期化待ち処理
+		/// <summary>
+		/// 初期化待ち処理
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		public void InitWebView(object sender, EventArgs e)
+		{
+			try
+			{
+				var main_wnd = Utilities.GetWindow<gRpcapiDocV>(sender);
+				SetWebViewObject(((gRpcapiDocV)main_wnd).webView);
+			}
+			catch (Exception ex)
+			{
+				ShowMessage.ShowErrorOK(ex.Message, "Error");
 			}
 		}
 		#endregion
@@ -53,11 +75,7 @@ namespace menDoc.ViewModels
 				{
 					// 保存ファイルから読み込み
 					this.Service = XMLUtil.Deserialize<gRPCServiceM>(dialog.FileName);
-
-					// 成功メッセージ
-					//ShowMessage.ShowNoticeOK("Load Success!!", "Information");
 				}
-
 			}
 			catch (Exception e)
 			{
@@ -238,27 +256,6 @@ namespace menDoc.ViewModels
 				ShowMessage.ShowErrorOK(e.Message, "Error");
 			}
 		}
-		#endregion
-
-		#region 初期化処理
-		/// <summary>
-		/// 初期化処理
-		/// </summary>
-		public override void Init()
-        {
-            
-
-        }
-		#endregion
-
-		#region 画面を閉じる処理
-		/// <summary>
-		/// 画面を閉じる処理
-		/// </summary>
-		public override void Close()
-        {
-
-        }
 		#endregion
 	}
 }

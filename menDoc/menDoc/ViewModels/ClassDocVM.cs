@@ -1,4 +1,5 @@
 ﻿using menDoc.Common;
+using menDoc.Common.Utilities;
 using menDoc.Models.ClassDiagram;
 using menDoc.Views;
 using Microsoft.Win32;
@@ -12,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace menDoc.ViewModels
 {
-	public class ClassDocVM : ViewModelBase
+	public class ClassDocVM : WebViewPrevVM
 	{
 		#region クラスのリスト[ClassList]プロパティ
 		/// <summary>
@@ -35,24 +36,24 @@ namespace menDoc.ViewModels
 		}
 		#endregion
 
-		#region 初期化処理
+
+		#region 初期化待ち処理
 		/// <summary>
-		/// 初期化処理
+		/// 初期化待ち処理
 		/// </summary>
-		public override void Init()
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		public void InitWebView(object sender, EventArgs e)
 		{
-
-
-		}
-		#endregion
-
-		#region 画面を閉じる処理
-		/// <summary>
-		/// 画面を閉じる処理
-		/// </summary>
-		public override void Close()
-		{
-
+			try
+			{
+				var main_wnd = Utilities.GetWindow<ClassDocV>(sender);
+				SetWebViewObject(((ClassDocV)main_wnd).webView);
+			}
+			catch (Exception ex)
+			{
+				ShowMessage.ShowErrorOK(ex.Message, "Error");
+			}
 		}
 		#endregion
 

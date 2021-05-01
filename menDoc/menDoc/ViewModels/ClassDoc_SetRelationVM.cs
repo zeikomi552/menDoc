@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 namespace menDoc.ViewModels
 {
     public class ClassDoc_SetRelationVM : ViewModelBase
-    {
+	{
 		#region クラスのリスト[ClassList]プロパティ
 		/// <summary>
 		/// クラスのリスト[ClassList]プロパティ

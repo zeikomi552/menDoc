@@ -18,16 +18,8 @@ using System.Windows.Controls;
 
 namespace menDoc.ViewModels
 {
-    public class ERDocVM : ViewModelBase
+    public class ERDocVM : WebViewPrevVM
 	{
-
-		#region WebView2オブジェクト
-		/// <summary>
-		/// WebView2オブジェクト
-		/// </summary>
-		WebView2 _Webview2 = null;
-		#endregion
-
 		#region テーブルリスト[TableList]プロパティ
 		/// <summary>
 		/// テーブルリスト[TableList]プロパティ
@@ -50,51 +42,6 @@ namespace menDoc.ViewModels
 		}
 		#endregion
 
-		#region ブラウザのパス[DefaultBrowzerPath]プロパティ
-		/// <summary>
-		/// ブラウザのパス[DefaultBrowzerPath]プロパティ用変数
-		/// </summary>
-		string _DefaultBrowzerPath = string.Empty;
-		/// <summary>
-		/// ブラウザのパス[DefaultBrowzerPath]プロパティ
-		/// </summary>
-		public string DefaultBrowzerPath
-		{
-			get
-			{
-				return _DefaultBrowzerPath;
-			}
-			set
-			{
-				if (!_DefaultBrowzerPath.Equals(value))
-				{
-					_DefaultBrowzerPath = value;
-					NotifyPropertyChanged("DefaultBrowzerPath");
-				}
-			}
-		}
-		#endregion
-
-		#region 初期化処理
-		/// <summary>
-		/// 初期化処理
-		/// </summary>
-		public override void Init()
-		{
-			try
-			{
-				string path = this.TableList.SaveTemporary();
-				var conf = ConfigManager.LoadConf();
-				this.DefaultBrowzerPath = conf.DefaultBrowzerPath;
-
-			}
-			catch (Exception ex)
-			{
-				ShowMessage.ShowErrorOK(ex.Message, "Error");
-			}
-		}
-		#endregion
-
 		#region 初期化待ち処理
 		/// <summary>
 		/// 初期化待ち処理
@@ -103,33 +50,15 @@ namespace menDoc.ViewModels
 		/// <param name="e"></param>
 		public void InitWebView(object sender, EventArgs e)
 		{
-			InitializeAsync(sender, e);
-		}
-		#endregion
-
-		#region WebView2初期化待ち処理
-		/// <summary>
-		/// WebView2初期化待ち処理
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		async void InitializeAsync(object sender, EventArgs e)
-		{
-			var main_wnd = Utilities.GetWindow<ERDocV>(sender);
-			await ((ERDocV)main_wnd).webView.EnsureCoreWebView2Async(null);
-
-			this._Webview2 = ((ERDocV)main_wnd).webView;
-
-		}
-		#endregion
-
-		#region 画面を閉じる処理
-		/// <summary>
-		/// 画面を閉じる処理
-		/// </summary>
-		public override void Close()
-		{
-
+			try
+            {
+				var main_wnd = Utilities.GetWindow<ERDocV>(sender);
+				SetWebViewObject(((ERDocV)main_wnd).webView);
+			}
+			catch (Exception ex)
+			{
+				ShowMessage.ShowErrorOK(ex.Message, "Error");
+			}
 		}
 		#endregion
 
@@ -147,7 +76,7 @@ namespace menDoc.ViewModels
 				// 値が変化している場合のみ更新
 				if (this.TableList.ChangeCheck())
 				{
-					this._Webview2.Reload();
+					this.WebviewObject.Reload();
 					this.TableList.Backup();
 				}
 			}
@@ -250,7 +179,7 @@ namespace menDoc.ViewModels
 					string path = this.TableList.SaveTemporary();
 
 					// プレビューのリロード
-					this._Webview2.Reload();
+					this.WebviewObject.Reload();
 				}
 
 			}
