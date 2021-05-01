@@ -110,32 +110,5 @@ namespace menDoc.Models
 		}
 		#endregion
 
-		#region ディープコピー
-		/// <summary>
-		/// ディープコピー
-		/// </summary>
-		/// <returns>コピー結果</returns>
-		public gRPCAPIM DeepCopy()
-		{
-			var tmp = ShallowCopy<gRPCAPIM>();
-
-			var request_list = new ModelList<gRrpcParamM>();
-			foreach (var api in this.RequestItems)
-			{
-				request_list.Items.Add(api.ShallowCopy<gRrpcParamM>());
-			}
-			tmp.RequestItems = request_list;
-
-
-			var reqply_list = new ModelList<gRrpcParamM>();
-			foreach (var api in this.Replytems)
-			{
-				reqply_list.Items.Add(api.ShallowCopy<gRrpcParamM>());
-			}
-			tmp.Replytems = reqply_list;
-
-			return tmp;
-		}
-		#endregion
 	}
 }
