@@ -157,15 +157,15 @@
                                 </Style>
                             </DataGrid.Resources>
                             <b:Interaction.Triggers>
-                                <b:EventTrigger EventName="SelectionChanged">
+                                <b:EventTrigger EventName="SourceUpdated">
                                     <b:CallMethodAction TargetObject="{Binding Mode=OneWay, Source={StaticResource vm}}" MethodName="RefreshPreview"/>
                                 </b:EventTrigger>
                             </b:Interaction.Triggers>
                             <DataGrid.Columns>
-                                <DataGridTextColumn Header="Name" Binding="{Binding Name}"/>
-                                <DataGridTextColumn Header="Description" Binding="{Binding Description}"/>
-                                <DataGridTextColumn Header="Create Date" Binding="{Binding CreateDate, StringFormat=yyyy/MM/dd}"/>
-                                <DataGridTextColumn Header="Create User" Binding="{Binding CreateUser}"/>
+                                <DataGridTextColumn Header="Name" Binding="{Binding Name, NotifyOnSourceUpdated=True, UpdateSourceTrigger=LostFocus}"/>
+                                <DataGridTextColumn Header="Description" Binding="{Binding Description, NotifyOnSourceUpdated=True, UpdateSourceTrigger=LostFocus}"/>
+                                <DataGridTextColumn Header="Create Date" Binding="{Binding CreateDate, StringFormat=yyyy/MM/dd, NotifyOnSourceUpdated=True, UpdateSourceTrigger=LostFocus}"/>
+                                <DataGridTextColumn Header="Create User" Binding="{Binding CreateUser, NotifyOnSourceUpdated=True, UpdateSourceTrigger=LostFocus}"/>
                             </DataGrid.Columns>
                         </DataGrid>
                         <Grid Grid.Column="1">
@@ -203,18 +203,18 @@
                                 ItemsSource="{Binding TableList.TableItems.SelectedItem.ParameterItems.Items}"
                                 SelectedItem="{Binding TableList.TableItems.SelectedItem.ParameterItems.SelectedItem}">
                             <b:Interaction.Triggers>
-                                <b:EventTrigger EventName="SelectionChanged">
+                                <b:EventTrigger EventName="SourceUpdated">
                                     <b:CallMethodAction TargetObject="{Binding Mode=OneWay, Source={StaticResource vm}}" MethodName="RefreshPreview"/>
                                 </b:EventTrigger>
                             </b:Interaction.Triggers>
 
                             <DataGrid.Columns>
-                                <DataGridCheckBoxColumn Header="PK" Binding="{Binding PrimaryKey}"/>
-                                <DataGridCheckBoxColumn Header="NotNull" Binding="{Binding NotNull}"/>
-                                <DataGridTextColumn Header="Type" Binding="{Binding Type}"/>
-                                <DataGridTextColumn Header="Size" Binding="{Binding Size}"/>
-                                <DataGridTextColumn Header="Name" Binding="{Binding Name}"/>
-                                <DataGridTextColumn Header="Description" Binding="{Binding Description}"/>
+                                <DataGridCheckBoxColumn Header="PK" Binding="{Binding PrimaryKey, NotifyOnSourceUpdated=True, UpdateSourceTrigger=LostFocus}"/>
+                                <DataGridCheckBoxColumn Header="NotNull" Binding="{Binding NotNull, NotifyOnSourceUpdated=True, UpdateSourceTrigger=LostFocus}"/>
+                                <DataGridTextColumn Header="Type" Binding="{Binding Type, NotifyOnSourceUpdated=True, UpdateSourceTrigger=LostFocus}"/>
+                                <DataGridTextColumn Header="Size" Binding="{Binding Size, NotifyOnSourceUpdated=True, UpdateSourceTrigger=LostFocus}"/>
+                                <DataGridTextColumn Header="Name" Binding="{Binding Name, NotifyOnSourceUpdated=True, UpdateSourceTrigger=LostFocus}"/>
+                                <DataGridTextColumn Header="Description" Binding="{Binding Description, NotifyOnSourceUpdated=True, UpdateSourceTrigger=LostFocus}"/>
                             </DataGrid.Columns>
                         </DataGrid>
                         <Grid Grid.Column="1">
@@ -254,13 +254,13 @@
                               SelectedItem="{Binding TableList.TableItems.SelectedItem.TableRelationList.SelectedItem,
                               Converter={StaticResource ignoreNewItemPlaceHolderConverter}}">
                             <b:Interaction.Triggers>
-                                <b:EventTrigger EventName="SelectionChanged">
+                                <b:EventTrigger EventName="SourceUpdated">
                                     <b:CallMethodAction TargetObject="{Binding Mode=OneWay, Source={StaticResource vm}}" MethodName="RefreshPreview"/>
                                 </b:EventTrigger>
                             </b:Interaction.Triggers>
                             <DataGrid.Columns>
 
-                                <DataGridTextColumn Header="TargetTable" Binding="{Binding TagetTable}"/>
+                                <DataGridTextColumn Header="TargetTable" Binding="{Binding TagetTable, NotifyOnSourceUpdated=True, UpdateSourceTrigger=LostFocus}"/>
                                 <!--<DataGridTemplateColumn IsReadOnly="True" Header="TargetTable">
                                     <DataGridTemplateColumn.CellTemplate>
                                         <DataTemplate>
@@ -278,7 +278,7 @@
                                     </DataGridTemplateColumn.CellTemplate>
                                 </DataGridTemplateColumn>-->
 
-                                <DataGridTextColumn Header="Description" Binding="{Binding Description}"/>
+                                <DataGridTextColumn Header="Description" Binding="{Binding Description, NotifyOnSourceUpdated=True, UpdateSourceTrigger=LostFocus}"/>
                                 
                                 
                                 <DataGridTemplateColumn IsReadOnly="True" Header="Multiplicity">
@@ -292,7 +292,13 @@
                                             </DataTemplate.Triggers>
                                             <ComboBox ItemsSource="{Binding Mode=OneWay, Source={StaticResource MultiplicityValues}}"
                                                       SelectedItem="{Binding OwnMultiplicity, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
-                                                   <ComboBox.ItemTemplate>
+                                                <b:Interaction.Triggers>
+                                                    <b:EventTrigger EventName="SelectionChanged">
+                                                        <b:CallMethodAction TargetObject="{Binding Mode=OneWay, Source={StaticResource vm}}" MethodName="RefreshPreview"/>
+                                                    </b:EventTrigger>
+                                                </b:Interaction.Triggers>
+
+                                                <ComboBox.ItemTemplate>
                                                     <DataTemplate>
                                                         <Image Source="{Binding Converter={StaticResource MultiplicityToImagePathConverter}, ConverterParameter=left}"/>
                                                     </DataTemplate>
@@ -312,6 +318,11 @@
                                             </DataTemplate.Triggers>
                                             <ComboBox ItemsSource="{Binding Mode=OneWay, Source={StaticResource MultiplicityValues}}"
                                                       SelectedItem="{Binding TargetMultiplicity, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                                                <b:Interaction.Triggers>
+                                                    <b:EventTrigger EventName="SelectionChanged">
+                                                        <b:CallMethodAction TargetObject="{Binding Mode=OneWay, Source={StaticResource vm}}" MethodName="RefreshPreview"/>
+                                                    </b:EventTrigger>
+                                                </b:Interaction.Triggers>
                                                 <ComboBox.ItemTemplate>
                                                     <DataTemplate>
                                                         <Image Source="{Binding Converter={StaticResource MultiplicityToImagePathConverter}, ConverterParameter=right}"/>

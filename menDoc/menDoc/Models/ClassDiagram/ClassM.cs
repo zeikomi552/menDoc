@@ -207,6 +207,42 @@ namespace menDoc.Models.ClassDiagram
 		}
 		#endregion
 
+		#region ディープコピー
+		/// <summary>
+		/// ディープコピー
+		/// </summary>
+		/// <returns>コピー結果</returns>
+		public ClassM DeepCopy()
+		{
+			var tmp = ShallowCopy<ClassM>();
+
+			var p_list = new ModelList<ClassParamM>();
+			foreach (var p in ParameterItems)
+			{
+				p_list.Items.Add(p.ShallowCopy<ClassParamM>());
+			}
+			tmp.ParameterItems = p_list;
+
+			var p_items = new ModelList<ClassMethodM>();
+			foreach (var m in MethodItems)
+			{
+				p_items.Items.Add(m.ShallowCopy<ClassMethodM>());
+			}
+			tmp.MethodItems = p_items;
+
+
+			var r_items = new ModelList<ClassRelationM>();
+			foreach (var r in RelationItems)
+			{
+				r_items.Items.Add(r.ShallowCopy<ClassRelationM>());
+			}
+			tmp.RelationItems = r_items;
+
+			return tmp;
+		}
+		#endregion
+
+
 		#region テーブル情報からクラスをつくる関数
 		/// <summary>
 		/// テーブル情報からクラスをつくる関数

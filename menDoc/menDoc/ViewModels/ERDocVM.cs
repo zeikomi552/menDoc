@@ -83,13 +83,8 @@ namespace menDoc.ViewModels
 		{
 			try
 			{
-				this.TableList.RefleshCode();
-				// 値が変化している場合のみ更新
-				if (this.TableList.ChangeCheck())
-				{
-					this.WebviewObject.Reload();
-					this.TableList.Backup();
-				}
+				this.TableList.SaveTemporary(); // 一時ファイルの保存
+				this.WebviewObject.Reload();
 			}
 			catch (Exception ex)
 			{

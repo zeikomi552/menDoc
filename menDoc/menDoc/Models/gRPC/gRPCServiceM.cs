@@ -118,6 +118,26 @@ namespace menDoc.Models
 		string RecieveMethodTempletePath = @".\Common\Templete\CSharpCode\gRPC\RequestMethod.mdtmpl";
 		string RecieveEventHandlerTempletePath = @".\Common\Templete\CSharpCode\gRPC\RecieveEventHandler.mdtmpl";
 
+		#region ディープコピー
+		/// <summary>
+		/// ディープコピー
+		/// </summary>
+		/// <returns>コピー結果</returns>
+		public gRPCServiceM DeepCopy()
+		{
+			var tmp = ShallowCopy<gRPCServiceM>();
+
+			var api_list = new ModelList<gRPCAPIM>();
+			foreach (var api in this.APIs)
+			{
+				api_list.Items.Add(api.DeepCopy());
+			}
+			tmp.APIs = api_list;
+
+			return tmp;
+		}
+		#endregion
+
 		#region 受信コードの生成
 		/// <summary>
 		/// 受信コードの生成

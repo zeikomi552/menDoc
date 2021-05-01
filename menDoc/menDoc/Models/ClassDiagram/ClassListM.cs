@@ -29,6 +29,8 @@ namespace menDoc.Models.ClassDiagram
 		}
 		#endregion
 
+
+
 		#region テーブルからクラスを作成してセットする
 		/// <summary>
 		/// テーブルからクラスを作成してセットする
@@ -96,6 +98,32 @@ namespace menDoc.Models.ClassDiagram
 		}
 		#endregion
 
+		#region クラス要素のバックアップ[ClassItemsBackup]プロパティ
+		/// <summary>
+		/// クラス要素のバックアップ[ClassItemsBackup]プロパティ用変数
+		/// </summary>
+		ModelList<ClassM> _ClassItemsBackup = new ModelList<ClassM>();
+		/// <summary>
+		/// クラス要素のバックアップ[ClassItemsBackup]プロパティ
+		/// </summary>
+		public ModelList<ClassM> ClassItemsBackup
+		{
+			get
+			{
+				return _ClassItemsBackup;
+			}
+			set
+			{
+				if (_ClassItemsBackup == null || !_ClassItemsBackup.Equals(value))
+				{
+					_ClassItemsBackup = value;
+					NotifyPropertyChanged("ClassItemsBackup");
+				}
+			}
+		}
+		#endregion
+
+
 		#region マークダウン
 		/// <summary>
 		/// マークダウン
@@ -133,6 +161,23 @@ namespace menDoc.Models.ClassDiagram
 			{
 				return new Uri(ClassDiagramPath.TmploraryFilePath);
 			}
+		}
+		#endregion
+
+		#region バックアップ処理
+		/// <summary>
+		/// バックアップ処理
+		/// </summary>
+		public void Bakcup()
+		{
+			ModelList<ClassM> bak = new ();
+
+			foreach (var tmp in this.ClassItems)
+			{
+				bak.Items.Add(tmp.DeepCopy());
+			}
+
+			this.ClassItemsBackup = bak;
 		}
 		#endregion
 
