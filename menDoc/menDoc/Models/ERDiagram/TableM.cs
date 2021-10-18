@@ -303,16 +303,20 @@ namespace menDoc.Models.ERDiagram
 			{
 
 				string parameter = templete;
+				string charp_type = string.Empty;
 				parameter = parameter.Replace("{mendoc:primarykey}", col.PrimaryKey ? "[Key]" : "");	// primarykey部の置換
 				parameter = parameter.Replace("{mendoc:column}", col.Name);	// column部の置換
 				parameter = parameter.Replace("{mendoc:name}", col.Name);	// name部の置換
 				parameter = parameter.Replace("{mendoc:description}", col.Description); // description部の置換
-				parameter = parameter.Replace("{mendoc:type}", Utilities.ConvertTypeDBtoCSharp(Utilities.DBtype.MSSQLServer, col.NotNull, col.Type));    // type部の置換
+				parameter = parameter.Replace("{mendoc:type}", (charp_type = Utilities.ConvertTypeDBtoCSharp(Utilities.DBtype.MSSQLServer, col.NotNull, col.Type)));    // type部の置換
 				parameter = parameter.Replace("{mendoc:no}", (index++).ToString());    // no部の置換
 				parameter = parameter.Replace("{mendoc:initparam}", Utilities.CSharpTypeInitCode(Utilities.DBtype.MSSQLServer, col.NotNull, col.Type));    // type部の置換
 
+				if (Utilities.IsNullCheck(charp_type))
+				{
+					parameter = parameter.Replace($"_{col.Name} == null || ", string.Empty);
+				}
 				parameters_code.AppendLine(parameter);
-
 			}
 
 			return parameters_code.ToString();

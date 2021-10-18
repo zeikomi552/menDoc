@@ -470,6 +470,34 @@ namespace menDoc.Common.Utilities
         }
         #endregion
 
+        #region Nullチェックすべきかどうか
+        /// <summary>
+        /// Nullチェックすべきかどうか
+        /// </summary>
+        /// <param name="csharp_type"></param>
+        /// <returns></returns>
+        public static bool IsNullCheck(string csharp_type)
+        {
+            if (csharp_type.ToLower().Equals("int")
+                || csharp_type.ToLower().Equals("double")
+                || csharp_type.ToLower().Equals("decimal")
+                || csharp_type.ToLower().Equals("Single")
+                || csharp_type.ToLower().Equals("Int16")
+                || csharp_type.ToLower().Equals("Int32")
+                || csharp_type.ToLower().Equals("Int64")
+                || csharp_type.ToLower().Equals("byte")
+                || csharp_type.ToLower().Equals("DateTime")
+                )
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+        #endregion
+
         #region DBの型をC#の型に変換する
         /// <summary>
         /// DBの型をC#の型に変換する
@@ -486,6 +514,7 @@ namespace menDoc.Common.Utilities
                         if (notnull)
                         {
                             if (db_param_type.ToLower().Equals("BigInt".ToLower())) return "Int64";
+                            if (db_param_type.ToLower().Equals("Varchar".ToLower())) return "String";
                             if (db_param_type.ToLower().Equals("VarBinary".ToLower())) return "Byte[]";
                             if (db_param_type.ToLower().Equals("Char".ToLower())) return "String";
                             if (db_param_type.ToLower().Equals("Date".ToLower())) return "DateTime";
@@ -523,6 +552,7 @@ namespace menDoc.Common.Utilities
                         {
                             if (db_param_type.ToLower().Equals("BigInt".ToLower())) return "Int64?";
                             if (db_param_type.ToLower().Equals("VarBinary".ToLower())) return "Byte[]";
+                            if (db_param_type.ToLower().Equals("Varchar".ToLower())) return "String";
                             if (db_param_type.ToLower().Equals("Char".ToLower())) return "String";
                             if (db_param_type.ToLower().Equals("Date".ToLower())) return "DateTime?";
                             if (db_param_type.ToLower().Equals("DateTime".ToLower())) return "DateTime?";
@@ -582,8 +612,10 @@ namespace menDoc.Common.Utilities
                         if(notnull)
                         {
                             if (db_param_type.ToLower().Equals("BigInt".ToLower())) return "0";
+                            if (db_param_type.ToLower().Equals("long".ToLower())) return "0";
                             if (db_param_type.ToLower().Equals("VarBinary".ToLower())) return "new Byte[]";
                             if (db_param_type.ToLower().Equals("Char".ToLower())) return "string.Empty";
+                            if (db_param_type.ToLower().Equals("Varchar".ToLower())) return "string.Empty";
                             if (db_param_type.ToLower().Equals("Date".ToLower())) return "DateTime.MinValue";
                             if (db_param_type.ToLower().Equals("DateTime".ToLower())) return "DateTime.MinValue";
                             if (db_param_type.ToLower().Equals("DateTime2".ToLower())) return "DateTime.MinValue";
@@ -618,7 +650,9 @@ namespace menDoc.Common.Utilities
                         else
                         {
                             if (db_param_type.ToLower().Equals("BigInt".ToLower())) return "0";
+                            if (db_param_type.ToLower().Equals("long".ToLower())) return "0";
                             if (db_param_type.ToLower().Equals("VarBinary".ToLower())) return "new Byte[]";
+                            if (db_param_type.ToLower().Equals("Varchar".ToLower())) return "string.Empty";
                             if (db_param_type.ToLower().Equals("Char".ToLower())) return "string.Empty";
                             if (db_param_type.ToLower().Equals("Date".ToLower())) return "null";
                             if (db_param_type.ToLower().Equals("DateTime".ToLower())) return "null";
