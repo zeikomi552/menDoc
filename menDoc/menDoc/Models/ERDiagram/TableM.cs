@@ -524,6 +524,7 @@ namespace menDoc.Models.ERDiagram
 					{
 						pk.Append(" && " + pk_tmpl.Replace("{mendoc:name}", tmp.Name));
 					}
+					pk_find = true;
 				}
 			}
 
