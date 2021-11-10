@@ -23,6 +23,26 @@ namespace menDoc.Common.Enums
 	}
 	#endregion
 
+	public enum gRPCTypeEnum
+	{ 
+		double_,
+		float_,
+		int32_,
+		int64_,
+		uint32_,
+		uint64_,
+		sint32_,
+		sint64_,
+		fixed32_,
+		fixed64_,
+		sfixed32_,
+		sfixed64_,
+		bool_,
+		string_,
+		bytes_
+	}
+
+
 	#region アクセス修飾子
 	/// <summary>
 	/// アクセス修飾子

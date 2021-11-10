@@ -6,9 +6,13 @@
     <UseWPF>true</UseWPF>
     <AssemblyVersion>0.0.0.4</AssemblyVersion>
     <FileVersion>0.0.0.4</FileVersion>
+    <ApplicationIcon>Common\Themes\Icons\App.ico</ApplicationIcon>
+    <Company>Zeikomi</Company>
+    <Authors>Zeikomi552</Authors>
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Common\Themes\Icons\App.ico" />
     <None Remove="Common\Themes\Icons\multiplicity-onemulti-left.png" />
     <None Remove="Common\Themes\Icons\multiplicity-onemulti-right.png" />
     <None Remove="Common\Themes\Icons\multiplicity-oneone-left.png" />
@@ -37,6 +41,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Common\Themes\Icons\App.ico" />
     <Resource Include="Common\Themes\Icons\multiplicity-onemulti-left.png">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>

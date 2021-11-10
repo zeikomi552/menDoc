@@ -3,6 +3,7 @@ using menDoc.Models.ClassDiagram;
 using menDoc.Models.ERDiagram;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -83,5 +84,33 @@ namespace menDoc.Common
 		}
 		#endregion
 
+		#region gRPCで使用できる変数リスト
+		/// <summary>
+		/// gRPCで使用できる変数リスト
+		/// </summary>
+		public static ObservableCollection<string> gRPCTypes
+        {
+            get
+            {
+				ObservableCollection<string> list = new ObservableCollection<string>();
+				list.Add("double");
+				list.Add("float");
+				list.Add("int32");
+				list.Add("int64");
+				list.Add("uint32");
+				list.Add("uint64");
+				list.Add("sint32");
+				list.Add("sint64");
+				list.Add("fixed32");
+				list.Add("fixed64");
+				list.Add("sfixed32");
+				list.Add("sfixed64");
+				list.Add("bool");
+				list.Add("string");
+				list.Add("bytes");
+				return list;
+			}
+		}
+		#endregion
 	}
 }

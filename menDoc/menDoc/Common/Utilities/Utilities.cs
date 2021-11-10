@@ -3,6 +3,7 @@ using menDoc.Models.ClassDiagram;
 using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -35,6 +36,18 @@ namespace menDoc.Common.Utilities
         }
         #endregion
 
+        #region アプリケーションフォルダの取得
+        /// <summary>
+        /// アプリケーションフォルダの取得
+        /// </summary>
+        /// <returns>アプリケーションフォルダパス</returns>
+        public static string GetApplicationFolder()
+        {
+            var fv = FileVersionInfo.GetVersionInfo(System.Reflection.Assembly.GetExecutingAssembly().Location);
+            return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), fv.CompanyName, fv.ProductName);
+        }
+        #endregion
+
         #region JSファイルの保存先
         /// <summary>
         /// JSファイルの保存先
@@ -56,7 +69,8 @@ namespace menDoc.Common.Utilities
         {
             get
             {
-                return ExeCurrentDir + @"\Temporary";
+                string path = GetApplicationFolder() + @"\Temporary";
+                return path;
             }
         }
         #endregion

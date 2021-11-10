@@ -7,6 +7,7 @@ using MVVMCore.BaseClass;
 using MVVMCore.Common.Utilities;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -49,6 +50,21 @@ namespace menDoc.ViewModels
 			}
 		}
 		#endregion
+
+		#region gRPC用変数一覧[gRPCTypes]プロパティ
+		/// <summary>
+		/// gRPC用変数一覧[gRPCTypes]プロパティ
+		/// </summary>
+		public ObservableCollection<string> gRPCTypes
+		{
+			get
+			{
+				return GlobalValue.gRPCTypes;
+			}
+		}
+		#endregion
+
+
 
 		#region 初期化処理
 		/// <summary>

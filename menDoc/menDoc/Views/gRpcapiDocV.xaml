@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:hlp="clr-namespace:menDoc.Common.Helpers"
              xmlns:local="clr-namespace:menDoc.Views"
              xmlns:enum="clr-namespace:menDoc.Common.Enums"
              xmlns:sys="clr-namespace:System;assembly=mscorlib"
@@ -203,7 +204,7 @@
                             </b:Interaction.Triggers>
                             <DataGrid.Columns>
                                 <DataGridComboBoxColumn Header="Single/Repeat"  SelectedItemBinding="{Binding SingleRepeat, NotifyOnSourceUpdated=True, UpdateSourceTrigger=LostFocus}" ItemsSource="{Binding Mode=OneWay, Source={StaticResource AlignmentValues}}"/>
-                                <DataGridTextColumn Header="Type" Binding="{Binding TypeName, NotifyOnSourceUpdated=True, UpdateSourceTrigger=LostFocus}"/>
+                                <DataGridComboBoxColumn Header="Type" ItemsSource="{Binding gRPCTypes, Source={StaticResource vm}}" SelectedItemBinding="{Binding TypeName, NotifyOnSourceUpdated=True, UpdateSourceTrigger=LostFocus}" />
                                 <DataGridTextColumn Header="ValueName" Binding="{Binding ValueName, NotifyOnSourceUpdated=True, UpdateSourceTrigger=LostFocus}"/>
                                 <DataGridTextColumn Header="Description" Binding="{Binding Description, NotifyOnSourceUpdated=True, UpdateSourceTrigger=LostFocus}"/>
                             </DataGrid.Columns>
@@ -251,7 +252,7 @@
                             </b:Interaction.Triggers>
                             <DataGrid.Columns>
                                 <DataGridComboBoxColumn Header="Single/Repeat"  SelectedItemBinding="{Binding SingleRepeat, NotifyOnSourceUpdated=True, UpdateSourceTrigger=LostFocus}" ItemsSource="{Binding Mode=OneWay, Source={StaticResource AlignmentValues}}"/>
-                                <DataGridTextColumn Header="Type" Binding="{Binding TypeName, NotifyOnSourceUpdated=True, UpdateSourceTrigger=LostFocus}"/>
+                                <DataGridComboBoxColumn Header="Type" ItemsSource="{Binding gRPCTypes, Source={StaticResource vm}}" SelectedItemBinding="{Binding TypeName}" />
                                 <DataGridTextColumn Header="ValueName" Binding="{Binding ValueName, NotifyOnSourceUpdated=True, UpdateSourceTrigger=LostFocus}"/>
                                 <DataGridTextColumn Header="Description" Binding="{Binding Description, NotifyOnSourceUpdated=True, UpdateSourceTrigger=LostFocus}"/>
                             </DataGrid.Columns>
