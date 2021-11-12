@@ -82,7 +82,7 @@ namespace menDoc.Common.Utilities
         public static void CreateTemporaryDir()
         {
             // フォルダの存在を確認しない場合は作成する
-            CheckAndCreate(ExeCurrentDir + @"\Temporary");
+            CheckAndCreate(TempDir);
         }
         #endregion
 
@@ -94,7 +94,7 @@ namespace menDoc.Common.Utilities
         {
             get
             {
-                return ExeCurrentDir + @"\" + "config";
+                return GetApplicationFolder() + @"\" + "config";
             }
         }
         #endregion

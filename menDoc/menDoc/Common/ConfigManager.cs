@@ -2,6 +2,7 @@
 using MVVMCore.Common.Utilities;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -33,6 +34,19 @@ namespace menDoc.Common
 					NotifyPropertyChanged("DefaultBrowzerPath");
 				}
 			}
+		}
+		#endregion
+
+
+		#region アプリケーションフォルダの取得
+		/// <summary>
+		/// アプリケーションフォルダの取得
+		/// </summary>
+		/// <returns>アプリケーションフォルダパス</returns>
+		public static string GetApplicationFolder()
+		{
+			var fv = FileVersionInfo.GetVersionInfo(System.Reflection.Assembly.GetExecutingAssembly().Location);
+			return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), fv.CompanyName, fv.ProductName);
 		}
 		#endregion
 

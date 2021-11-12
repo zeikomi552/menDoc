@@ -4,10 +4,20 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:menDoc"
-        xmlns:Views="clr-namespace:menDoc.Views" x:Class="menDoc.MainWindow"
+        xmlns:Views="clr-namespace:menDoc.Views"
+        xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
         xmlns:mahApps="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+        xmlns:ViewModels="clr-namespace:menDoc.ViewModels" x:Class="menDoc.MainWindow"
         mc:Ignorable="d"
         Title="MainWindow" Height="800" Width="1200">
+    <b:Interaction.Triggers>
+        <b:EventTrigger>
+            <b:CallMethodAction TargetObject="{Binding}" MethodName="Init"/>
+        </b:EventTrigger>
+    </b:Interaction.Triggers>
+    <mahApps:MetroWindow.DataContext>
+        <ViewModels:MainWindowVM/>
+    </mahApps:MetroWindow.DataContext>
     <Grid>
         <TabControl>
             <TabItem Header="ER">

@@ -64,6 +64,7 @@ namespace menDoc.ViewModels
 			}
 			catch (Exception ex)
 			{
+				_logger.Error(ex.Message);
 				ShowMessage.ShowErrorOK(ex.Message, "Error");
 			}
 		}

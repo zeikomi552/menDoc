@@ -64,14 +64,22 @@ namespace menDoc.ViewModels
 		/// </summary>
 		public override void Init()
 		{
-			List<string> class_name = new List<string>();
-
-			// クラス情報
-			foreach (var class_item in this.ClassList.ClassItems)
+			try
 			{
-				class_name.Add(class_item.Name);
+				List<string> class_name = new List<string>();
+
+				// クラス情報
+				foreach (var class_item in this.ClassList.ClassItems)
+				{
+					class_name.Add(class_item.Name);
+				}
+				this.ClassNames.Items = new System.Collections.ObjectModel.ObservableCollection<string>(class_name);
 			}
-			this.ClassNames.Items = new System.Collections.ObjectModel.ObservableCollection<string>(class_name);
+			catch (Exception e)
+			{
+				_logger.Error(e.Message);
+				ShowMessage.ShowErrorOK(e.Message, "Error");
+			}
 		}
 		#endregion
 
