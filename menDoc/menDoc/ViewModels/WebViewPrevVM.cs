@@ -52,7 +52,6 @@ namespace menDoc.ViewModels
 		}
 		#endregion
 
-
 		#region ブラウザのパス[DefaultBrowzerPath]プロパティ
 		/// <summary>
 		/// ブラウザのパス[DefaultBrowzerPath]プロパティ用変数
@@ -95,6 +94,7 @@ namespace menDoc.ViewModels
 			}
 		}
 		#endregion
+
 		#region 初期化処理
 		/// <summary>
 		/// 初期化処理
@@ -109,12 +109,13 @@ namespace menDoc.ViewModels
 				}
 
 				var conf = ConfigManager.LoadConf();
+
 				this.DefaultBrowzerPath = conf.DefaultBrowzerPath;
 			}
 			catch (Exception ex)
 			{
 				_logger.Error(ex.Message);
-				ShowMessage.ShowErrorOK(ex.Message, "Error");
+				ShowMessage.ShowErrorOK(ex.Message + "ClassDoc_SetRelationVM", "Error");
 			}
 		}
 		#endregion
@@ -127,13 +128,21 @@ namespace menDoc.ViewModels
 		/// <param name="e"></param>
 		public void SetWebViewObject(object sender, EventArgs e)
 		{
-			var wv = sender as WebView2;
-
-			// nullチェック
-			if (wv != null)
+			try
 			{
-				// オブジェクトの保持
-				SetWebviewObject(wv);
+				var wv = sender as WebView2;
+
+                // nullチェック
+                if (wv != null)
+                {
+                    // オブジェクトの保持
+                    SetWebviewObject(wv);
+                }
+            }
+			catch (Exception ex)
+			{
+				_logger.Error(ex.Message);
+				ShowMessage.ShowErrorOK(ex.Message, "Error");
 			}
 		}
 		#endregion
@@ -145,9 +154,22 @@ namespace menDoc.ViewModels
 		/// <param name="webview"></param>
 		async public void SetWebviewObject(WebView2 webview)
         {
-			await webview.EnsureCoreWebView2Async(null);
+			try
+			{
+				//string folder = Path.Combine(Utilities.GetApplicationFolder(), "Temporary");
 
-			this.WebviewObject = webview;
+				//var webView2Environment = await Microsoft.Web.WebView2.Core.CoreWebView2Environment.CreateAsync(null, folder);
+
+				await webview.EnsureCoreWebView2Async(null);
+
+				this.WebviewObject = webview;
+			}
+			catch (Exception ex)
+			{
+				_logger.Error(ex.Message);
+				ShowMessage.ShowErrorOK(ex.Message, "Error");
+			}
+
 		}
 		#endregion
 

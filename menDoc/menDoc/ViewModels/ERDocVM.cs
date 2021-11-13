@@ -207,7 +207,8 @@ namespace menDoc.ViewModels
 			}
 			catch (Exception e)
 			{
-				ShowMessage.ShowErrorOK(e.Message, "Error");
+				_logger.Error(e.Message);
+				ShowMessage.ShowErrorOK(e.Message + "ClassDoc_SetRelationVM", "Error");
 			}
 		}
 		#endregion
