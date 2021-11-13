@@ -7,8 +7,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "menDoc", "menDoc\menDoc.csp
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MVVMCore", "..\MVVMCore\MVVMCore\MVVMCore.csproj", "{1718094A-0C1E-4CEF-B1CB-3DB956EFAEB7}"
 EndProject
-Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "menDocInstaller", "menDocInstaller\menDocInstaller.vdproj", "{378D28DB-8137-4F4D-92A6-A33855EEC7C4}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -23,8 +21,6 @@ Global
 		{1718094A-0C1E-4CEF-B1CB-3DB956EFAEB7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1718094A-0C1E-4CEF-B1CB-3DB956EFAEB7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1718094A-0C1E-4CEF-B1CB-3DB956EFAEB7}.Release|Any CPU.Build.0 = Release|Any CPU
-		{378D28DB-8137-4F4D-92A6-A33855EEC7C4}.Debug|Any CPU.ActiveCfg = Debug
-		{378D28DB-8137-4F4D-92A6-A33855EEC7C4}.Release|Any CPU.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
