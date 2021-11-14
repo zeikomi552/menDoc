@@ -156,13 +156,13 @@ namespace menDoc.ViewModels
         {
 			try
 			{
-				string folder = Path.Combine(Utilities.GetApplicationFolder(), "Temporary");
+				//string folder = Path.Combine(Utilities.GetApplicationFolder(), "Temporary");
 
-				ShowMessage.ShowErrorOK(folder, "aasa");
+				//ShowMessage.ShowErrorOK(folder, "aasa");
 
-				var webView2Environment = await Microsoft.Web.WebView2.Core.CoreWebView2Environment.CreateAsync(null, folder);
+				//var webView2Environment = await Microsoft.Web.WebView2.Core.CoreWebView2Environment.CreateAsync(null, folder);
 
-				await webview.EnsureCoreWebView2Async(webView2Environment);
+				await webview.EnsureCoreWebView2Async(null);
 
 				this.WebviewObject = webview;
 			}
