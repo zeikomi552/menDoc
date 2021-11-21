@@ -635,6 +635,7 @@ namespace menDoc.Common.Utilities
                             if (db_param_type.ToLower().Equals("DateTime2".ToLower())) return "DateTime.MinValue";
                             if (db_param_type.ToLower().Equals("DateTimeOffset".ToLower())) return "DateTimeOffset.MinValue";
                             if (db_param_type.ToLower().Equals("Decimal".ToLower())) return "0";
+                            if (db_param_type.ToLower().Equals("bool".ToLower())) return "false";
                             if (db_param_type.ToLower().Equals("VarBinary".ToLower())) return "null";
                             if (db_param_type.ToLower().Equals("Float".ToLower())) return "Double";
                             if (db_param_type.ToLower().Equals("Binary".ToLower())) return "Byte[]";
@@ -673,6 +674,7 @@ namespace menDoc.Common.Utilities
                             if (db_param_type.ToLower().Equals("DateTime2".ToLower())) return "null";
                             if (db_param_type.ToLower().Equals("DateTimeOffset".ToLower())) return "DateTimeOffset.MinValue";
                             if (db_param_type.ToLower().Equals("Decimal".ToLower())) return "0";
+                            if (db_param_type.ToLower().Equals("bool".ToLower())) return "false";
                             if (db_param_type.ToLower().Equals("VarBinary".ToLower())) return "null";
                             if (db_param_type.ToLower().Equals("Float".ToLower())) return "Double";
                             if (db_param_type.ToLower().Equals("Binary".ToLower())) return "Byte[]";
