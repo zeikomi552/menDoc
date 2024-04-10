@@ -204,7 +204,29 @@
                             </b:Interaction.Triggers>
                             <DataGrid.Columns>
                                 <DataGridComboBoxColumn Header="Single/Repeat"  SelectedItemBinding="{Binding SingleRepeat, NotifyOnSourceUpdated=True, UpdateSourceTrigger=LostFocus}" ItemsSource="{Binding Mode=OneWay, Source={StaticResource AlignmentValues}}"/>
-                                <DataGridComboBoxColumn Header="Type" ItemsSource="{Binding gRPCTypes, Source={StaticResource vm}}" SelectedItemBinding="{Binding TypeName, NotifyOnSourceUpdated=True, UpdateSourceTrigger=LostFocus}" />
+                                <!--<DataGridComboBoxColumn Header="Type2" ItemsSource="{Binding gRPCTypes, Source={StaticResource vm}}"
+                                                        SelectedItemBinding="{Binding TypeName, NotifyOnSourceUpdated=True, UpdateSourceTrigger=LostFocus}"/>-->
+                                <DataGridTemplateColumn IsReadOnly="True" Header="Type">
+                                    <DataGridTemplateColumn.CellTemplate>
+
+                                        <DataTemplate>
+                                            <DataTemplate.Triggers>
+                                                <DataTrigger Binding="{Binding}" Value="{x:Static hlp:NewItemHolderHelper.NewItemPlaceholder}">
+                                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                                </DataTrigger>
+                                            </DataTemplate.Triggers>
+                                            <ComboBox ItemsSource="{Binding gRPCTypes, Mode=OneWay, Source={StaticResource vm}}"
+                                                      SelectedItem="{Binding TypeName, NotifyOnSourceUpdated=True, UpdateSourceTrigger=LostFocus}">
+                                                <b:Interaction.Triggers>
+                                                    <b:EventTrigger EventName="DropDownOpened">
+                                                        <b:CallMethodAction TargetObject="{Binding Mode=OneWay, Source={StaticResource vm}}" MethodName="DropdownOpen"/>
+                                                    </b:EventTrigger>
+                                                </b:Interaction.Triggers>
+
+                                            </ComboBox>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
                                 <DataGridTextColumn Header="ValueName" Binding="{Binding ValueName, NotifyOnSourceUpdated=True, UpdateSourceTrigger=LostFocus}"/>
                                 <DataGridTextColumn Header="Description" Binding="{Binding Description, NotifyOnSourceUpdated=True, UpdateSourceTrigger=LostFocus}"/>
                             </DataGrid.Columns>

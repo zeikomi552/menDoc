@@ -64,8 +64,6 @@ namespace menDoc.ViewModels
 		}
 		#endregion
 
-
-
 		#region 初期化処理
 		/// <summary>
 		/// 初期化処理
@@ -76,15 +74,31 @@ namespace menDoc.ViewModels
 			{
 				base.Init();    // 親の初期化処理を使用する
 				this.Service.SaveTemporary(); // 一時ファイルの保存
-				//this.Service.Backup();        // バックアップデータの作成
-			}
-			catch (Exception ex)
+                                              //this.Service.Backup();        // バックアップデータの作成
+
+
+            }
+            catch (Exception ex)
 			{
 				_logger.Error(ex.Message);
 				ShowMessage.ShowErrorOK(ex.Message, "Error");
 			}
 		}
 		#endregion
+
+		public void DropdownOpen()
+		{
+            GlobalValue.TypeInit();
+
+			var items = (from x in this.Service.APIs.Items
+					   select x.Name).Distinct();
+
+			foreach (var item in items)
+			{
+                GlobalValue.AddGrpcType(item);
+            }
+            NotifyPropertyChanged("gRPCTypes");
+        }
 
 		#region Previewの更新処理
 		/// <summary>
