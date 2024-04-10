@@ -338,9 +338,30 @@ namespace menDoc.Models
 
 			foreach (var api in this.APIs)
 			{
-				code.AppendLine(string.Format("message {0}Request {{", api.Name));
+                int index = 1;
+                if (api.ClassItems.Items.Count > 0)
+				{
+                    code.AppendLine(string.Format("message {0} {{", api.Name));
 
-				int index = 1;
+                    foreach (var cls in api.ClassItems)
+                    {
+                        // repeatの判別
+                        if (cls.SingleRepeat == SingleRepeatEnum.Single)
+                        {
+                            code.AppendLine(string.Format("\t{0} {1} = {2};", cls.TypeName, cls.ValueName, index));
+                        }
+                        else
+                        {
+                            code.AppendLine(string.Format("\trepeated {0} {1} = {2};", cls.TypeName, cls.ValueName, index));
+                        }
+                        index++;
+                    }
+                    code.AppendLine("}");
+
+                }
+                code.AppendLine(string.Format("message {0}Request {{", api.Name));
+
+				index = 1;
 				foreach (var request in api.RequestItems)
 				{
 					// repeatの判別

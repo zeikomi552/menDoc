@@ -142,7 +142,7 @@
                         </StackPanel>
                     </GroupBox>
                 </Grid>
-                <GroupBox Header="APIs" Grid.Row="1">
+                <GroupBox Margin="5" Header="APIs" Grid.Row="1">
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
@@ -187,15 +187,17 @@
                         </Grid>
                     </Grid>
                 </GroupBox>
-                <GroupBox Grid.Row="2" Header="Request">
+
+
+                <GroupBox Grid.Row="2" Margin="5" Header="Class">
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="30"/>
                         </Grid.ColumnDefinitions>
                         <DataGrid AutoGenerateColumns="False"
-                                  ItemsSource="{Binding Service.APIs.SelectedItem.RequestItems.Items}"
-                                  SelectedItem="{Binding Service.APIs.SelectedItem.RequestItems.SelectedItem}"
+                                  ItemsSource="{Binding Service.APIs.SelectedItem.ClassItems.Items}"
+                                  SelectedItem="{Binding Service.APIs.SelectedItem.ClassItems.SelectedItem}"
                                   Margin="5">
                             <b:Interaction.Triggers>
                                 <b:EventTrigger EventName="SourceUpdated">
@@ -257,54 +259,152 @@
                         </Grid>
                     </Grid>
                 </GroupBox>
-                <GroupBox Grid.Row="3" Header="Replay">
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="30"/>
-                        </Grid.ColumnDefinitions>
-                        <DataGrid AutoGenerateColumns="False" Margin="5"
+
+                <Grid Grid.Row="3">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <GroupBox Margin="5" Header="Request">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="30"/>
+                            </Grid.ColumnDefinitions>
+                            <DataGrid AutoGenerateColumns="False"
+                                  ItemsSource="{Binding Service.APIs.SelectedItem.RequestItems.Items}"
+                                  SelectedItem="{Binding Service.APIs.SelectedItem.RequestItems.SelectedItem}"
+                                  Margin="5">
+                                <b:Interaction.Triggers>
+                                    <b:EventTrigger EventName="SourceUpdated">
+                                        <b:CallMethodAction TargetObject="{Binding Mode=OneWay, Source={StaticResource vm}}" MethodName="RefreshPreview"/>
+                                    </b:EventTrigger>
+                                </b:Interaction.Triggers>
+                                <DataGrid.Columns>
+                                    <DataGridComboBoxColumn Header="Single/Repeat"  SelectedItemBinding="{Binding SingleRepeat, NotifyOnSourceUpdated=True, UpdateSourceTrigger=LostFocus}" ItemsSource="{Binding Mode=OneWay, Source={StaticResource AlignmentValues}}"/>
+                                    <!--<DataGridComboBoxColumn Header="Type2" ItemsSource="{Binding gRPCTypes, Source={StaticResource vm}}"
+                                                        SelectedItemBinding="{Binding TypeName, NotifyOnSourceUpdated=True, UpdateSourceTrigger=LostFocus}"/>-->
+                                    <DataGridTemplateColumn IsReadOnly="True" Header="Type">
+                                        <DataGridTemplateColumn.CellTemplate>
+
+                                            <DataTemplate>
+                                                <DataTemplate.Triggers>
+                                                    <DataTrigger Binding="{Binding}" Value="{x:Static hlp:NewItemHolderHelper.NewItemPlaceholder}">
+                                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                                    </DataTrigger>
+                                                </DataTemplate.Triggers>
+                                                <ComboBox ItemsSource="{Binding gRPCTypes, Mode=OneWay, Source={StaticResource vm}}"
+                                                      SelectedItem="{Binding TypeName, NotifyOnSourceUpdated=True, UpdateSourceTrigger=LostFocus}">
+                                                    <b:Interaction.Triggers>
+                                                        <b:EventTrigger EventName="DropDownOpened">
+                                                            <b:CallMethodAction TargetObject="{Binding Mode=OneWay, Source={StaticResource vm}}" MethodName="DropdownOpen"/>
+                                                        </b:EventTrigger>
+                                                    </b:Interaction.Triggers>
+
+                                                </ComboBox>
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellTemplate>
+                                    </DataGridTemplateColumn>
+                                    <DataGridTextColumn Header="ValueName" Binding="{Binding ValueName, NotifyOnSourceUpdated=True, UpdateSourceTrigger=LostFocus}"/>
+                                    <DataGridTextColumn Header="Description" Binding="{Binding Description, NotifyOnSourceUpdated=True, UpdateSourceTrigger=LostFocus}"/>
+                                </DataGrid.Columns>
+                            </DataGrid>
+                            <Grid Grid.Column="1">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="*"/>
+                                </Grid.RowDefinitions>
+                                <Button Grid.Row="1" Content="↑">
+                                    <b:Interaction.Triggers>
+                                        <b:EventTrigger EventName="Click">
+                                            <b:CallMethodAction TargetObject="{Binding}" MethodName="MoveUp_RequestItems"/>
+                                        </b:EventTrigger>
+                                    </b:Interaction.Triggers>
+                                </Button>
+                                <Button Grid.Row="3" Content="↓">
+                                    <b:Interaction.Triggers>
+                                        <b:EventTrigger EventName="Click">
+                                            <b:CallMethodAction TargetObject="{Binding}" MethodName="MoveDown_RequestItesm"/>
+                                        </b:EventTrigger>
+                                    </b:Interaction.Triggers>
+                                </Button>
+
+                            </Grid>
+                        </Grid>
+                    </GroupBox>
+                    <GroupBox Margin="5" Grid.Column="1" Header="Replay">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="30"/>
+                            </Grid.ColumnDefinitions>
+                            <DataGrid AutoGenerateColumns="False" Margin="5"
                                   ItemsSource="{Binding Service.APIs.SelectedItem.Replytems.Items}"
                                   SelectedItem="{Binding Service.APIs.SelectedItem.Replytems.SelectedItem}"
                                   >
-                            <b:Interaction.Triggers>
-                                <b:EventTrigger EventName="SourceUpdated">
-                                    <b:CallMethodAction TargetObject="{Binding Mode=OneWay, Source={StaticResource vm}}" MethodName="RefreshPreview"/>
-                                </b:EventTrigger>
-                            </b:Interaction.Triggers>
-                            <DataGrid.Columns>
-                                <DataGridComboBoxColumn Header="Single/Repeat"  SelectedItemBinding="{Binding SingleRepeat, NotifyOnSourceUpdated=True, UpdateSourceTrigger=LostFocus}" ItemsSource="{Binding Mode=OneWay, Source={StaticResource AlignmentValues}}"/>
-                                <DataGridComboBoxColumn Header="Type" ItemsSource="{Binding gRPCTypes, Source={StaticResource vm}}" SelectedItemBinding="{Binding TypeName}" />
-                                <DataGridTextColumn Header="ValueName" Binding="{Binding ValueName, NotifyOnSourceUpdated=True, UpdateSourceTrigger=LostFocus}"/>
-                                <DataGridTextColumn Header="Description" Binding="{Binding Description, NotifyOnSourceUpdated=True, UpdateSourceTrigger=LostFocus}"/>
-                            </DataGrid.Columns>
-                        </DataGrid>
-                        <Grid Grid.Column="1">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="*"/>
-                                <RowDefinition Height="*"/>
-                                <RowDefinition Height="*"/>
-                                <RowDefinition Height="*"/>
-                                <RowDefinition Height="*"/>
-                            </Grid.RowDefinitions>
-                            <Button Grid.Row="1" Content="↑">
                                 <b:Interaction.Triggers>
-                                    <b:EventTrigger EventName="Click">
-                                        <b:CallMethodAction TargetObject="{Binding}" MethodName="MoveUp_ReplyItems"/>
+                                    <b:EventTrigger EventName="SourceUpdated">
+                                        <b:CallMethodAction TargetObject="{Binding Mode=OneWay, Source={StaticResource vm}}" MethodName="RefreshPreview"/>
                                     </b:EventTrigger>
                                 </b:Interaction.Triggers>
-                            </Button>
-                            <Button Grid.Row="3" Content="↓">
-                                <b:Interaction.Triggers>
-                                    <b:EventTrigger EventName="Click">
-                                        <b:CallMethodAction TargetObject="{Binding}" MethodName="MoveDown_ReplyItesm"/>
-                                    </b:EventTrigger>
-                                </b:Interaction.Triggers>
-                            </Button>
+                                <DataGrid.Columns>
+                                    <DataGridComboBoxColumn Header="Single/Repeat"  SelectedItemBinding="{Binding SingleRepeat, NotifyOnSourceUpdated=True, UpdateSourceTrigger=LostFocus}" ItemsSource="{Binding Mode=OneWay, Source={StaticResource AlignmentValues}}"/>
+                                    <DataGridTemplateColumn IsReadOnly="True" Header="Type">
+                                        <DataGridTemplateColumn.CellTemplate>
 
+                                            <DataTemplate>
+                                                <DataTemplate.Triggers>
+                                                    <DataTrigger Binding="{Binding}" Value="{x:Static hlp:NewItemHolderHelper.NewItemPlaceholder}">
+                                                        <Setter Property="Visibility" Value="Collapsed"/>
+                                                    </DataTrigger>
+                                                </DataTemplate.Triggers>
+                                                <ComboBox ItemsSource="{Binding gRPCTypes, Mode=OneWay, Source={StaticResource vm}}"
+                                                      SelectedItem="{Binding TypeName, NotifyOnSourceUpdated=True, UpdateSourceTrigger=LostFocus}">
+                                                    <b:Interaction.Triggers>
+                                                        <b:EventTrigger EventName="DropDownOpened">
+                                                            <b:CallMethodAction TargetObject="{Binding Mode=OneWay, Source={StaticResource vm}}" MethodName="DropdownOpen"/>
+                                                        </b:EventTrigger>
+                                                    </b:Interaction.Triggers>
+
+                                                </ComboBox>
+                                            </DataTemplate>
+                                        </DataGridTemplateColumn.CellTemplate>
+                                    </DataGridTemplateColumn>
+
+                                    <DataGridTextColumn Header="ValueName" Binding="{Binding ValueName, NotifyOnSourceUpdated=True, UpdateSourceTrigger=LostFocus}"/>
+                                    <DataGridTextColumn Header="Description" Binding="{Binding Description, NotifyOnSourceUpdated=True, UpdateSourceTrigger=LostFocus}"/>
+                                </DataGrid.Columns>
+                            </DataGrid>
+                            <Grid Grid.Column="1">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="*"/>
+                                </Grid.RowDefinitions>
+                                <Button Grid.Row="1" Content="↑">
+                                    <b:Interaction.Triggers>
+                                        <b:EventTrigger EventName="Click">
+                                            <b:CallMethodAction TargetObject="{Binding}" MethodName="MoveUp_ReplyItems"/>
+                                        </b:EventTrigger>
+                                    </b:Interaction.Triggers>
+                                </Button>
+                                <Button Grid.Row="3" Content="↓">
+                                    <b:Interaction.Triggers>
+                                        <b:EventTrigger EventName="Click">
+                                            <b:CallMethodAction TargetObject="{Binding}" MethodName="MoveDown_ReplyItesm"/>
+                                        </b:EventTrigger>
+                                    </b:Interaction.Triggers>
+                                </Button>
+
+                            </Grid>
                         </Grid>
-                    </Grid>
-                </GroupBox>
+                    </GroupBox>
+                </Grid>
             </Grid>
         </Grid>
         <Grid Grid.Row="1">

@@ -58,13 +58,38 @@ namespace menDoc.Models
 				}
 			}
 		}
-		#endregion
+        #endregion
 
-		#region リクエストアイテム[RequestItems]プロパティ
-		/// <summary>
-		/// リクエストアイテム[RequestItems]プロパティ用変数
-		/// </summary>
-		ModelList<gRrpcParamM> _RequestItems = new ModelList<gRrpcParamM>();
+        #region クラスアイテム[ClassItems]プロパティ
+        /// <summary>
+        /// クラスアイテム[RequestItems]プロパティ用変数
+        /// </summary>
+        ModelList<gRrpcParamM> _ClassItems = new ModelList<gRrpcParamM>();
+        /// <summary>
+        /// クラスアイテム[ClassItems]プロパティ
+        /// </summary>
+        public ModelList<gRrpcParamM> ClassItems
+        {
+            get
+            {
+                return _ClassItems;
+            }
+            set
+            {
+                if (_ClassItems == null || !_ClassItems.Equals(value))
+                {
+                    _ClassItems = value;
+                    NotifyPropertyChanged("ClassItems");
+                }
+            }
+        }
+        #endregion
+
+        #region リクエストアイテム[RequestItems]プロパティ
+        /// <summary>
+        /// リクエストアイテム[RequestItems]プロパティ用変数
+        /// </summary>
+        ModelList<gRrpcParamM> _RequestItems = new ModelList<gRrpcParamM>();
 		/// <summary>
 		/// リクエストアイテム[RequestItems]プロパティ
 		/// </summary>
