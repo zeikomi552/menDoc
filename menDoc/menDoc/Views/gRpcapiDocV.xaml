@@ -18,6 +18,11 @@
                 <x:Type TypeName="enum:SingleRepeatEnum" />
             </ObjectDataProvider.MethodParameters>
         </ObjectDataProvider>
+        <ObjectDataProvider MethodName="GetValues" ObjectType="{x:Type sys:Enum}" x:Key="RequiredOptionalValues">
+            <ObjectDataProvider.MethodParameters>
+                <x:Type TypeName="enum:gRPCOptionalEnum" />
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
     </UserControl.Resources>
 
     <Grid DataContext="{Binding Mode=OneWay, Source={StaticResource vm}}">
@@ -206,6 +211,7 @@
                             </b:Interaction.Triggers>
                             <DataGrid.Columns>
                                 <DataGridComboBoxColumn Header="Single/Repeat"  SelectedItemBinding="{Binding SingleRepeat, NotifyOnSourceUpdated=True, UpdateSourceTrigger=LostFocus}" ItemsSource="{Binding Mode=OneWay, Source={StaticResource AlignmentValues}}"/>
+                                <DataGridComboBoxColumn Header="Optional"  SelectedItemBinding="{Binding Required, NotifyOnSourceUpdated=True, UpdateSourceTrigger=LostFocus}" ItemsSource="{Binding Mode=OneWay, Source={StaticResource RequiredOptionalValues}}"/>
                                 <!--<DataGridComboBoxColumn Header="Type2" ItemsSource="{Binding gRPCTypes, Source={StaticResource vm}}"
                                                         SelectedItemBinding="{Binding TypeName, NotifyOnSourceUpdated=True, UpdateSourceTrigger=LostFocus}"/>-->
                                 <DataGridTemplateColumn IsReadOnly="True" Header="Type">
@@ -282,6 +288,7 @@
                                 </b:Interaction.Triggers>
                                 <DataGrid.Columns>
                                     <DataGridComboBoxColumn Header="Single/Repeat"  SelectedItemBinding="{Binding SingleRepeat, NotifyOnSourceUpdated=True, UpdateSourceTrigger=LostFocus}" ItemsSource="{Binding Mode=OneWay, Source={StaticResource AlignmentValues}}"/>
+                                    <DataGridComboBoxColumn Header="Optional"  SelectedItemBinding="{Binding Required, NotifyOnSourceUpdated=True, UpdateSourceTrigger=LostFocus}" ItemsSource="{Binding Mode=OneWay, Source={StaticResource RequiredOptionalValues}}"/>
                                     <!--<DataGridComboBoxColumn Header="Type2" ItemsSource="{Binding gRPCTypes, Source={StaticResource vm}}"
                                                         SelectedItemBinding="{Binding TypeName, NotifyOnSourceUpdated=True, UpdateSourceTrigger=LostFocus}"/>-->
                                     <DataGridTemplateColumn IsReadOnly="True" Header="Type">
@@ -352,6 +359,7 @@
                                 </b:Interaction.Triggers>
                                 <DataGrid.Columns>
                                     <DataGridComboBoxColumn Header="Single/Repeat"  SelectedItemBinding="{Binding SingleRepeat, NotifyOnSourceUpdated=True, UpdateSourceTrigger=LostFocus}" ItemsSource="{Binding Mode=OneWay, Source={StaticResource AlignmentValues}}"/>
+                                    <DataGridComboBoxColumn Header="Optional"  SelectedItemBinding="{Binding Required, NotifyOnSourceUpdated=True, UpdateSourceTrigger=LostFocus}" ItemsSource="{Binding Mode=OneWay, Source={StaticResource RequiredOptionalValues}}"/>
                                     <DataGridTemplateColumn IsReadOnly="True" Header="Type">
                                         <DataGridTemplateColumn.CellTemplate>
 

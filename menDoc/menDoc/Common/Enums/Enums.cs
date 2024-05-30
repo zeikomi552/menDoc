@@ -23,6 +23,22 @@ namespace menDoc.Common.Enums
 	}
 	#endregion
 
+	/// <summary>
+	/// required/optional 列挙子
+	/// </summary>
+	public enum gRPCOptionalEnum
+	{
+		Required,
+		Optional
+	}
+
+	public enum gRPCValueType
+	{
+		Class,
+		Request,
+		Reply
+	}
+
 	public enum gRPCTypeEnum
 	{ 
 		double_,

@@ -215,9 +215,8 @@ namespace menDoc.Models.ClassDiagram
 			{
 				// UTF-8
 				StreamReader html_sr = new StreamReader(ClassDiagramPath.OutputHtmlTmpletePath, Encoding.UTF8);
-
-				// テンプレートファイル読み出し
-				string html_txt = html_sr.ReadToEnd();
+                // テンプレートファイル読み出し
+                string html_txt = html_sr.ReadToEnd();
 
 				html_txt = html_txt.Replace("{menDoc:jsdir}", Utilities.JSDir);
 				html_txt = html_txt.Replace("{menDoc:htmlbody}", this.Html);

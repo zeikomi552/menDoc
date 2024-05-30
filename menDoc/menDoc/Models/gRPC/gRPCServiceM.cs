@@ -1,4 +1,5 @@
-﻿using Markdig;
+﻿using ControlzEx.Standard;
+using Markdig;
 using menDoc.Common.Enums;
 using menDoc.Common.Utilities;
 using menDoc.Models.ERDiagram;
@@ -8,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using static menDoc.Common.TempletePath;
@@ -309,6 +311,36 @@ namespace menDoc.Models
 		}
 		#endregion
 
+		private string CreateProtoCodeDetail(string apiname, List<gRrpcParamM> gparams)
+		{
+            int index = 1;
+			StringBuilder code = new StringBuilder();
+
+            foreach (var param in gparams)
+            {
+                if (index == 1)
+                    code.AppendLine(string.Format("message {0} {{", apiname));
+
+                // repeatの判別
+                string code_detail = string.Format("{0} {1} = {2};", param.TypeName, param.ValueName, index);
+
+                if (param.SingleRepeat == SingleRepeatEnum.Repeat)
+                {
+                    code_detail = string.Format("repeated {0}", code_detail);
+                }
+
+                if (param.Required == gRPCOptionalEnum.Optional)
+                {
+                    code_detail = string.Format("optional {0}", code_detail);
+                }
+                code.AppendLine("\t" + code_detail);
+                index++;
+            }
+
+            code.AppendLine("}");
+            return code.ToString();
+        }
+
 		#region .protoファイル用Codeの作成
 		/// <summary>
 		/// .protoファイル用Codeの作成
@@ -338,64 +370,25 @@ namespace menDoc.Models
 
 			foreach (var api in this.APIs)
 			{
-                int index = 1;
                 if (api.ClassItems.Items.Count > 0)
 				{
-                    code.AppendLine(string.Format("message {0} {{", api.Name));
-
-                    foreach (var cls in api.ClassItems)
-                    {
-                        // repeatの判別
-                        if (cls.SingleRepeat == SingleRepeatEnum.Single)
-                        {
-                            code.AppendLine(string.Format("\t{0} {1} = {2};", cls.TypeName, cls.ValueName, index));
-                        }
-                        else
-                        {
-                            code.AppendLine(string.Format("\trepeated {0} {1} = {2};", cls.TypeName, cls.ValueName, index));
-                        }
-                        index++;
-                    }
-                    code.AppendLine("}");
-
+					string code_temp = CreateProtoCodeDetail(api.Name, api.ClassItems.Items.ToList());
+					code.AppendLine(code_temp);
                 }
-                code.AppendLine(string.Format("message {0}Request {{", api.Name));
 
-				index = 1;
-				foreach (var request in api.RequestItems)
+
+				if (api.RequestItems.Items.Count > 0)
 				{
-					// repeatの判別
-					if (request.SingleRepeat == SingleRepeatEnum.Single)
-					{
-						code.AppendLine(string.Format("\t{0} {1} = {2};", request.TypeName, request.ValueName, index));
-					}
-					else
-					{
-						code.AppendLine(string.Format("\trepeated {0} {1} = {2};", request.TypeName, request.ValueName, index));
-					}
-					index++;
-				}
-				code.AppendLine("}");
+                    string code_temp = CreateProtoCodeDetail(api.Name + "Request", api.RequestItems.Items.ToList());
+                    code.AppendLine(code_temp);
+                }
 
-
-				code.AppendLine(string.Format("message {0}Reply {{", api.Name));
-
-				index = 1;
-				foreach (var reply in api.Replytems)
-				{
-					// repeatの判別
-					if (reply.SingleRepeat == SingleRepeatEnum.Single)
-					{
-						code.AppendLine(string.Format("\t{0} {1} = {2};", reply.TypeName, reply.ValueName, index));
-					}
-					else
-					{
-						code.AppendLine(string.Format("\trepeated {0} {1} = {2};", reply.TypeName, reply.ValueName, index));
-					}
-					index++;
-				}
-				code.AppendLine("}");
-			}
+                if (api.Replytems.Items.Count > 0)
+                {
+                    string code_temp = CreateProtoCodeDetail(api.Name + "Reply", api.Replytems.Items.ToList());
+                    code.AppendLine(code_temp);
+                }
+            }
 
 			return code.ToString();
 		}

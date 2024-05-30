@@ -11,11 +11,37 @@ namespace menDoc.Models
 
 	public class gRrpcParamM : ModelBase
     {
-		#region 単体・応答識別[SingleRepeat]プロパティ
-		/// <summary>
-		/// 単体・応答識別[SingleRepeat]プロパティ用変数
-		/// </summary>
-		SingleRepeatEnum _SingleRepeat = new SingleRepeatEnum();
+
+        #region 必須/オプションの切り分け
+        /// <summary>
+        /// 必須/オプションの切り分け
+        /// </summary>
+        gRPCOptionalEnum _Required = gRPCOptionalEnum.Required;
+        /// <summary>
+        /// 必須/オプションの切り分け
+        /// </summary>
+        public gRPCOptionalEnum Required
+        {
+            get
+            {
+                return _Required;
+            }
+            set
+            {
+                if (!_Required.Equals(value))
+                {
+                    _Required = value;
+                    NotifyPropertyChanged("Required");
+                }
+            }
+        }
+        #endregion
+
+        #region 単体・応答識別[SingleRepeat]プロパティ
+        /// <summary>
+        /// 単体・応答識別[SingleRepeat]プロパティ用変数
+        /// </summary>
+        SingleRepeatEnum _SingleRepeat = new SingleRepeatEnum();
 		/// <summary>
 		/// 単体・応答識別[SingleRepeat]プロパティ
 		/// </summary>
