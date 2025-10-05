@@ -311,6 +311,12 @@ namespace menDoc.Models
 		}
 		#endregion
 
+		/// <summary>
+		/// .protoファイルのmessage定義を生成します。
+		/// </summary>
+		/// <param name="apiname">API名（message名）</param>
+		/// <param name="gparams">パラメータリスト</param>
+		/// <returns>message定義の文字列</returns>
 		private string CreateProtoCodeDetail(string apiname, List<gRrpcParamM> gparams)
 		{
             int index = 1;
