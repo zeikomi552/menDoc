@@ -389,7 +389,7 @@ namespace menDoc.Models.ERDiagram
 
 				foreach (var param in table.ParameterItems)
 				{
-					code.AppendLine(param.Type + " " + param.Name);
+					code.AppendLine(param.Type + " " + param.Name + (param.PrimaryKey ? (" " + "PK") : "") + " " + "\"" + param.Description + "\"");
 				}
 
 				code.AppendLine("}");
