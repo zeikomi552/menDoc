@@ -458,34 +458,56 @@ namespace menDoc.Models
 				code.AppendLine(string.Format("### API名：{0}", api.Name));
 				code.AppendLine();
 
-				code.AppendLine("- リクエスト");
-				code.AppendLine();
-				code.AppendLine("|No.|単体/リスト|型|変数名|説明|");
-				code.AppendLine("|---|---|---|---|---|");
-
-				index = 1;
-				foreach (var request in api.RequestItems)
-                {
-					code.AppendLine(string.Format("|{0}|{1}|{2}|{3}|{4}|", 
-						index++, request.SingleRepeat.ToString()
-						, request.TypeName, request.ValueName, request.Description));
-				}
-				code.AppendLine();
-
-				code.AppendLine("- リプライ");
-				code.AppendLine();
-				code.AppendLine("|No.|単体/リスト|型|変数名|説明|");
-				code.AppendLine("|---|---|---|---|---|");
-
-				index = 1;
-				foreach (var request in api.Replytems)
+				if (api.ClassItems.Items.Count > 0)
 				{
-					code.AppendLine(string.Format("|{0}|{1}|{2}|{3}|{4}|",
-						index++, request.SingleRepeat.ToString()
-						, request.TypeName, request.ValueName, request.Description));
-				}
-				code.AppendLine();
+                    code.AppendLine("- クラス");
+                    code.AppendLine();
+                    code.AppendLine("|No.|必須/オプション|単体/リスト|型|変数名|説明|");
+                    code.AppendLine("|---|---|---|---|---|---|");
 
+                    index = 1;
+                    foreach (var request in api.ClassItems)
+                    {
+                        code.AppendLine(string.Format("|{0}|{1}|{2}|{3}|{4}|{5}|",
+                            index++, request.Required, request.SingleRepeat.ToString()
+                            , request.TypeName, request.ValueName, request.Description));
+                    }
+                    code.AppendLine();
+                }
+
+				if (api.RequestItems.Items.Count > 0)
+				{
+                    code.AppendLine("- リクエスト");
+                    code.AppendLine();
+                    code.AppendLine("|No.|必須/オプション|単体/リスト|型|変数名|説明|");
+                    code.AppendLine("|---|---|---|---|---|---|");
+
+                    index = 1;
+                    foreach (var request in api.RequestItems)
+                    {
+                        code.AppendLine(string.Format("|{0}|{1}|{2}|{3}|{4}|{5}|",
+                            index++, request.Required, request.SingleRepeat.ToString()
+                            , request.TypeName, request.ValueName, request.Description));
+                    }
+                    code.AppendLine();
+                }
+
+				if (api.Replytems.Items.Count > 0)
+				{
+                    code.AppendLine("- リプライ");
+                    code.AppendLine();
+                    code.AppendLine("|No.|必須/オプション|単体/リスト|型|変数名|説明|");
+                    code.AppendLine("|---|---|---|---|---|---|");
+
+                    index = 1;
+                    foreach (var request in api.Replytems)
+                    {
+                        code.AppendLine(string.Format("|{0}|{1}|{2}|{3}|{4}|{5}|",
+                            index++, request.Required, request.SingleRepeat.ToString()
+                            , request.TypeName, request.ValueName, request.Description));
+                    }
+                    code.AppendLine();
+                }
 			}
 
 			return code.ToString();

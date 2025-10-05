@@ -110,7 +110,9 @@ namespace menDoc.ViewModels
 			{
 				this.Service.SaveTemporary(); // 一時ファイルの保存
 				this.WebviewObject.Reload();
-			}
+				this.Service.RefleshCode();
+
+            }
 			catch (Exception ex)
 			{
 				_logger.Error(ex.Message);
